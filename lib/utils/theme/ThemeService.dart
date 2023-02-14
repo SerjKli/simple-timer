@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simpletimer/utils/assets/font_assets.dart';
 
 import 'color_schema.dart';
 
@@ -26,9 +27,9 @@ class ThemeService {
           ),
         )
         .apply(
-          bodyColor: _colorScheme.dark,
-          displayColor: _colorScheme.dark,
-          fontFamily: "Roboto",
+          bodyColor: _colorScheme.brand,
+          displayColor: _colorScheme.brand,
+          fontFamily: FontAssets.base,
         );
     Color txtColor = txtTheme.bodySmall!.color!;
 

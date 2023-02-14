@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:simpletimer/modules/main_screen/ui/widgets/AddTimerButton.dart';
+import 'package:simpletimer/modules/main_screen/ui/widgets/TimersList.dart';
+import 'package:simpletimer/widgets/app_icon.dart';
 import 'package:simpletimer/widgets/app_screen.dart';
 
 class MainScreen extends StatelessWidget {
@@ -8,10 +11,21 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AppScreen(
+    return AppScreen(
+      isInSafeArea: false,
       screenTitle: "SimpleTimer",
-      titleIcon: Icons.timer,
-      body: Text('helloc'),
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: const AppIcon(icon: Icons.settings),
+        ),
+      ],
+      body: Column(
+        children: const [
+          Expanded(child: TimersList()),
+          AddTimerButton(),
+        ],
+      ),
     );
   }
 }

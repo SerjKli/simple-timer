@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:simpletimer/utils/theme/extensions/context.dart';
 
 import 'app_bar.dart';
-import 'app_icon.dart';
 
 class AppScreen extends StatelessWidget {
   /// Screen's bar properties
@@ -30,14 +29,9 @@ class AppScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBaseBar(
-          title: 'SimpleTimer',
+          title: screenTitle,
           icon: titleIcon,
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const AppIcon(icon: Icons.settings),
-            ),
-          ],
+          actions: actions,
         ),
         body: isInSafeArea ? SafeArea(child: body) : body,
       ),

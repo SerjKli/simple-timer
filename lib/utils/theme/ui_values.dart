@@ -25,4 +25,6 @@ abstract class UiValues {
     blurRadius: shadowBlur,
     offset: shadowOffset,
   );
+
+  static const double buttonHeight = 88;
 }

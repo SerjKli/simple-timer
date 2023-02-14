@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simpletimer/utils/theme/color_schema.dart';
-import 'package:simpletimer/utils/theme/constants.dart';
+import 'package:simpletimer/utils/theme/ui_values.dart';
 import 'package:simpletimer/widgets/app_gap.dart';
 
 import 'app_icon.dart';
@@ -24,6 +24,7 @@ class AppBaseBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) AppIcon(icon: icon!),
           if (icon != null) const AppGap.vertical(),
