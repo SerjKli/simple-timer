@@ -25,20 +25,21 @@ class AppScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBaseBar(
-        title: 'SimpleTimer',
-        icon: titleIcon,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const AppIcon(icon: Icons.settings),
-          ),
-        ],
-      ),
-      body: Container(
-        decoration: BoxDecoration(gradient: context.colorScheme.bgGradient),
-        child: isInSafeArea ? SafeArea(child: body) : body,
+    return Container(
+      decoration: BoxDecoration(gradient: context.colorScheme.bgGradient),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBaseBar(
+          title: 'SimpleTimer',
+          icon: titleIcon,
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const AppIcon(icon: Icons.settings),
+            ),
+          ],
+        ),
+        body: isInSafeArea ? SafeArea(child: body) : body,
       ),
     );
   }

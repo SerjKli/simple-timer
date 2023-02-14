@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:simpletimer/modules/main_screen/ui/MainScreen.dart';
+import 'package:simpletimer/route/NavigationService.dart';
+import 'package:simpletimer/route/routes.dart';
+import 'package:simpletimer/utils/services/LocatorService.dart';
 import 'package:simpletimer/utils/theme/ThemeService.dart';
 
-void main() {
+void main() async {
+  await init();
+
   runApp(const MyApp());
+}
+
+Future<void> init() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  setupLocator();
+
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getTemporaryDirectory(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,6 +41,10 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.light,
+
+      /// Route settings
+      navigatorKey: locator<NavigationService>().navigatorKey,
+      onGenerateRoute: AppRouter.onGenerateRoute,
 
       home: const MainScreen(),
     );

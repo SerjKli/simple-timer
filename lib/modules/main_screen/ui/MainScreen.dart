@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:simpletimer/widgets/app_screen.dart';
 
 class MainScreen extends StatelessWidget {
+  static const String routeName = "/";
+
   const MainScreen({Key? key}) : super(key: key);
 
   @override

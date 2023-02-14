@@ -32,6 +32,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
 
   RadialGradient get bgGradient => RadialGradient(
         colors: [bgGradientBegin!, bgGradientEnd!],
+        center: const Alignment(00, -0.5),
+        radius: 3.9,
       );
 
   @override
@@ -102,8 +104,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     dark: Color(0xff6C6C6C),
     hint: Color(0xffbebebe),
     black: Color(0xff000000),
-    bgGradientBegin: Color(0xff154377),
     bgGradientEnd: Color(0xff59A4D0),
+    bgGradientBegin: Color(0xff154377),
     shadow: Color(0xff252525),
   );
 
@@ -118,8 +120,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     dark: Color(0xff6C6C6C),
     hint: Color(0xffbebebe),
     black: Color(0xff000000),
-    bgGradientBegin: Color(0xff154377),
     bgGradientEnd: Color(0xff59A4D0),
+    bgGradientBegin: Color(0xff154377),
     shadow: Color(0xffdadada),
   );
 }
