@@ -12,13 +12,13 @@ class AppGap extends StatelessWidget {
 
   const AppGap.vertical({
     super.key,
-    this.height = 0,
-  }) : width = UiValues.padding2x;
+    this.width = 0,
+  }) : height = UiValues.padding2x;
 
   const AppGap.horizontal({
     super.key,
-    this.width = 0,
-  }) : height = UiValues.padding2x;
+    this.height = 0,
+  }) : width = UiValues.padding2x;
 
   @override
   Widget build(BuildContext context) {

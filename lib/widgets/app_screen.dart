@@ -27,6 +27,7 @@ class AppScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(gradient: context.colorScheme.bgGradient),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
         appBar: AppBaseBar(
           title: screenTitle,

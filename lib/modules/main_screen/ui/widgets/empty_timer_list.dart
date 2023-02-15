@@ -5,8 +5,8 @@ import 'package:simpletimer/widgets/app_gap.dart';
 import 'package:simpletimer/widgets/app_icon.dart';
 import 'package:simpletimer/widgets/app_text.dart';
 
-class EmptyTimerList extends StatelessWidget {
-  const EmptyTimerList({Key? key}) : super(key: key);
+class EmptyWorkoutList extends StatelessWidget {
+  const EmptyWorkoutList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class EmptyTimerList extends StatelessWidget {
           opacity: UiValues.opacity,
           child: AppIcon.lg(icon: FontAwesomeIcons.listUl),
         ),
-        AppGap.horizontal(),
+        AppGap.vertical(),
         AppText("Ready to add a new timer?"),
       ],
     );

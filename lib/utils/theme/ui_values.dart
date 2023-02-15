@@ -5,6 +5,11 @@ abstract class UiValues {
 
   static const double padding = 8;
   static const double padding2x = 16;
+  static const double paddingMax = 24;
+
+  static const EdgeInsets paddingEdge = EdgeInsets.all(padding);
+  static const EdgeInsets paddingEdgeLg = EdgeInsets.all(padding2x);
+  static const EdgeInsets paddingEdgeMax = EdgeInsets.all(paddingMax);
 
   static const int animationSpeed = 300;
 

@@ -27,7 +27,7 @@ class AppBaseBar extends StatelessWidget implements PreferredSizeWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) AppIcon(icon: icon!),
-          if (icon != null) const AppGap.vertical(),
+          if (icon != null) const AppGap.horizontal(),
           Text(
             title,
             style: TextStyle(color: colorScheme.brand),

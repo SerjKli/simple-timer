@@ -1,0 +1,4 @@
+enum DurationType {
+  workout,
+  rest,
+}

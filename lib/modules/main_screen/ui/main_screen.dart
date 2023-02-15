@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:simpletimer/modules/main_screen/ui/widgets/AddTimerButton.dart';
-import 'package:simpletimer/modules/main_screen/ui/widgets/TimersList.dart';
+import 'package:simpletimer/modules/main_screen/ui/widgets/add_workout_button.dart';
+import 'package:simpletimer/modules/main_screen/ui/widgets/workout_list.dart';
 import 'package:simpletimer/widgets/app_icon.dart';
 import 'package:simpletimer/widgets/app_screen.dart';
 
@@ -13,7 +13,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppScreen(
       isInSafeArea: false,
-      screenTitle: "SimpleTimer",
+      screenTitle: "Simple Workout Timer",
       actions: [
         IconButton(
           onPressed: () {},
@@ -22,8 +22,8 @@ class MainScreen extends StatelessWidget {
       ],
       body: Column(
         children: const [
-          Expanded(child: TimersList()),
-          AddTimerButton(),
+          Expanded(child: WorkoutList()),
+          AddWorkoutButton(),
         ],
       ),
     );

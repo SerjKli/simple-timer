@@ -37,8 +37,8 @@ class AppButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (isIconSet) AppIcon(icon: icon!, isDark: true, size: 14),
-            if (isIconSet) const AppGap.vertical(),
-            AppText(title, isDark: true),
+            if (isIconSet) const AppGap.horizontal(),
+            AppText.dark(title),
           ],
         ),
       ),
