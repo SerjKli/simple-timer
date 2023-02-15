@@ -24,8 +24,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     WorkoutChangeRoundsEvent event,
     Emitter<WorkoutState> emit,
   ) {
-    int newRounds =
-        event.newRoundsValue ?? int.parse(state.roundsController.text);
+    int newRounds = event.newRoundsValue ?? int.parse(state.roundsController.text);
 
     if (newRounds < 1) newRounds = 1;
 
@@ -41,8 +40,7 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     WorkoutChangeDurationEvent event,
     Emitter<WorkoutState> emit,
   ) {
-    final int currentSeconds =
-        event.isWork ? state.workout.workDuration : state.workout.restDuration;
+    final int currentSeconds = event.isWork ? state.workout.workDuration : state.workout.restDuration;
 
     int newSeconds = currentSeconds + event.newDurationValue;
 
@@ -63,20 +61,10 @@ class WorkoutBloc extends Bloc<WorkoutEvent, WorkoutState> {
     WorkoutManualSetMinutesEvent event,
     Emitter<WorkoutState> emit,
   ) {
-    WorkoutModel model;
-
-    if (event.isWork) {
-      final int newMinutes = int.parse(state.workoutMinutesController.text);
-      final int currentSeconds = state.workout.workoutSeconds;
-      model = state.workout
-          .copyWith(workDuration: ((newMinutes * 60) + currentSeconds));
-    } else {
-      final int newMinutes = int.parse(state.restMinutesController.text);
-      final int currentSeconds = state.workout.restSeconds;
-      model = state.workout
-          .copyWith(restDuration: ((newMinutes * 60) + currentSeconds));
+    debugPrint("${state.workoutMinutesController.text}");
+    if(state.workoutMinutesController.text.isEmpty){
+      state.workoutMinutesController.text = '00';
     }
-
-    emit(WorkoutState(model));
   }
+
 }

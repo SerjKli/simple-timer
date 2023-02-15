@@ -6,13 +6,17 @@ class AppWatch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.all(Radius.circular(120)),
-      child: Container(
-        width: 240,
-        height: 240,
-        color: context.colorScheme.brand,
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(120)),
+          child: Container(
+            width: constraints.maxHeight,
+            height: constraints.maxHeight,
+            color: context.colorScheme.brand,
+          ),
+        );
+      },
     );
   }
 }

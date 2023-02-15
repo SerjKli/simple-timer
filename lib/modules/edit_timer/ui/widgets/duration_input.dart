@@ -49,9 +49,11 @@ class DurationInputField extends StatelessWidget {
                 maxLength: 2,
                 controller: minutesController,
                 validator: (String value) {
-                  return ValidationService.isValidInteger(value, 1, 59);
+                  // return ValidationService.isValidInteger(value, 1, 59);
+                  return null;
                 },
                 onSave: (value) {
+                  debugPrint("${value}");
                   context.read<WorkoutBloc>().add(
                         WorkoutManualSetMinutesEvent(durationType),
                       );
@@ -66,7 +68,8 @@ class DurationInputField extends StatelessWidget {
                 maxLength: 2,
                 controller: secondsController,
                 validator: (String value) {
-                  return ValidationService.isValidInteger(value, 1, 59);
+                  // return ValidationService.isValidInteger(value, 1, 59);
+                  return null;
                 },
               ),
             ),
