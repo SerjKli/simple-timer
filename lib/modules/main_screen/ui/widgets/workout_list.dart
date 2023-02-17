@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simpletimer/modules/main_screen/ui/widgets/empty_timer_list.dart';
+import 'package:simpletimer/modules/main_screen/ui/widgets/workout_item.dart';
 
 import '../../blocs/workout_list/exports.dart';
 
@@ -13,9 +14,9 @@ class WorkoutList extends StatelessWidget {
         if (state.isEmpty) return const EmptyWorkoutList();
 
         return ListView.builder(
-          itemCount: state.timersLength,
+          itemCount: state.workoutsLength,
           itemBuilder: (_, int index) {
-            return Text(state.allTimers[index].name);
+            return WorkoutItem(state.allWorkouts[index]);
           },
         );
       },

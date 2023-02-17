@@ -22,11 +22,11 @@ class AppIconButton extends StatelessWidget {
       customBorder: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(UiValues.radiusBig),
       ),
-      radius: 24,
+      radius: UiValues.iconButtonSize / 2,
       child: Container(
         alignment: Alignment.center,
-        width: 48,
-        height: 48,
+        width: UiValues.iconButtonSize,
+        height: UiValues.iconButtonSize,
         child: AppIcon(icon: icon),
       ),
     );

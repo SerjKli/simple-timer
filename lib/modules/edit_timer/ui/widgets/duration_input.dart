@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:simpletimer/utils/services/ValidatorService.dart';
 import 'package:simpletimer/widgets/app_icon_button.dart';
 import 'package:simpletimer/widgets/app_input.dart';
 import 'package:simpletimer/widgets/app_text.dart';
@@ -43,34 +42,48 @@ class DurationInputField extends StatelessWidget {
             ),
             SizedBox(
               width: 60,
-              child: AppInputField.noBorder(
-                inputType: TextInputType.number,
-                textAlign: TextAlign.right,
-                maxLength: 2,
-                controller: minutesController,
-                validator: (String value) {
-                  // return ValidationService.isValidInteger(value, 1, 59);
-                  return null;
-                },
-                onSave: (value) {
-                  debugPrint("${value}");
+              child: Focus(
+                onFocusChange: (hasFocus) {
+                  if (hasFocus) return;
+
                   context.read<WorkoutBloc>().add(
-                        WorkoutManualSetMinutesEvent(durationType),
+                        WorkoutManualSetMinutesEvent(
+                            durationType, minutesController.text),
                       );
                 },
+                child: AppInputField.noBorder(
+                  inputType: TextInputType.number,
+                  textAlign: TextAlign.right,
+                  maxLength: 2,
+                  controller: minutesController,
+                  validator: (String value) {
+                    // return ValidationService.isValidInteger(value, 1, 59);
+                    return null;
+                  },
+                ),
               ),
             ),
             const AppText(":"),
             SizedBox(
               width: 60,
-              child: AppInputField.noBorder(
-                inputType: TextInputType.number,
-                maxLength: 2,
-                controller: secondsController,
-                validator: (String value) {
-                  // return ValidationService.isValidInteger(value, 1, 59);
-                  return null;
+              child: Focus(
+                onFocusChange: (hasFocus) {
+                  if (hasFocus) return;
+
+                  context.read<WorkoutBloc>().add(
+                        WorkoutManualSetSecondsEvent(
+                            durationType, secondsController.text),
+                      );
                 },
+                child: AppInputField.noBorder(
+                  inputType: TextInputType.number,
+                  maxLength: 2,
+                  controller: secondsController,
+                  validator: (String value) {
+                    // return ValidationService.isValidInteger(value, 1, 59);
+                    return null;
+                  },
+                ),
               ),
             ),
             AppIconButton(

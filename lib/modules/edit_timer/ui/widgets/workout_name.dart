@@ -14,15 +14,22 @@ class WorkoutName extends StatelessWidget {
       padding: UiValues.paddingEdgeLg,
       child: BlocBuilder<WorkoutBloc, WorkoutState>(
         builder: (context, state) {
-          return AppInputField(
-            controller: state.nameController,
-            title: "Workout's name",
-            maxLength: 50,
-            autoValidation: true,
-            initValue: "",
-            validator: (String value) {
-              return ValidationService.stringIsValid(value, "Name", 3, 50);
+          return Focus(
+            onFocusChange: (hasFocus) {
+              if (hasFocus) return;
+
+              context.read<WorkoutBloc>().add(const WorkoutChangeNameEvent());
             },
+            child: AppInputField(
+              controller: state.nameController,
+              title: "Workout's name",
+              maxLength: 50,
+              autoValidation: true,
+              initValue: "",
+              validator: (String value) {
+                return ValidationService.stringIsValid(value, "Name", 3, 50);
+              },
+            ),
           );
         },
       ),

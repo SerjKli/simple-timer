@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../enums/ColorTypes.dart';
+
 @immutable
 class AppColorScheme extends ThemeExtension<AppColorScheme> {
   final Color? bg;
@@ -35,6 +37,17 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
         center: const Alignment(00, -0.5),
         radius: 3.9,
       );
+
+  Color getColorByType(ColorTypes colorType) {
+    switch (colorType) {
+      case ColorTypes.light:
+        return light!;
+      case ColorTypes.dark:
+        return bg!;
+      case ColorTypes.brand:
+        return brand!;
+    }
+  }
 
   @override
   AppColorScheme copyWith({

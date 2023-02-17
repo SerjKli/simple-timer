@@ -5,6 +5,7 @@ class WorkoutModel extends Equatable {
   final String uuid;
   final String name;
   final int rounds;
+  final int prepareDuration;
   final int workDuration;
   final int restDuration;
 
@@ -12,6 +13,7 @@ class WorkoutModel extends Equatable {
     required this.uuid,
     required this.name,
     required this.rounds,
+    required this.prepareDuration,
     required this.workDuration,
     required this.restDuration,
   });
@@ -19,8 +21,9 @@ class WorkoutModel extends Equatable {
   static WorkoutModel template() {
     return WorkoutModel(
       uuid: const Uuid().v1(),
-      name: "My awesome workout",
+      name: "My workout",
       rounds: 3,
+      prepareDuration: 10,
       workDuration: 30,
       restDuration: 30,
     );
@@ -30,15 +33,19 @@ class WorkoutModel extends Equatable {
   int get workoutSeconds => workDuration - (workoutMinutes * 60);
   int get restMinutes => restDuration ~/ 60;
   int get restSeconds => restDuration - (restMinutes * 60);
+  int get prepareMinutes => restDuration ~/ 60;
+  int get prepareSeconds => restDuration - (restMinutes * 60);
 
   @override
-  List<Object?> get props => [uuid, name, rounds, workDuration, restDuration];
+  List<Object?> get props =>
+      [uuid, name, rounds, prepareDuration, workDuration, restDuration];
 
   Map<String, dynamic> toMap() {
     return {
       'uuid': uuid,
       'name': name,
       'rounds': rounds,
+      'prepareDuration': prepareDuration,
       'workDuration': workDuration,
       'restDuration': restDuration,
     };
@@ -49,6 +56,7 @@ class WorkoutModel extends Equatable {
       uuid: map['uuid'] as String,
       name: map['name'] as String,
       rounds: map['rounds'] as int,
+      prepareDuration: map['prepareDuration'] as int,
       workDuration: map['workDuration'] as int,
       restDuration: map['restDuration'] as int,
     );
@@ -56,7 +64,7 @@ class WorkoutModel extends Equatable {
 
   @override
   String toString() {
-    return 'WorkoutModel{uuid: $uuid, name: $name, rounds: $rounds, workDuration: $workDuration, restDuration: $restDuration}';
+    return 'WorkoutModel{uuid: $uuid, name: $name, rounds: $rounds, prepareDuration: $prepareDuration, workDuration: $workDuration, restDuration: $restDuration}';
   }
 
   WorkoutModel copyWith({
@@ -64,12 +72,14 @@ class WorkoutModel extends Equatable {
     String? name,
     int? rounds,
     int? workDuration,
+    int? prepareDuration,
     int? restDuration,
   }) {
     return WorkoutModel(
       uuid: uuid ?? this.uuid,
       name: name ?? this.name,
       rounds: rounds ?? this.rounds,
+      prepareDuration: prepareDuration ?? this.prepareDuration,
       workDuration: workDuration ?? this.workDuration,
       restDuration: restDuration ?? this.restDuration,
     );

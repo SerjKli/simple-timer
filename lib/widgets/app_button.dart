@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simpletimer/utils/enums/ColorTypes.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
 import 'package:simpletimer/widgets/app_gap.dart';
 import 'package:simpletimer/widgets/app_icon.dart';
@@ -36,7 +37,8 @@ class AppButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (isIconSet) AppIcon(icon: icon!, isDark: true, size: 14),
+            if (isIconSet)
+              AppIcon(icon: icon!, colorType: ColorTypes.dark, size: 14),
             if (isIconSet) const AppGap.horizontal(),
             AppText.dark(title),
           ],

@@ -1,19 +1,29 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:simpletimer/models/WorkoutModel.dart';
 
 part 'workout_list_event.dart';
 part 'workout_list_state.dart';
 
-class WorkoutListBloc extends Bloc<WorkoutListEvent, WorkoutListState> {
+class WorkoutListBloc extends HydratedBloc<WorkoutListEvent, WorkoutListState> {
   WorkoutListBloc() : super(const WorkoutListState()) {
-    on<WorkoutListAddEvent>(_addTimer);
+    on<WorkoutListAddEvent>(_addWorkout);
   }
 
-  /// Add new timer to list
-  void _addTimer(WorkoutListAddEvent event, Emitter<WorkoutListState> emit) {
-    final List<WorkoutModel> timers = [...state.allTimers, event.timer];
+  /// Add new workout to list
+  void _addWorkout(WorkoutListAddEvent event, Emitter<WorkoutListState> emit) {
+    final List<WorkoutModel> workouts = [...state.allWorkouts, event.workout];
 
-    emit(WorkoutListState(timers: timers));
+    emit(WorkoutListState(workouts: workouts));
+  }
+
+  @override
+  WorkoutListState? fromJson(Map<String, dynamic> json) {
+    return WorkoutListState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(WorkoutListState state) {
+    return state.toMap();
   }
 }

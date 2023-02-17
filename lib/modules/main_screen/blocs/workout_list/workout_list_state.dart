@@ -1,18 +1,27 @@
 part of 'workout_list_bloc.dart';
 
-// abstract class TimerListState extends Equatable {
-//   const TimerListState();
-// }
-
 class WorkoutListState extends Equatable {
-  final List<WorkoutModel> timers;
+  final List<WorkoutModel> workouts;
 
-  const WorkoutListState({this.timers = const <WorkoutModel>[]});
+  const WorkoutListState({this.workouts = const <WorkoutModel>[]});
 
   @override
-  List<Object> get props => [timers];
+  List<Object> get props => [workouts];
 
-  List<WorkoutModel> get allTimers => timers;
-  int get timersLength => allTimers.length;
-  bool get isEmpty => timersLength == 0;
+  List<WorkoutModel> get allWorkouts => workouts;
+  int get workoutsLength => allWorkouts.length;
+  bool get isEmpty => workoutsLength == 0;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'workouts': workouts.map((t) => t.toMap()).toList(),
+    };
+  }
+
+  factory WorkoutListState.fromMap(Map<String, dynamic> map) {
+    return WorkoutListState(
+      workouts: List<WorkoutModel>.from(
+          map['workouts']?.map((t) => WorkoutModel.fromMap(t))).toList(),
+    );
+  }
 }

@@ -4,6 +4,10 @@ class WorkoutState extends Equatable {
   final WorkoutModel workout;
   final TextEditingController nameController = TextEditingController();
   final TextEditingController roundsController = TextEditingController();
+  final TextEditingController prepareMinutesController =
+      TextEditingController();
+  final TextEditingController prepareSecondsController =
+      TextEditingController();
   final TextEditingController workoutMinutesController =
       TextEditingController();
   final TextEditingController workoutSecondsController =
@@ -18,6 +22,10 @@ class WorkoutState extends Equatable {
   init() {
     nameController.text = workout.name;
     roundsController.text = workout.rounds.toStringAsFixed(0);
+    prepareMinutesController.text =
+        workout.workoutMinutes.toStringAsFixed(0).padLeft(2, '0');
+    prepareSecondsController.text =
+        workout.workoutSeconds.toStringAsFixed(0).padLeft(2, '0');
     workoutMinutesController.text =
         workout.workoutMinutes.toStringAsFixed(0).padLeft(2, '0');
     workoutSecondsController.text =
@@ -28,14 +36,29 @@ class WorkoutState extends Equatable {
         workout.restSeconds.toStringAsFixed(0).padLeft(2, '0');
   }
 
+  TextEditingController getMinutesControllerByType(
+    DurationType type,
+  ) {
+    switch (type) {
+      case (DurationType.prepare):
+        return prepareMinutesController;
+      case (DurationType.workout):
+        return workoutMinutesController;
+      case (DurationType.rest):
+        return restMinutesController;
+      default:
+        throw Exception("Undefined duration type");
+    }
+  }
+
   @override
   List<Object?> get props => [
         workout,
-        restSecondsController,
-        restSecondsController,
-        restSecondsController,
-        restSecondsController,
-        restSecondsController,
+        prepareMinutesController,
+        prepareSecondsController,
+        workoutMinutesController,
+        workoutSecondsController,
+        restMinutesController,
         restSecondsController,
       ];
 }

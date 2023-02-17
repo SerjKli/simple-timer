@@ -32,4 +32,5 @@ abstract class UiValues {
   );
 
   static const double buttonHeight = 88;
+  static const double iconButtonSize = 56;
 }

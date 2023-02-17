@@ -5,10 +5,10 @@ abstract class WorkoutListEvent extends Equatable {
 }
 
 class WorkoutListAddEvent extends WorkoutListEvent {
-  final WorkoutModel timer;
+  final WorkoutModel workout;
 
-  const WorkoutListAddEvent(this.timer);
+  const WorkoutListAddEvent(this.workout);
 
   @override
-  List<Object> get props => [timer];
+  List<Object> get props => [workout];
 }

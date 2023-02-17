@@ -10,7 +10,7 @@ class AppText extends StatelessWidget {
   const AppText(
     this.text, {
     Key? key,
-    this.colorType = ColorTypes.isLight,
+    this.colorType = ColorTypes.light,
     this.style,
   }) : super(key: key);
 
@@ -18,26 +18,24 @@ class AppText extends StatelessWidget {
     this.text, {
     Key? key,
     this.style,
-  })  : colorType = ColorTypes.isBrand,
+  })  : colorType = ColorTypes.brand,
         super(key: key);
 
   const AppText.dark(
     this.text, {
     Key? key,
     this.style,
-  })  : colorType = ColorTypes.isDark,
+  })  : colorType = ColorTypes.dark,
         super(key: key);
 
-  Color colorFromType(BuildContext context) {
-    switch (colorType) {
-      case ColorTypes.isLight:
-        return context.colorScheme.light!;
-      case ColorTypes.isDark:
-        return context.colorScheme.bg!;
-      case ColorTypes.isBrand:
-        return context.colorScheme.brand!;
-    }
-  }
+  const AppText.h1(
+    this.text, {
+    Key? key,
+  })  : colorType = ColorTypes.brand,
+        style = const TextStyle(
+            fontSize: 24 //TODO: remove static and take data from theme
+            ),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +44,7 @@ class AppText extends StatelessWidget {
     return Text(
       text,
       style: styles.copyWith(
-        color: colorFromType(context),
+        color: context.colorScheme.getColorByType(colorType),
       ),
     );
   }

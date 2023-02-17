@@ -1,5 +1,5 @@
 enum ColorTypes {
-  isBrand,
-  isLight,
-  isDark,
+  brand,
+  light,
+  dark,
 }

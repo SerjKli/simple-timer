@@ -19,19 +19,37 @@ class WorkoutChangeDurationEvent extends WorkoutEvent {
 
   const WorkoutChangeDurationEvent(this.newDurationValue, this.durationType);
 
-  bool get isWork => durationType == DurationType.workout;
-
   @override
   List<Object?> get props => [newDurationValue, durationType];
 }
 
 class WorkoutManualSetMinutesEvent extends WorkoutEvent {
   final DurationType durationType;
+  final String value;
 
-  const WorkoutManualSetMinutesEvent(this.durationType);
+  const WorkoutManualSetMinutesEvent(this.durationType, this.value);
 
   bool get isWork => durationType == DurationType.workout;
 
   @override
-  List<Object?> get props => [durationType];
+  List<Object?> get props => [durationType, value];
+}
+
+class WorkoutManualSetSecondsEvent extends WorkoutEvent {
+  final DurationType durationType;
+  final String value;
+
+  const WorkoutManualSetSecondsEvent(this.durationType, this.value);
+
+  bool get isWork => durationType == DurationType.workout;
+
+  @override
+  List<Object?> get props => [durationType, value];
+}
+
+class WorkoutChangeNameEvent extends WorkoutEvent {
+  const WorkoutChangeNameEvent();
+
+  @override
+  List<Object?> get props => [];
 }
