@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simpletimer/models/WorkoutModel.dart';
 
 import '../../blocs/workout/exports.dart';
 import '../../enums/DurationType.dart';
@@ -9,15 +10,15 @@ class RestDuration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WorkoutBloc, WorkoutState>(
-      builder: (context, state) {
-        return DurationInputField(
-          title: "Rest duration",
-          durationType: DurationType.rest,
-          minutesController: state.restMinutesController,
-          secondsController: state.restSecondsController,
-        );
-      },
+    final WorkoutModel workout = context.read<WorkoutBloc>().state.workout;
+
+    return DurationInputField(
+      title: "Rest duration",
+      durationTypeMinutes: DurationType.restMinutes,
+      durationTypeSeconds: DurationType.restSeconds,
+      currentMinutes: workout.restMinutes,
+      currentSeconds: workout.restSeconds,
     );
+
   }
 }

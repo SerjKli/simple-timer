@@ -47,6 +47,9 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => WorkoutBloc()),
         ],
         child: MaterialApp(
+          /// Global key for SnackBar messages
+          scaffoldMessengerKey: locator<NavigationService>().scaffoldKey,
+
           title: 'SimpleTimer',
 
           /// Hide debug banner

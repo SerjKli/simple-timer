@@ -46,6 +46,12 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
         return bg!;
       case ColorTypes.brand:
         return brand!;
+      case ColorTypes.error:
+        return error!;
+      case ColorTypes.success:
+        return success!;
+      default:
+        throw Exception("Undefined color");
     }
   }
 

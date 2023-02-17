@@ -1,5 +1,8 @@
 enum DurationType {
-  workout,
-  rest,
-  prepare,
+  workoutMinutes,
+  workoutSeconds,
+  restMinutes,
+  restSeconds,
+  prepareMinutes,
+  prepareSeconds,
 }

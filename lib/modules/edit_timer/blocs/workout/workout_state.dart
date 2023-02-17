@@ -1,51 +1,27 @@
 part of 'workout_bloc.dart';
 
 class WorkoutState extends Equatable {
+  final AppException? exception;
   final WorkoutModel workout;
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController roundsController = TextEditingController();
-  final TextEditingController prepareMinutesController =
-      TextEditingController();
-  final TextEditingController prepareSecondsController =
-      TextEditingController();
-  final TextEditingController workoutMinutesController =
-      TextEditingController();
-  final TextEditingController workoutSecondsController =
-      TextEditingController();
-  final TextEditingController restMinutesController = TextEditingController();
-  final TextEditingController restSecondsController = TextEditingController();
 
-  WorkoutState(this.workout) {
-    init();
-  }
+  const WorkoutState(this.workout, {this.exception});
+  bool get hasError => exception != null;
+  String? get errorMessage => exception?.toString();
 
-  init() {
-    nameController.text = workout.name;
-    roundsController.text = workout.rounds.toStringAsFixed(0);
-    prepareMinutesController.text =
-        workout.workoutMinutes.toStringAsFixed(0).padLeft(2, '0');
-    prepareSecondsController.text =
-        workout.workoutSeconds.toStringAsFixed(0).padLeft(2, '0');
-    workoutMinutesController.text =
-        workout.workoutMinutes.toStringAsFixed(0).padLeft(2, '0');
-    workoutSecondsController.text =
-        workout.workoutSeconds.toStringAsFixed(0).padLeft(2, '0');
-    restMinutesController.text =
-        workout.restMinutes.toStringAsFixed(0).padLeft(2, '0');
-    restSecondsController.text =
-        workout.restSeconds.toStringAsFixed(0).padLeft(2, '0');
-  }
-
-  TextEditingController getMinutesControllerByType(
-    DurationType type,
-  ) {
-    switch (type) {
-      case (DurationType.prepare):
-        return prepareMinutesController;
-      case (DurationType.workout):
-        return workoutMinutesController;
-      case (DurationType.rest):
-        return restMinutesController;
+  int getDurationValueByDurationType(DurationType durationType) {
+    switch (durationType) {
+      case (DurationType.prepareMinutes):
+        return workout.prepareMinutes;
+      case (DurationType.prepareSeconds):
+        return workout.prepareSeconds;
+      case (DurationType.workoutMinutes):
+        return workout.workoutMinutes;
+      case (DurationType.workoutSeconds):
+        return workout.workoutSeconds;
+      case (DurationType.restMinutes):
+        return workout.restMinutes;
+      case (DurationType.restSeconds):
+        return workout.restSeconds;
       default:
         throw Exception("Undefined duration type");
     }
@@ -54,11 +30,6 @@ class WorkoutState extends Equatable {
   @override
   List<Object?> get props => [
         workout,
-        prepareMinutesController,
-        prepareSecondsController,
-        workoutMinutesController,
-        workoutSecondsController,
-        restMinutesController,
-        restSecondsController,
+        exception,
       ];
 }

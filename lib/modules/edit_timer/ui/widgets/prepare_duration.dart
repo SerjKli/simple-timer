@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simpletimer/models/WorkoutModel.dart';
 
 import '../../blocs/workout/exports.dart';
 import '../../enums/DurationType.dart';
@@ -9,15 +10,15 @@ class PrepareDuration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WorkoutBloc, WorkoutState>(
-      builder: (context, state) {
-        return DurationInputField(
-          title: "Prepare duration",
-          durationType: DurationType.prepare,
-          minutesController: state.prepareMinutesController,
-          secondsController: state.prepareSecondsController,
-        );
-      },
+
+    final WorkoutModel workout = context.read<WorkoutBloc>().state.workout;
+
+    return DurationInputField(
+      title: "Prepare duration",
+      durationTypeMinutes: DurationType.prepareMinutes,
+      durationTypeSeconds: DurationType.prepareSeconds,
+      currentMinutes: workout.prepareMinutes,
+      currentSeconds: workout.prepareSeconds,
     );
   }
 }

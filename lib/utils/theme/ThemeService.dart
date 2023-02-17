@@ -4,6 +4,9 @@ import 'package:simpletimer/utils/assets/font_assets.dart';
 import 'color_schema.dart';
 
 class ThemeService {
+  static const double fontSizeSm = 12;
+  static const double fontSizeM = 14;
+  static const double fontSizeLg = 16;
   final ThemeData themeMode;
 
   const ThemeService({
@@ -18,11 +21,11 @@ class ThemeService {
   ThemeData get themeData {
     TextTheme txtTheme = themeMode.textTheme
         .copyWith(
-          bodySmall: const TextStyle(fontSize: 12),
-          bodyLarge: const TextStyle(fontSize: 14),
-          bodyMedium: const TextStyle(fontSize: 16),
+          bodySmall: const TextStyle(fontSize: fontSizeSm),
+          bodyMedium: const TextStyle(fontSize: fontSizeM),
+          bodyLarge: const TextStyle(fontSize: fontSizeLg),
           displayLarge: const TextStyle(
-            fontSize: 18,
+            fontSize: fontSizeSm + (fontSizeSm * 0.5),
             fontWeight: FontWeight.bold,
           ),
         )

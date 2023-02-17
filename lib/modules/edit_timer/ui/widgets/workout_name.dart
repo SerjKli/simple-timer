@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simpletimer/models/WorkoutModel.dart';
 import 'package:simpletimer/utils/services/ValidatorService.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
 import 'package:simpletimer/widgets/app_input.dart';
@@ -10,27 +11,28 @@ class WorkoutName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController controller = TextEditingController(
+      text: context.read<WorkoutBloc>().state.workout.name,
+    );
+
     return Padding(
       padding: UiValues.paddingEdgeLg,
-      child: BlocBuilder<WorkoutBloc, WorkoutState>(
-        builder: (context, state) {
-          return Focus(
-            onFocusChange: (hasFocus) {
-              if (hasFocus) return;
-
-              context.read<WorkoutBloc>().add(const WorkoutChangeNameEvent());
-            },
-            child: AppInputField(
-              controller: state.nameController,
-              title: "Workout's name",
-              maxLength: 50,
-              autoValidation: true,
-              initValue: "",
-              validator: (String value) {
-                return ValidationService.stringIsValid(value, "Name", 3, 50);
-              },
-            ),
+      child: AppInputField(
+        controller: controller,
+        title: "Workout's name",
+        maxLength: 50,
+        autoValidation: true,
+        initValue: "",
+        validator: (String value) {
+          return ValidationService.stringIsValid(
+            value,
+            "Name",
+            WorkoutModel.nameMinLength,
+            WorkoutModel.nameMaxLength,
           );
+        },
+        onSave: (value) {
+          context.read<WorkoutBloc>().add(WorkoutChangeNameEvent(value));
         },
       ),
     );

@@ -13,43 +13,47 @@ class WorkoutChangeRoundsEvent extends WorkoutEvent {
   List<Object?> get props => [newRoundsValue];
 }
 
-class WorkoutChangeDurationEvent extends WorkoutEvent {
-  final DurationType durationType;
-  final int newDurationValue;
-
-  const WorkoutChangeDurationEvent(this.newDurationValue, this.durationType);
-
-  @override
-  List<Object?> get props => [newDurationValue, durationType];
-}
-
-class WorkoutManualSetMinutesEvent extends WorkoutEvent {
-  final DurationType durationType;
-  final String value;
-
-  const WorkoutManualSetMinutesEvent(this.durationType, this.value);
-
-  bool get isWork => durationType == DurationType.workout;
-
-  @override
-  List<Object?> get props => [durationType, value];
-}
-
-class WorkoutManualSetSecondsEvent extends WorkoutEvent {
-  final DurationType durationType;
-  final String value;
-
-  const WorkoutManualSetSecondsEvent(this.durationType, this.value);
-
-  bool get isWork => durationType == DurationType.workout;
-
-  @override
-  List<Object?> get props => [durationType, value];
-}
-
 class WorkoutChangeNameEvent extends WorkoutEvent {
-  const WorkoutChangeNameEvent();
+  final String name;
+  const WorkoutChangeNameEvent(this.name);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [name];
+}
+
+class WorkoutSavingErrorEvent extends WorkoutEvent {
+  final AppException exception;
+
+  const WorkoutSavingErrorEvent(this.exception);
+
+  @override
+  List<Object?> get props => [exception];
+}
+
+class WorkoutVaryDurationEvent extends WorkoutEvent {
+  final DurationType durationType;
+  final int value;
+  const WorkoutVaryDurationEvent(this.value, this.durationType);
+
+  @override
+  List<Object?> get props => [value, durationType];
+}
+
+
+class WorkoutManualChangeMinutesDurationEvent extends WorkoutEvent {
+  final DurationType durationType;
+  final String value;
+  const WorkoutManualChangeMinutesDurationEvent(this.value, this.durationType);
+
+  @override
+  List<Object?> get props => [value, durationType];
+}
+
+class WorkoutManualChangeSecondsDurationEvent extends WorkoutEvent {
+  final DurationType durationType;
+  final String value;
+  const WorkoutManualChangeSecondsDurationEvent(this.value, this.durationType);
+
+  @override
+  List<Object?> get props => [value, durationType];
 }

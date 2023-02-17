@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 class NavigationService {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
+
   Future<dynamic> pushNamed(String routeName, [args]) {
     return navigatorKey.currentState!.pushNamed(routeName, arguments: args);
   }
@@ -11,8 +13,7 @@ class NavigationService {
   }
 
   void pop([Map<String, dynamic>? args]) {
-    if (navigatorKey.currentState != null &&
-        navigatorKey.currentState!.canPop()) {
+    if (navigatorKey.currentState != null && navigatorKey.currentState!.canPop()) {
       return navigatorKey.currentState!.pop(args);
     }
   }

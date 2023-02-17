@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simpletimer/utils/enums/ColorTypes.dart';
+import 'package:simpletimer/utils/theme/ThemeService.dart';
 import 'package:simpletimer/utils/theme/extensions/context.dart';
 
 class AppText extends StatelessWidget {
@@ -33,7 +34,7 @@ class AppText extends StatelessWidget {
     Key? key,
   })  : colorType = ColorTypes.brand,
         style = const TextStyle(
-            fontSize: 24 //TODO: remove static and take data from theme
+            fontSize: ThemeService.fontSizeLg //TODO: remove static and take data from theme
             ),
         super(key: key);
 

@@ -31,6 +31,9 @@ abstract class UiValues {
     offset: shadowOffset,
   );
 
+
+  /// UI elements sizes
   static const double buttonHeight = 88;
   static const double iconButtonSize = 56;
+  static const double timeBoxWidth = 60;
 }

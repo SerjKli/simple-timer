@@ -1,7 +1,17 @@
 import 'package:equatable/equatable.dart';
+import 'package:simpletimer/utils/services/ValidatorService.dart';
 import 'package:uuid/uuid.dart';
 
 class WorkoutModel extends Equatable {
+  static const int defaultRoundStep = 1;
+  static const int minimalRounds = 1;
+  static const int maximumRounds = 99;
+  static const int defaultSecondsStep = 5;
+  static const int minimumDuration = 1;
+  static const int nameMinLength = 3;
+  static const int nameMaxLength = 50;
+
+
   final String uuid;
   final String name;
   final int rounds;
@@ -31,14 +41,31 @@ class WorkoutModel extends Equatable {
 
   int get workoutMinutes => workDuration ~/ 60;
   int get workoutSeconds => workDuration - (workoutMinutes * 60);
+
   int get restMinutes => restDuration ~/ 60;
   int get restSeconds => restDuration - (restMinutes * 60);
-  int get prepareMinutes => restDuration ~/ 60;
-  int get prepareSeconds => restDuration - (restMinutes * 60);
+
+  int get prepareMinutes => prepareDuration ~/ 60;
+  int get prepareSeconds => prepareDuration - (prepareMinutes * 60);
+
+  bool get hasError => errorMessage != null;
+  String? get errorMessage {
+    final String? isNameNotValid =  ValidationService.stringIsValid(
+      name,
+      "Name",
+      WorkoutModel.nameMinLength,
+      WorkoutModel.nameMaxLength,
+    );
+
+    if(isNameNotValid != null) return isNameNotValid;
+
+    if (workDuration == 0) return "Please, set workout duration";
+
+    return null;
+  }
 
   @override
-  List<Object?> get props =>
-      [uuid, name, rounds, prepareDuration, workDuration, restDuration];
+  List<Object?> get props => [uuid, name, rounds, prepareDuration, workDuration, restDuration];
 
   Map<String, dynamic> toMap() {
     return {
