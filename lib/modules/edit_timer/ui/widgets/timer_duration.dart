@@ -5,19 +5,19 @@ import '../../blocs/timer/exports.dart';
 import '../../enums/DurationType.dart';
 import 'duration_input.dart';
 
-class RestDuration extends StatelessWidget {
-  const RestDuration({Key? key}) : super(key: key);
+class TimerDuration extends StatelessWidget {
+  const TimerDuration({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final TimerModel timer = context.read<TimerBloc>().state.timer;
 
     return DurationInputField(
-      title: "Rest duration",
-      durationTypeMinutes: DurationType.restMinutes,
-      durationTypeSeconds: DurationType.restSeconds,
-      currentMinutes: timer.restMinutes,
-      currentSeconds: timer.restSeconds,
+      title: "Timer duration",
+      durationTypeMinutes: DurationType.timerMinutes,
+      durationTypeSeconds: DurationType.timerSeconds,
+      currentMinutes: timer.timerMinutes,
+      currentSeconds: timer.timerSeconds,
     );
   }
 }

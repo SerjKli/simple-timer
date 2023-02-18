@@ -7,6 +7,7 @@ class ThemeService {
   static const double fontSizeSm = 12;
   static const double fontSizeM = 14;
   static const double fontSizeLg = 16;
+  static const double fontSizeMax = 32;
   final ThemeData themeMode;
 
   const ThemeService({

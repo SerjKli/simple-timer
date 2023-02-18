@@ -1,4 +1,4 @@
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:hydrated_bloc/hydrated_bloc.dart';
 
-export 'workout_bloc.dart';
+export 'timer_bloc.dart';

@@ -46,6 +46,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
         return bg!;
       case ColorTypes.brand:
         return brand!;
+      case ColorTypes.subBrand:
+        return subBrand!;
       case ColorTypes.error:
         return error!;
       case ColorTypes.success:

@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/services/ValidatorService.dart';
 import 'package:uuid/uuid.dart';
 
-class WorkoutModel extends Equatable {
+class TimerModel extends Equatable {
   static const int defaultRoundStep = 1;
   static const int minimalRounds = 1;
   static const int maximumRounds = 99;
@@ -11,7 +12,6 @@ class WorkoutModel extends Equatable {
   static const int nameMinLength = 3;
   static const int nameMaxLength = 50;
 
-
   final String uuid;
   final String name;
   final int rounds;
@@ -19,7 +19,7 @@ class WorkoutModel extends Equatable {
   final int workDuration;
   final int restDuration;
 
-  const WorkoutModel({
+  const TimerModel({
     required this.uuid,
     required this.name,
     required this.rounds,
@@ -28,10 +28,10 @@ class WorkoutModel extends Equatable {
     required this.restDuration,
   });
 
-  static WorkoutModel template() {
-    return WorkoutModel(
+  static TimerModel template() {
+    return TimerModel(
       uuid: const Uuid().v1(),
-      name: "My workout",
+      name: "My timer",
       rounds: 3,
       prepareDuration: 10,
       workDuration: 30,
@@ -39,33 +39,36 @@ class WorkoutModel extends Equatable {
     );
   }
 
-  int get workoutMinutes => workDuration ~/ 60;
-  int get workoutSeconds => workDuration - (workoutMinutes * 60);
+  int get timerMinutes => workDuration ~/ 60;
+  int get timerSeconds => workDuration - (timerMinutes * 60);
 
   int get restMinutes => restDuration ~/ 60;
   int get restSeconds => restDuration - (restMinutes * 60);
 
   int get prepareMinutes => prepareDuration ~/ 60;
   int get prepareSeconds => prepareDuration - (prepareMinutes * 60);
+  bool get needToPrepare => prepareDuration > 0;
 
   bool get hasError => errorMessage != null;
+
   String? get errorMessage {
-    final String? isNameNotValid =  ValidationService.stringIsValid(
+    final String? isNameNotValid = ValidationService.stringIsValid(
       name,
       "Name",
-      WorkoutModel.nameMinLength,
-      WorkoutModel.nameMaxLength,
+      TimerModel.nameMinLength,
+      TimerModel.nameMaxLength,
     );
 
-    if(isNameNotValid != null) return isNameNotValid;
+    if (isNameNotValid != null) return isNameNotValid;
 
-    if (workDuration == 0) return "Please, set workout duration";
+    if (workDuration == 0) return "Please, set timer duration";
 
     return null;
   }
 
   @override
-  List<Object?> get props => [uuid, name, rounds, prepareDuration, workDuration, restDuration];
+  List<Object?> get props =>
+      [uuid, name, rounds, prepareDuration, workDuration, restDuration];
 
   Map<String, dynamic> toMap() {
     return {
@@ -78,8 +81,8 @@ class WorkoutModel extends Equatable {
     };
   }
 
-  factory WorkoutModel.fromMap(Map<String, dynamic> map) {
-    return WorkoutModel(
+  factory TimerModel.fromMap(Map<String, dynamic> map) {
+    return TimerModel(
       uuid: map['uuid'] as String,
       name: map['name'] as String,
       rounds: map['rounds'] as int,
@@ -91,10 +94,10 @@ class WorkoutModel extends Equatable {
 
   @override
   String toString() {
-    return 'WorkoutModel{uuid: $uuid, name: $name, rounds: $rounds, prepareDuration: $prepareDuration, workDuration: $workDuration, restDuration: $restDuration}';
+    return 'TimerModel{uuid: $uuid, name: $name, rounds: $rounds, prepareDuration: $prepareDuration, workDuration: $workDuration, restDuration: $restDuration}';
   }
 
-  WorkoutModel copyWith({
+  TimerModel copyWith({
     String? uuid,
     String? name,
     int? rounds,
@@ -102,7 +105,7 @@ class WorkoutModel extends Equatable {
     int? prepareDuration,
     int? restDuration,
   }) {
-    return WorkoutModel(
+    return TimerModel(
       uuid: uuid ?? this.uuid,
       name: name ?? this.name,
       rounds: rounds ?? this.rounds,
@@ -111,4 +114,16 @@ class WorkoutModel extends Equatable {
       restDuration: restDuration ?? this.restDuration,
     );
   }
+
+  /// Return duration of preparing stage as MM:SS
+  String get prepareDurationAsTime =>
+      "${prepareMinutes.beautifyForTime}:${prepareSeconds.beautifyForTime}";
+
+  /// Return duration of timer stage as MM:SS
+  String get timerDurationAsTime =>
+      "${timerMinutes.beautifyForTime}:${timerSeconds.beautifyForTime}";
+
+  /// Return duration of resting stage as MM:SS
+  String get restDurationAsTime =>
+      "${restMinutes.beautifyForTime}:${restSeconds.beautifyForTime}";
 }

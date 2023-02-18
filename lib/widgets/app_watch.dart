@@ -9,7 +9,9 @@ class AppWatch extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(120)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(constraints.maxHeight / 2),
+          ),
           child: Container(
             width: constraints.maxHeight,
             height: constraints.maxHeight,

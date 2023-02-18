@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:simpletimer/modules/edit_timer/blocs/workout/workout_bloc.dart';
-import 'package:simpletimer/modules/main_screen/blocs/workout_list/workout_list_bloc.dart';
+import 'package:simpletimer/modules/edit_timer/blocs/timer/timer_bloc.dart';
+import 'package:simpletimer/modules/main_screen/blocs/timer_list/timer_list_bloc.dart';
 import 'package:simpletimer/modules/main_screen/ui/main_screen.dart';
+import 'package:simpletimer/modules/play/blocs/active_timer/active_timer_bloc.dart';
 import 'package:simpletimer/route/NavigationService.dart';
 import 'package:simpletimer/route/routes.dart';
 import 'package:simpletimer/utils/services/LocatorService.dart';
@@ -43,8 +44,9 @@ class MyApp extends StatelessWidget {
       },
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => WorkoutListBloc()),
-          BlocProvider(create: (context) => WorkoutBloc()),
+          BlocProvider(create: (context) => TimerListBloc()),
+          BlocProvider(create: (context) => TimerBloc()),
+          BlocProvider(create: (context) => ActiveTimerBloc()),
         ],
         child: MaterialApp(
           /// Global key for SnackBar messages

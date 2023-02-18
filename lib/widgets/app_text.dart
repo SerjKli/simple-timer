@@ -34,7 +34,30 @@ class AppText extends StatelessWidget {
     Key? key,
   })  : colorType = ColorTypes.brand,
         style = const TextStyle(
-            fontSize: ThemeService.fontSizeLg //TODO: remove static and take data from theme
+          //TODO: remove static and take data from theme
+          fontSize: ThemeService.fontSizeLg,
+          fontWeight: FontWeight.bold,
+        ),
+        super(key: key);
+
+  const AppText.max(
+    this.text, {
+    Key? key,
+  })  : colorType = ColorTypes.brand,
+        style = const TextStyle(
+          //TODO: remove static and take data from theme
+          fontSize: ThemeService.fontSizeMax,
+          fontWeight: FontWeight.bold,
+        ),
+        super(key: key);
+
+  const AppText.xs(
+    this.text, {
+    Key? key,
+  })  : colorType = ColorTypes.light,
+        style = const TextStyle(
+            fontSize: ThemeService
+                .fontSizeSm //TODO: remove static and take data from theme
             ),
         super(key: key);
 

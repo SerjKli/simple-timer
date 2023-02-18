@@ -1,21 +1,41 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:simpletimer/models/WorkoutModel.dart';
+import 'package:simpletimer/models/TimerModel.dart';
 import 'package:simpletimer/utils/services/ValidatorService.dart';
+import 'package:simpletimer/utils/theme/ui_values.dart';
 import 'package:simpletimer/widgets/app_icon_button.dart';
 import 'package:simpletimer/widgets/app_input.dart';
 import 'package:simpletimer/widgets/app_text.dart';
 
-import '../../blocs/workout/exports.dart';
+import '../../blocs/timer/exports.dart';
 
 class RoundCounts extends StatelessWidget {
   const RoundCounts({Key? key}) : super(key: key);
 
+  _changeRounds(BuildContext context, int rounds) {
+    context.read<TimerBloc>().add(TimerChangeRoundsEvent(rounds));
+  }
+
+  _decreaseRounds(BuildContext context, String value) {
+    final rounds = int.parse(value) - TimerModel.defaultRoundStep;
+    _changeRounds(context, rounds);
+  }
+
+  _increaseRounds(BuildContext context, String value) {
+    final rounds = int.parse(value) + TimerModel.defaultRoundStep;
+    _changeRounds(context, rounds);
+  }
+
   @override
   Widget build(BuildContext context) {
     final TextEditingController controller = TextEditingController(
-      text: context.read<WorkoutBloc>().state.workout.rounds.toString(),
+      text: context.read<TimerBloc>().state.timer.rounds.toString(),
     );
+
+    Timer? timerPeriodic;
+    Timer? timerDelay;
 
     return Column(
       children: [
@@ -25,19 +45,30 @@ class RoundCounts extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AppIconButton(
-              onPressed: () {
-                context.read<WorkoutBloc>().add(
-                      WorkoutChangeRoundsEvent(int.parse(controller.text) - WorkoutModel.defaultRoundStep),
-                    );
-              },
+              onPressed: () => _decreaseRounds(context, controller.text),
               icon: FontAwesomeIcons.minus,
+              onLongPress: () {
+                timerDelay = Timer(
+                  UiValues.animationDuration2x,
+                  () {
+                    timerPeriodic = Timer.periodic(
+                      UiValues.animationDuration2x,
+                      (_) => _decreaseRounds(context, controller.text),
+                    );
+                  },
+                );
+              },
+              onTapCancel: () {
+                if (timerDelay != null) timerDelay!.cancel();
+                if (timerPeriodic != null) timerPeriodic!.cancel();
+              },
             ),
             SizedBox(
               width: 60,
-              child: BlocListener<WorkoutBloc, WorkoutState>(
+              child: BlocListener<TimerBloc, TimerState>(
                 listener: (context, state) {
-                  if(controller.text != state.workout.rounds.toString()) {
-                    controller.text = state.workout.rounds.toString();
+                  if (controller.text != state.timer.rounds.toString()) {
+                    controller.text = state.timer.rounds.toString();
                   }
                 },
                 child: AppInputField.noBorder(
@@ -50,22 +81,35 @@ class RoundCounts extends StatelessWidget {
                     return ValidationService.isValidInteger(value);
                   },
                   onSave: (value) {
-                    final rounds = value.toString().isNotEmpty ? int.parse(value) : WorkoutModel.minimalRounds;
+                    final rounds = value.toString().isNotEmpty
+                        ? int.parse(value)
+                        : TimerModel.minimalRounds;
 
-                    context.read<WorkoutBloc>().add(
-                          WorkoutChangeRoundsEvent(rounds),
+                    context.read<TimerBloc>().add(
+                          TimerChangeRoundsEvent(rounds),
                         );
                   },
                 ),
               ),
             ),
             AppIconButton(
-              onPressed: () {
-                context.read<WorkoutBloc>().add(
-                      WorkoutChangeRoundsEvent(int.parse(controller.text) + WorkoutModel.defaultRoundStep),
-                    );
-              },
+              onPressed: () => _increaseRounds(context, controller.text),
               icon: FontAwesomeIcons.plus,
+              onLongPress: () {
+                timerDelay = Timer(
+                  UiValues.animationDuration2x,
+                  () {
+                    timerPeriodic = Timer.periodic(
+                      UiValues.animationDuration2x,
+                      (_) => _increaseRounds(context, controller.text),
+                    );
+                  },
+                );
+              },
+              onTapCancel: () {
+                if (timerDelay != null) timerDelay!.cancel();
+                if (timerPeriodic != null) timerPeriodic!.cancel();
+              },
             ),
           ],
         ),

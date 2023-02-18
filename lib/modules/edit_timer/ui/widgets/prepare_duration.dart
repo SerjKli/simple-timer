@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:simpletimer/models/WorkoutModel.dart';
+import 'package:simpletimer/models/TimerModel.dart';
 
-import '../../blocs/workout/exports.dart';
+import '../../blocs/timer/exports.dart';
 import '../../enums/DurationType.dart';
 import 'duration_input.dart';
 
@@ -10,15 +10,14 @@ class PrepareDuration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final WorkoutModel workout = context.read<WorkoutBloc>().state.workout;
+    final TimerModel timer = context.read<TimerBloc>().state.timer;
 
     return DurationInputField(
       title: "Prepare duration",
       durationTypeMinutes: DurationType.prepareMinutes,
       durationTypeSeconds: DurationType.prepareSeconds,
-      currentMinutes: workout.prepareMinutes,
-      currentSeconds: workout.prepareSeconds,
+      currentMinutes: timer.prepareMinutes,
+      currentSeconds: timer.prepareSeconds,
     );
   }
 }

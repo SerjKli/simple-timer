@@ -1,13 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:simpletimer/models/WorkoutModel.dart';
+import 'package:simpletimer/models/TimerModel.dart';
 import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
 import 'package:simpletimer/widgets/app_icon_button.dart';
 import 'package:simpletimer/widgets/app_input.dart';
 import 'package:simpletimer/widgets/app_text.dart';
 
-import '../../blocs/workout/exports.dart';
+import '../../blocs/timer/exports.dart';
 import '../../enums/DurationType.dart';
 
 class DurationInputField extends StatelessWidget {
@@ -27,6 +29,22 @@ class DurationInputField extends StatelessWidget {
     required this.currentSeconds,
   }) : super(key: key);
 
+  void _decreaseDuration(BuildContext context) {
+    _changeDuration(-TimerModel.defaultSecondsStep, context);
+  }
+
+  void _increaseDuration(BuildContext context) {
+    _changeDuration(TimerModel.defaultSecondsStep, context);
+  }
+
+  void _changeDuration(int value, BuildContext context) {
+    final event = TimerVaryDurationEvent(
+      value,
+      durationTypeSeconds,
+    );
+    context.read<TimerBloc>().add(event);
+  }
+
   @override
   Widget build(BuildContext context) {
     final TextEditingController minutesController = TextEditingController(
@@ -36,6 +54,9 @@ class DurationInputField extends StatelessWidget {
       text: currentSeconds.beautifyForTime,
     );
 
+    Timer? timerPeriodic;
+    Timer? timerDelay;
+
     return Column(
       children: [
         AppText(title),
@@ -44,35 +65,48 @@ class DurationInputField extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AppIconButton(
-              onPressed: () {
-                final event = WorkoutVaryDurationEvent(
-                  -WorkoutModel.defaultSecondsStep,
-                  durationTypeSeconds,
-                );
-                context.read<WorkoutBloc>().add(event);
-              },
+              onPressed: () => _decreaseDuration(context),
               icon: FontAwesomeIcons.minus,
+              onLongPress: () {
+                timerDelay = Timer(
+                  UiValues.animationDuration2x,
+                  () {
+                    timerPeriodic = Timer.periodic(
+                      UiValues.animationDuration2x,
+                      (_) => _decreaseDuration(context),
+                    );
+                  },
+                );
+              },
+              onTapCancel: () {
+                if (timerDelay != null) timerDelay!.cancel();
+                if (timerPeriodic != null) timerPeriodic!.cancel();
+              },
             ),
             SizedBox(
               width: UiValues.timeBoxWidth,
-              child: BlocListener<WorkoutBloc, WorkoutState>(
+              child: BlocListener<TimerBloc, TimerState>(
                 listener: (context, state) {
                   // TODO: ! move logic from UI
                   final int currentDurationValue =
-                  state.getDurationValueByDurationType(durationTypeMinutes);
+                      state.getDurationValueByDurationType(durationTypeMinutes);
 
-                  if (minutesController.text.isEmpty && currentDurationValue == 0) return;
+                  if (minutesController.text.isEmpty &&
+                      currentDurationValue == 0) return;
 
-                  if (currentDurationValue != int.parse(minutesController.text)) {
+                  if (currentDurationValue !=
+                      int.parse(minutesController.text)) {
                     FocusManager.instance.primaryFocus?.unfocus();
-                    minutesController.text = currentDurationValue.beautifyForTime;
+                    minutesController.text =
+                        currentDurationValue.beautifyForTime;
                   }
                 },
                 child: Focus(
                   onFocusChange: (hasFocus) {
                     if (hasFocus) return;
 
-                    minutesController.text = minutesController.text.beautifyForTime;
+                    minutesController.text =
+                        minutesController.text.beautifyForTime;
                   },
                   child: AppInputField.noBorder(
                     inputType: TextInputType.number,
@@ -85,12 +119,12 @@ class DurationInputField extends StatelessWidget {
                     onSave: (String minutes) {
                       minutes = minutes.isEmpty ? "0" : minutes;
 
-                      final event = WorkoutManualChangeMinutesDurationEvent(
+                      final event = TimerManualChangeMinutesDurationEvent(
                         minutes,
                         durationTypeMinutes,
                       );
 
-                      context.read<WorkoutBloc>().add(event);
+                      context.read<TimerBloc>().add(event);
                     },
                   ),
                 ),
@@ -102,19 +136,23 @@ class DurationInputField extends StatelessWidget {
               child: Focus(
                 onFocusChange: (hasFocus) {
                   if (hasFocus) return;
-                  secondsController.text = secondsController.text.beautifyForTime;
+                  secondsController.text =
+                      secondsController.text.beautifyForTime;
                 },
-                child: BlocListener<WorkoutBloc, WorkoutState>(
+                child: BlocListener<TimerBloc, TimerState>(
                   listener: (context, state) {
                     // TODO: ! move logic from UI
-                    final int currentDurationValue =
-                    state.getDurationValueByDurationType(durationTypeSeconds);
+                    final int currentDurationValue = state
+                        .getDurationValueByDurationType(durationTypeSeconds);
 
-                    if (secondsController.text.isEmpty && currentDurationValue == 0) return;
+                    if (secondsController.text.isEmpty &&
+                        currentDurationValue == 0) return;
 
-                    if (currentDurationValue != int.parse(secondsController.text)) {
+                    if (currentDurationValue !=
+                        int.parse(secondsController.text)) {
                       FocusManager.instance.primaryFocus?.unfocus();
-                      secondsController.text = currentDurationValue.beautifyForTime;
+                      secondsController.text =
+                          currentDurationValue.beautifyForTime;
                     }
                   },
                   child: AppInputField.noBorder(
@@ -127,27 +165,32 @@ class DurationInputField extends StatelessWidget {
                     onSave: (String seconds) {
                       seconds = seconds.isEmpty ? "0" : seconds;
 
-                      final event = WorkoutManualChangeSecondsDurationEvent(
+                      final event = TimerManualChangeSecondsDurationEvent(
                         seconds,
                         durationTypeSeconds,
                       );
 
-                      context.read<WorkoutBloc>().add(event);
+                      context.read<TimerBloc>().add(event);
                     },
                   ),
                 ),
               ),
             ),
             AppIconButton(
-              onPressed: () {
-                final event = WorkoutVaryDurationEvent(
-                  WorkoutModel.defaultSecondsStep,
-                  durationTypeSeconds,
-                );
-                context.read<WorkoutBloc>().add(event);
-              },
+              onPressed: () => _increaseDuration(context),
               icon: FontAwesomeIcons.plus,
-              // onLongPress: () {}, //TODO: implement long press
+              onLongPress: () {
+                timerDelay = Timer(UiValues.animationDuration2x, () {
+                  timerPeriodic = Timer.periodic(
+                    UiValues.animationDuration2x,
+                    (_) => _increaseDuration(context),
+                  );
+                });
+              },
+              onTapCancel: () {
+                if (timerDelay != null) timerDelay!.cancel();
+                if (timerPeriodic != null) timerPeriodic!.cancel();
+              },
             ),
           ],
         ),

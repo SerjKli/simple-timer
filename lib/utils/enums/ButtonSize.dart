@@ -3,4 +3,5 @@ enum ButtonSize {
   sm,
   m,
   lg,
+  flex,
 }

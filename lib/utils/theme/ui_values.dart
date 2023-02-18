@@ -12,6 +12,12 @@ abstract class UiValues {
   static const EdgeInsets paddingEdgeMax = EdgeInsets.all(paddingMax);
 
   static const int animationSpeed = 300;
+  static const Duration animationDuration = Duration(
+    milliseconds: animationSpeed,
+  );
+  static const Duration animationDuration2x = Duration(
+    milliseconds: animationSpeed ~/ 2,
+  );
 
   static const Radius radius = Radius.circular(8);
   static const Radius radius2x = Radius.circular(16);
@@ -30,7 +36,6 @@ abstract class UiValues {
     blurRadius: shadowBlur,
     offset: shadowOffset,
   );
-
 
   /// UI elements sizes
   static const double buttonHeight = 88;
