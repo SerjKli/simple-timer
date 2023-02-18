@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:simpletimer/models/TimerModel.dart';
 import 'package:simpletimer/route/NavigationService.dart';
+import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/services/LocatorService.dart';
 
 import '../../enums/TimerStatus.dart';
@@ -20,7 +21,28 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     on<ChooseTimerEvent>(_goToTimerPage);
 
     /// Start timer
-    on<StartTimerEvent>(_startTimer);
+    on<StartTimerEvent>((StartTimerEvent event, Emitter<ActiveTimerState> emit) {
+      _startTimer(emit);
+    });
+
+    /// Restart timer
+    on<RestartTimerEvent>((RestartTimerEvent event, Emitter<ActiveTimerState> emit) {
+      _startTimer(emit);
+    });
+
+    /// Exit from timer screen
+    on<ExitTimerEvent>(_exitTimer);
+
+    /// Pause timer
+    on<PauseTimerEvent>(_pauseTimer);
+
+    /// Continue timer
+    on<ContinuePausedTimerEvent>(_continueTimer);
+
+    /// Skip current phase of timer
+    /// For example: if current phase = "workout", this event switch to "rest"
+    /// If current phase is the last in the list finish timer
+    on<SkipCurrentDurationEvent>(_skipCurrentDuration);
   }
 
   _goToTimerPage(ChooseTimerEvent event, Emitter<ActiveTimerState> emit) {
@@ -64,23 +86,64 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     return durations;
   }
 
-  _startTimer(StartTimerEvent event, Emitter<ActiveTimerState> emit) {
-    final TimerStatus status = state.timer!.needToPrepare
-        ? TimerStatus.preparing
-        : TimerStatus.workout;
+  Timer _getPeriodicTimer(emit) {
+    return Timer.periodic(const Duration(seconds: 1), (timer) {
+
+    });
+  }
+
+  _startTimer(Emitter<ActiveTimerState> emit) {
+    final TimerStatus status = state.timer!.needToPrepare ? TimerStatus.preparing : TimerStatus.workout;
 
     final durations = _generateDurationModels(state.timer!);
 
-    final periodicTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      debugPrint("sdasd"); //TODO: remove debugging
-    });
-
-    debugPrint("$durations"); //TODO: remove debugging
+    final periodicTimer = _getPeriodicTimer(emit);
 
     emit(state.copyWith(
       timerStatus: status,
       durations: durations,
       periodicTimer: periodicTimer,
     ));
+  }
+
+  _exitTimer(ExitTimerEvent event, Emitter<ActiveTimerState> emit) {
+    emit(const ActiveTimerState());
+    locator<NavigationService>().pop();
+  }
+
+  _pauseTimer(PauseTimerEvent event, Emitter<ActiveTimerState> emit) {
+    if (state.periodicTimer != null) {
+      state.periodicTimer!.cancel();
+    }
+    emit(state.copyWith(timerStatus: TimerStatus.pause, periodicTimer: null));
+  }
+
+  _continueTimer(ContinuePausedTimerEvent event, Emitter<ActiveTimerState> emit) {
+    final periodicTimer = _getPeriodicTimer(emit);
+
+    final TimerStatus status = state.durations[0].status;
+
+    emit(state.copyWith(
+      timerStatus: status,
+      periodicTimer: periodicTimer,
+    ));
+  }
+
+  _skipCurrentDuration(SkipCurrentDurationEvent event, Emitter<ActiveTimerState> emit) {
+    final List<DurationModel> durations = [...state.durations];
+
+    durations.removeAt(0);
+
+    if (durations.isEmpty) {
+      state.periodicTimer!.cancel();
+      emit(ActiveTimerState(timer: state.timer, timerStatus: TimerStatus.completed));
+    } else {
+      final TimerStatus status = durations[0].status;
+
+      emit(state.copyWith(
+        timerStatus: status,
+        durations: durations,
+      ));
+    }
   }
 }

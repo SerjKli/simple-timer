@@ -15,6 +15,8 @@ class StartTimerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: ! before leave the screen stop all timers!!!
+
     return AppScreen(
       isInSafeArea: false,
       screenTitle: "SimpleTimer", //TODO: set timer's name

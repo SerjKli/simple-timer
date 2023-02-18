@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:simpletimer/utils/theme/extensions/context.dart';
 
+import 'app_text.dart';
+
 class AppWatch extends StatelessWidget {
   const AppWatch({Key? key}) : super(key: key);
 
@@ -16,6 +18,10 @@ class AppWatch extends StatelessWidget {
             width: constraints.maxHeight,
             height: constraints.maxHeight,
             color: context.colorScheme.brand,
+            child: const Align(
+              alignment: Alignment.center,
+              child: AppText.dark("i'm THE SUN"),
+            ),
           ),
         );
       },

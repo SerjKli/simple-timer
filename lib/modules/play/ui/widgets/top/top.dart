@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simpletimer/modules/play/ui/widgets/top/timer_tik.dart';
 import 'package:simpletimer/widgets/app_text.dart';
 import 'package:simpletimer/widgets/app_watch.dart';
 
@@ -21,7 +22,7 @@ class Top extends StatelessWidget {
             height: 280, //TODO: remove static height
             child: AppWatch(),
           ),
-          AppText.max('--:--'),
+         TimerTik(),
         ],
       ),
     );

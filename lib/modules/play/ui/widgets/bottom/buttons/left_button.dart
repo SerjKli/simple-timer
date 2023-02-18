@@ -10,6 +10,19 @@ import 'big_button_template.dart';
 class LeftButton extends StatelessWidget {
   const LeftButton({Key? key}) : super(key: key);
 
+
+  void _exitFromTimer(BuildContext context) {
+    context.read<ActiveTimerBloc>().add(const ExitTimerEvent());
+  }
+
+  void _pauseTimer(BuildContext context) {
+    context.read<ActiveTimerBloc>().add(const PauseTimerEvent());
+  }
+
+  void _restartTimer(BuildContext context) {
+    context.read<ActiveTimerBloc>().add(const RestartTimerEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     const ColorTypes colorType = ColorTypes.brand;
@@ -22,9 +35,7 @@ class LeftButton extends StatelessWidget {
             return BigButtonTemplate(
               text: "Exit",
               icon: FontAwesomeIcons.arrowRightFromBracket,
-              onTap: () {
-                debugPrint("exit"); //TODO: remove debugging
-              },
+              onTap: () =>  _exitFromTimer(context),
               colorType: colorType,
             );
 
@@ -34,9 +45,7 @@ class LeftButton extends StatelessWidget {
             return BigButtonTemplate(
               text: "Pause",
               icon: FontAwesomeIcons.pause,
-              onTap: () {
-                debugPrint("pause"); //TODO: remove debugging
-              },
+              onTap: () => _pauseTimer(context),
               colorType: colorType,
             );
 
@@ -44,9 +53,7 @@ class LeftButton extends StatelessWidget {
             return BigButtonTemplate(
               text: "Restart",
               icon: FontAwesomeIcons.arrowRotateLeft,
-              onTap: () {
-                debugPrint("restart"); //TODO: remove debugging
-              },
+              onTap: ()  => _restartTimer(context),
               colorType: colorType,
             );
 
@@ -59,4 +66,5 @@ class LeftButton extends StatelessWidget {
       },
     );
   }
+
 }

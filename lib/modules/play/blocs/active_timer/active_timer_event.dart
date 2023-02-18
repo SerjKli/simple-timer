@@ -19,3 +19,39 @@ class StartTimerEvent extends ActiveTimerEvent {
   @override
   List<Object> get props => [];
 }
+
+
+class ExitTimerEvent extends ActiveTimerEvent {
+  const ExitTimerEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class PauseTimerEvent extends ActiveTimerEvent {
+  const PauseTimerEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class RestartTimerEvent extends ActiveTimerEvent {
+  const RestartTimerEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class ContinuePausedTimerEvent extends ActiveTimerEvent {
+  const ContinuePausedTimerEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class SkipCurrentDurationEvent extends ActiveTimerEvent {
+  const SkipCurrentDurationEvent();
+
+  @override
+  List<Object> get props => [];
+}
