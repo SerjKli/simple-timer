@@ -51,6 +51,8 @@ class TimerModel extends Equatable {
 
   bool get hasError => errorMessage != null;
 
+  int get totalStagesCount => rounds * 2 + (prepareDuration > 0 ? 1 : 0);
+
   String? get errorMessage {
     final String? isNameNotValid = ValidationService.stringIsValid(
       name,

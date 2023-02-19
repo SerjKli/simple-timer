@@ -35,7 +35,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
   RadialGradient get bgGradient => RadialGradient(
         colors: [bgGradientBegin!, bgGradientEnd!],
         center: const Alignment(00, -0.5),
-        radius: 3.9,
+        radius: 1.9,
       );
 
   Color getColorByType(ColorTypes colorType) {
