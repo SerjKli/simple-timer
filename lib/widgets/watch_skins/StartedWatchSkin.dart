@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:simpletimer/utils/theme/color_schema.dart';
 
 class StartedWatchSkinPainter extends CustomPainter {
-  static const double dashHeightFactor = 0.0436;
-  static const double dashWidthFactor = 0.0062;
-  static const double borderWidthFactor = 0.0186;
-  static const double innerCircleFactor = 0.558;
+  static const double dashHeightFactor = 0.1361429;
+  static const double dashWidthFactor = 0.01488571;
+  static const double borderWidthFactor = 0.02857143;
+  static const double innerCircleFactor = 0.24960998;
 
   final AppColorScheme colors;
   final double width;
@@ -19,17 +19,16 @@ class StartedWatchSkinPainter extends CustomPainter {
     required this.height,
   });
 
-  double get borderWidth => width * borderWidthFactor;
+  double get borderWidth => min(width, height) * borderWidthFactor;
 
-  double get dashHeight => width * dashHeightFactor;
-  double get dashWidth => width * dashWidthFactor;
+  double get dashHeight => min(width, height) * dashHeightFactor;
 
-  // double get dashHeight => 38;
-  // double get dashWidth => 6;
+  double get dashWidth => min(width, height) * dashWidthFactor;
+
+  double get centerRadius => min(width, height) * innerCircleFactor;
 
   @override
   void paint(Canvas canvas, Size size) {
-    debugPrint("${width}x$height"); //TODO: remove debugging
     _paintBaseLayers(canvas, size);
 
     _paintDashes(canvas, size);
@@ -60,16 +59,9 @@ class StartedWatchSkinPainter extends CustomPainter {
     /// Center light layer
     canvas.drawCircle(
       Offset(size.width / 2, size.height / 2),
-      (height / 2) * innerCircleFactor,
+      centerRadius,
       Paint()..color = Colors.white.withOpacity(0.1),
     );
-
-    // /// Circle for hands
-    // canvas.drawCircle(
-    //   Offset(size.width / 2, size.height / 2),
-    //   (height / 2) * 0.58,
-    //   Paint()..color = Colors.white.withOpacity(0.1),
-    // );
   }
 
   _paintDashes(Canvas canvas, Size size) {
@@ -97,8 +89,5 @@ class StartedWatchSkinPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    //TODO: do not repaint
-    return true;
-  }
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
