@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simpletimer/utils/theme/extensions/context.dart';
 
-import 'app_text.dart';
+import 'watch_skins/StartedWatchSkin.dart';
 
 class AppWatch extends StatelessWidget {
   const AppWatch({Key? key}) : super(key: key);
@@ -10,18 +10,12 @@ class AppWatch extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return ClipRRect(
-          borderRadius: BorderRadius.all(
-            Radius.circular(constraints.maxHeight / 2),
-          ),
-          child: Container(
-            width: constraints.maxHeight,
+        return CustomPaint(
+          size: Size(constraints.maxWidth, constraints.maxHeight),
+          painter: StartedWatchSkinPainter(
+            colors: context.colorScheme,
+            width: constraints.maxWidth,
             height: constraints.maxHeight,
-            color: context.colorScheme.brand,
-            child: const Align(
-              alignment: Alignment.center,
-              child: AppText.dark("i'm THE SUN"),
-            ),
           ),
         );
       },
