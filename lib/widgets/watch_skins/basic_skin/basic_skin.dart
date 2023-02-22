@@ -6,6 +6,8 @@ import 'package:simpletimer/widgets/watch_skins/basic_skin/second_hand.dart';
 import 'skin_background.dart';
 
 class BasicSkin extends StatelessWidget {
+  static const String skinName = 'base_skin';
+
   final Widget? child;
   final bool isActive;
 

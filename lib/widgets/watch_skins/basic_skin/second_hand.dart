@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:simpletimer/modules/play/ui/widgets/top/timer_tick_builder.dart';
+import 'package:simpletimer/modules/play/ui/widgets/timer_tick_builder.dart';
 import 'package:simpletimer/utils/theme/extensions/context.dart';
 
 class SecondsHand extends StatelessWidget {
@@ -32,7 +32,7 @@ class SecondsHand extends StatelessWidget {
 
 class _SecondsHandPainter extends CustomPainter {
   static const double handsBaseCircleRadius = 8;
-  static const double handLength = 64;
+  static const double handLengthFactor = 0.225;
 
   /// 360 degrees / 60 seconds in 1 minute
   static const int secondHandAngleDegrees = 6;
@@ -76,7 +76,7 @@ class _SecondsHandPainter extends CustomPainter {
     final centerX = size.width / 2;
     final centerY = size.height / 2;
     final radius = min(centerX, centerY);
-    final innerCircleRadius = radius - handLength;
+    final innerCircleRadius = radius - (handLengthFactor * size.height);
     const outerCircleRadius = handsBaseCircleRadius;
 
     final x1 = centerX +

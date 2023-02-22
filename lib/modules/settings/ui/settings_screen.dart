@@ -4,7 +4,7 @@ import 'package:simpletimer/widgets/app_screen.dart';
 
 import 'widgets/about_settings.dart';
 import 'widgets/skin_settings/skin_settings.dart';
-import 'widgets/sound_settings.dart';
+import 'widgets/sound_settings/sound_settings.dart';
 
 class SettingsScreen extends StatelessWidget {
   static const String routeName = '/settings';
@@ -21,8 +21,8 @@ class SettingsScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: const [
-            SoundSettings(),
             SkinSettings(),
+            SoundSettings(),
             AboutSettings(),
           ],
         ),

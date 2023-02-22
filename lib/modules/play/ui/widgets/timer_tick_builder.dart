@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:simpletimer/modules/play/models/DurationModel.dart';
+import 'package:simpletimer/utils/services/LocatorService.dart';
+import 'package:simpletimer/utils/services/audio_services/AudioServiceContract.dart';
 
-import '../../../blocs/active_timer/exports.dart';
-import '../../../enums/TimerStatus.dart';
+import '../../blocs/active_timer/exports.dart';
+import '../../enums/TimerStatus.dart';
 
 typedef TimerTickWidgetBuilder = Widget Function(
   BuildContext context,
@@ -33,6 +35,10 @@ class _TimerTickBuilderState extends State<TimerTickBuilder> {
     super.initState();
   }
 
+  void _playSound(int duration) {
+    locator<AudioServiceContract>().playSoundOnTimerCountdown(duration);
+  }
+
   void _startTimer(DurationModel? durationModel) {
     if (durationModel == null) return;
 
@@ -41,14 +47,15 @@ class _TimerTickBuilderState extends State<TimerTickBuilder> {
     });
 
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        if (duration == null || duration! == 0) {
-          timer.cancel();
-          context.read<ActiveTimerBloc>().add(const SkipCurrentDurationEvent());
-        } else {
+      if (duration == null || duration! == 0) {
+        timer.cancel();
+        context.read<ActiveTimerBloc>().add(const SkipCurrentDurationEvent());
+      } else {
+        setState(() {
           duration = duration! - 1;
-        }
-      });
+        });
+        _playSound(duration!);
+      }
     });
   }
 

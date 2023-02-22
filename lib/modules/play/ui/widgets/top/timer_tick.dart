@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/widgets/app_text.dart';
 
-import 'timer_tick_builder.dart';
+import '../timer_tick_builder.dart';
 
 class TimerTik extends StatelessWidget {
   const TimerTik({Key? key}) : super(key: key);

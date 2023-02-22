@@ -32,7 +32,10 @@ class SimpleSettingItem extends SettingItem {
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [titleElement, trailer],
+        children: [
+          Flexible(child: titleElement),
+          trailer,
+        ],
       ),
     );
   }
