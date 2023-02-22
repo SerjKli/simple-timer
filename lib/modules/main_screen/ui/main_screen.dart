@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:simpletimer/modules/main_screen/ui/widgets/add_timer_button.dart';
 import 'package:simpletimer/modules/main_screen/ui/widgets/timer_list.dart';
+import 'package:simpletimer/modules/settings/ui/settings_screen.dart';
+import 'package:simpletimer/route/NavigationService.dart';
+import 'package:simpletimer/utils/services/LocatorService.dart';
 import 'package:simpletimer/widgets/app_icon.dart';
 import 'package:simpletimer/widgets/app_screen.dart';
 
@@ -16,7 +19,9 @@ class MainScreen extends StatelessWidget {
       screenTitle: "Simple Timer Timer",
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            locator<NavigationService>().pushNamed(SettingsScreen.routeName);
+          },
           icon: const AppIcon(icon: Icons.settings),
         ),
       ],

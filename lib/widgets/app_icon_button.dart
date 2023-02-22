@@ -21,6 +21,7 @@ class AppIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO: add vibration on tap
     return InkWell(
       onTap: () => onPressed(),
       onTapDown: (details) {

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:simpletimer/models/TimerModel.dart';
@@ -127,6 +125,8 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
   _skipCurrentDuration(
       SkipCurrentDurationEvent event, Emitter<ActiveTimerState> emit) {
     final List<DurationModel> durations = [...state.durations];
+
+    if (state.durations.isEmpty) return;
 
     durations.removeAt(0);
 

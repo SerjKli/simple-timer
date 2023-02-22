@@ -42,7 +42,7 @@ class _TimerTickBuilderState extends State<TimerTickBuilder> {
 
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        if (duration! == 0) {
+        if (duration == null || duration! == 0) {
           timer.cancel();
           context.read<ActiveTimerBloc>().add(const SkipCurrentDurationEvent());
         } else {
@@ -63,6 +63,7 @@ class _TimerTickBuilderState extends State<TimerTickBuilder> {
     return BlocListener<ActiveTimerBloc, ActiveTimerState>(
       listener: (context, state) {
         setState(() {
+          if (timer != null) timer!.cancel();
           timerStatus = state.timerStatus;
         });
         switch (timerStatus) {
@@ -73,6 +74,7 @@ class _TimerTickBuilderState extends State<TimerTickBuilder> {
             return;
           default:
             setState(() {
+              if (timer != null) timer!.cancel();
               duration = null;
             });
         }

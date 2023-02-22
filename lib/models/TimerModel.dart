@@ -49,6 +49,9 @@ class TimerModel extends Equatable {
   int get prepareSeconds => prepareDuration - (prepareMinutes * 60);
   bool get needToPrepare => prepareDuration > 0;
 
+  int get totalDuration =>
+      prepareDuration + rounds * (workDuration + restDuration);
+
   bool get hasError => errorMessage != null;
 
   int get totalStagesCount => rounds * 2 + (prepareDuration > 0 ? 1 : 0);
@@ -117,6 +120,7 @@ class TimerModel extends Equatable {
     );
   }
 
+  //TODO: check usage and remove
   /// Return duration of preparing stage as MM:SS
   String get prepareDurationAsTime =>
       "${prepareMinutes.beautifyForTime}:${prepareSeconds.beautifyForTime}";

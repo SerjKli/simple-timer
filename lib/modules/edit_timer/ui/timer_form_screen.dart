@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simpletimer/utils/services/MessageService.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
+import 'package:simpletimer/widgets/app_icon.dart';
 import 'package:simpletimer/widgets/app_screen.dart';
 import 'package:simpletimer/widgets/app_watch.dart';
 
@@ -37,7 +39,9 @@ class TimerFormScreen extends StatelessWidget {
                 SizedBox(
                   height: (constraints.maxHeight * topPartHeightFactor) -
                       (UiValues.buttonHeight / 2),
-                  child: const AppWatch(),
+                  child: const AppWatch(
+                    child: AppIcon(icon: FontAwesomeIcons.pencil),
+                  ),
                 ),
                 SizedBox(
                   height: (constraints.maxHeight * bottomPartHeightFactor) -

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simpletimer/models/TimerModel.dart';
+import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
 import 'package:simpletimer/widgets/app_gap.dart';
 import 'package:simpletimer/widgets/app_text.dart';
@@ -35,6 +36,12 @@ class TimerBody extends StatelessWidget {
           _DurationInfo(
             title: "Rest",
             time: timer.restDurationAsTime,
+          ),
+          const AppGap.horizontal(),
+          const AppGap.horizontal(),
+          _DurationInfo(
+            title: "Total",
+            time: timer.totalDuration.timeFromDuration(),
           ),
         ],
       ),

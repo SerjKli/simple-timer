@@ -54,6 +54,10 @@ flutter:
       fonts:
         - asset: assets/fonts/ABeeZee-Regular.ttf
         - asset: assets/fonts/ABeeZee-Italic.ttf
+    - family: Orbitron
+      fonts:
+        - asset: assets/fonts/Orbitron-Regular.ttf
+        - asset: assets/fonts/Orbitron-Bold.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:
