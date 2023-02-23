@@ -67,21 +67,7 @@ class DurationInputField extends StatelessWidget {
             AppIconButton(
               onPressed: () => _decreaseDuration(context),
               icon: FontAwesomeIcons.minus,
-              onLongPress: () {
-                timerDelay = Timer(
-                  UiValues.animationDuration2x,
-                  () {
-                    timerPeriodic = Timer.periodic(
-                      UiValues.animationDuration2x,
-                      (_) => _decreaseDuration(context),
-                    );
-                  },
-                );
-              },
-              onTapCancel: () {
-                if (timerDelay != null) timerDelay!.cancel();
-                if (timerPeriodic != null) timerPeriodic!.cancel();
-              },
+              allowLongPress: true,
             ),
             SizedBox(
               width: UiValues.timeBoxWidth,
@@ -179,18 +165,7 @@ class DurationInputField extends StatelessWidget {
             AppIconButton(
               onPressed: () => _increaseDuration(context),
               icon: FontAwesomeIcons.plus,
-              onLongPress: () {
-                timerDelay = Timer(UiValues.animationDuration2x, () {
-                  timerPeriodic = Timer.periodic(
-                    UiValues.animationDuration2x,
-                    (_) => _increaseDuration(context),
-                  );
-                });
-              },
-              onTapCancel: () {
-                if (timerDelay != null) timerDelay!.cancel();
-                if (timerPeriodic != null) timerPeriodic!.cancel();
-              },
+              allowLongPress: true,
             ),
           ],
         ),

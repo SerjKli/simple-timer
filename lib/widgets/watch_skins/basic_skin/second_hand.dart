@@ -49,7 +49,7 @@ class _SecondsHandPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    debugPrint("second hand repaint"); //TODO: remove debugging
+    //TODO: check repaint
     _paintCircle(canvas, size);
 
     _paintHand(canvas, size);

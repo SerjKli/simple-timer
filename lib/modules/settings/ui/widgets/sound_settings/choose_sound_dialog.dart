@@ -27,17 +27,17 @@ class ChooseSoundDialog extends StatelessWidget {
         child: Column(
           children: [
             SoundItem(
-                value: 'base',
-                onChanged: (value) {
-                  debugPrint("${value}"); //TODO: remove debugging
-                  _updateSoundFileNameSetting(context, value);
-                }),
+              value: 'base',
+              onChanged: (value) {
+                _updateSoundFileNameSetting(context, value);
+              },
+            ),
             SoundItem(
-                value: 'race',
-                onChanged: (value) {
-                  debugPrint("${value}"); //TODO: remove debugging
-                  _updateSoundFileNameSetting(context, value);
-                }),
+              value: 'race',
+              onChanged: (value) {
+                _updateSoundFileNameSetting(context, value);
+              },
+            ),
           ],
         ),
       ),

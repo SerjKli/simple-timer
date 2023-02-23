@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simpletimer/utils/enums/ButtonSize.dart';
 import 'package:simpletimer/utils/enums/ColorTypes.dart';
 import 'package:simpletimer/utils/extensions/button_extension.dart';
+import 'package:simpletimer/utils/services/VibrationService.dart';
 import 'package:simpletimer/utils/theme/extensions/context.dart';
 import 'package:simpletimer/widgets/app_gap.dart';
 import 'package:simpletimer/widgets/app_icon.dart';
@@ -47,6 +48,11 @@ class AppButton extends StatelessWidget {
         size = ButtonSize.flex,
         super(key: key);
 
+  _buttonTaped() {
+    VibrationService.vibrate();
+    onTap();
+  }
+
   @override
   Widget build(BuildContext context) {
     final ColorTypes textColor =
@@ -63,7 +69,7 @@ class AppButton extends StatelessWidget {
         ),
       ),
       child: ElevatedButton(
-        onPressed: () => onTap(),
+        onPressed: () => _buttonTaped(),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,

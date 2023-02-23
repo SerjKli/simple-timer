@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simpletimer/utils/enums/ColorTypes.dart';
 import 'package:simpletimer/widgets/app_button.dart';
+import 'package:simpletimer/widgets/app_gap.dart';
 import 'package:simpletimer/widgets/app_icon.dart';
 import 'package:simpletimer/widgets/app_text.dart';
 
@@ -21,15 +22,18 @@ class BigButtonTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppButton.flex(
-      title: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          AppIcon.lg(
-            icon: icon,
-            colorType: ColorTypes.dark,
-          ),
-          AppText.dark(text),
-        ],
+      title: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AppIcon.lg(
+              icon: icon,
+              colorType: ColorTypes.dark,
+            ),
+            const AppGap.vertical(),
+            AppText.dark(text),
+          ],
+        ),
       ),
       onTap: () => onTap(),
       colorType: colorType,

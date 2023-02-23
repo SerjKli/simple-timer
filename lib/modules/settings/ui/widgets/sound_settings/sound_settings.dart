@@ -15,49 +15,46 @@ class SoundSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SettingGroup(
-      title: 'Sound',
-      items: [
-        SimpleSettingItem(
-          title: "Play sound on last 3 seconds of the timer",
-          trailer: BlocBuilder<SettingsBloc, SettingsState>(
-            builder: (context, state) {
-              return AppSwitch(
+    return BlocBuilder<SettingsBloc, SettingsState>(
+      builder: (context, state) {
+        return SettingGroup(
+          title: 'Sound',
+          items: [
+            SimpleSettingItem(
+              title: "Play sound on last 3 seconds of the timer",
+              trailer: AppSwitch(
                 value: state.playSoundOnLastThreeSeconds,
                 onChanged: (value) {
                   const event = ChangePlaySoundSettingEvent();
                   context.read<SettingsBloc>().add(event);
                 },
-              );
-            },
-          ),
-        ),
-        //TODO: implement
-        SimpleSettingItem(
-          title: "Track",
-          trailer: InkWell(
-            onTap: () async {
-              await showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return const ChooseSoundDialog();
-                },
-              );
-            },
-            child: Row(
-              children: [
-                BlocBuilder<SettingsBloc, SettingsState>(
-                  builder: (context, state) {
-                    return AppText(state.soundName);
-                  },
-                ),
-                const AppGap.horizontal(),
-                const AppIcon(icon: FontAwesomeIcons.caretDown),
-              ],
+              ),
             ),
-          ),
-        ),
-      ],
+            //TODO: implement
+            SimpleSettingItem(
+              isActive: state.playSoundOnLastThreeSeconds,
+              title: "Track",
+              trailer: InkWell(
+                onTap: () async {
+                  await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const ChooseSoundDialog();
+                    },
+                  );
+                },
+                child: Row(
+                  children: [
+                    AppText(state.soundName),
+                    const AppGap.horizontal(),
+                    const AppIcon(icon: FontAwesomeIcons.caretDown),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

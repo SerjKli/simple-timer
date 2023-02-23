@@ -1,5 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:simpletimer/modules/edit_timer/blocs/timer/exports.dart';
+import 'package:simpletimer/utils/assets/audio_assets.dart';
+import 'package:simpletimer/utils/services/LocatorService.dart';
+import 'package:simpletimer/utils/services/audio_services/AudioServiceContract.dart';
 import 'package:simpletimer/widgets/watch_skins/basic_skin/basic_skin.dart';
 
 part 'settings_event.dart';
@@ -15,6 +18,9 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
 
     /// Change sound file name
     on<ChangeSoundFileNameSettingEvent>(_changeSoundFileName);
+
+    /// Change vibration active status
+    on<ChangeVibrationActiveStatusSettingEvent>(_changeVibrationStatus);
   }
 
   _changePlaySoundSetting(
@@ -39,6 +45,19 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
     Emitter<SettingsState> emit,
   ) {
     emit(state.copyWith(soundName: event.soundFileName));
+
+    //TODO: use DI
+    final audioService = locator<AudioServiceContract>();
+    audioService.playFromAssets(
+      AudioAssets.base.replaceFirst('base', event.soundFileName),
+    );
+  }
+
+  _changeVibrationStatus(
+    ChangeVibrationActiveStatusSettingEvent event,
+    Emitter<SettingsState> emit,
+  ) {
+    emit(state.copyWith(vibrationActive: !state.vibrationActive));
   }
 
   @override

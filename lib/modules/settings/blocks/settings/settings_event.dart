@@ -28,3 +28,10 @@ class ChangeSoundFileNameSettingEvent extends SettingsEvent {
   @override
   List<Object?> get props => [soundFileName];
 }
+
+class ChangeVibrationActiveStatusSettingEvent extends SettingsEvent {
+  const ChangeVibrationActiveStatusSettingEvent();
+
+  @override
+  List<Object?> get props => [];
+}

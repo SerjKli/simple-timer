@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simpletimer/models/TimerModel.dart';
 import 'package:simpletimer/utils/services/ValidatorService.dart';
-import 'package:simpletimer/utils/theme/ui_values.dart';
 import 'package:simpletimer/widgets/app_icon_button.dart';
 import 'package:simpletimer/widgets/app_input.dart';
 import 'package:simpletimer/widgets/app_text.dart';
@@ -47,21 +46,7 @@ class RoundCounts extends StatelessWidget {
             AppIconButton(
               onPressed: () => _decreaseRounds(context, controller.text),
               icon: FontAwesomeIcons.minus,
-              onLongPress: () {
-                timerDelay = Timer(
-                  UiValues.animationDuration2x,
-                  () {
-                    timerPeriodic = Timer.periodic(
-                      UiValues.animationDuration2x,
-                      (_) => _decreaseRounds(context, controller.text),
-                    );
-                  },
-                );
-              },
-              onTapCancel: () {
-                if (timerDelay != null) timerDelay!.cancel();
-                if (timerPeriodic != null) timerPeriodic!.cancel();
-              },
+              allowLongPress: true,
             ),
             SizedBox(
               width: 60,
@@ -95,21 +80,7 @@ class RoundCounts extends StatelessWidget {
             AppIconButton(
               onPressed: () => _increaseRounds(context, controller.text),
               icon: FontAwesomeIcons.plus,
-              onLongPress: () {
-                timerDelay = Timer(
-                  UiValues.animationDuration2x,
-                  () {
-                    timerPeriodic = Timer.periodic(
-                      UiValues.animationDuration2x,
-                      (_) => _increaseRounds(context, controller.text),
-                    );
-                  },
-                );
-              },
-              onTapCancel: () {
-                if (timerDelay != null) timerDelay!.cancel();
-                if (timerPeriodic != null) timerPeriodic!.cancel();
-              },
+              allowLongPress: true,
             ),
           ],
         ),

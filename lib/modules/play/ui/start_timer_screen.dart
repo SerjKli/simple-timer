@@ -1,45 +1,94 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:simpletimer/modules/play/enums/TimerStatus.dart';
+import 'package:simpletimer/modules/play/ui/widgets/hint_dialog.dart';
+import 'package:simpletimer/utils/theme/ui_values.dart';
 import 'package:simpletimer/widgets/app_icon_button.dart';
 import 'package:simpletimer/widgets/app_screen.dart';
 
+import '../blocs/active_timer/exports.dart';
 import 'widgets/bottom/bottom.dart';
 import 'widgets/top/top.dart';
 
-class StartTimerScreen extends StatelessWidget {
+class StartTimerScreen extends StatefulWidget {
   static const String routeName = '/start-timer';
-  static const double topPartHeightFactor = 0.6;
-  static const double bottomPartHeightFactor = 0.4;
 
   const StartTimerScreen({Key? key}) : super(key: key);
 
   @override
+  State<StartTimerScreen> createState() => _StartTimerScreenState();
+}
+
+class _StartTimerScreenState extends State<StartTimerScreen> {
+  double topPartHeightFactor = 0.6;
+  double bottomPartHeightFactor = 0.4;
+
+  bool showControlButtons = false;
+
+  void _changeControlButtonsVisible(bool newExpandedStatus) {
+    showControlButtons = newExpandedStatus;
+
+    if (showControlButtons) {
+      topPartHeightFactor = 0.9;
+      bottomPartHeightFactor = 0.1;
+    } else {
+      topPartHeightFactor = 0.6;
+      bottomPartHeightFactor = 0.4;
+    }
+
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // TODO: ! before leave the screen stop all timers!!!
+    return GestureDetector(
+      onTap: () => _changeControlButtonsVisible(!showControlButtons),
+      child: AppScreen(
+        isInSafeArea: false,
+        //TODO: set timer's name
+        screenTitle: "SimpleTimer",
 
-    return AppScreen(
-      isInSafeArea: false,
-      screenTitle: "SimpleTimer", //TODO: set timer's name
+        actions: [
+          AppIconButton(
+            onPressed: () async {
+              await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const HintDialog();
+                },
+              );
+            },
+            icon: FontAwesomeIcons.circleQuestion,
+          ),
+        ],
 
-      actions: [
-        AppIconButton(onPressed: () {}, icon: FontAwesomeIcons.circleQuestion),
-      ],
-
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return Column(
-            children: [
-              SizedBox(
-                height: (constraints.maxHeight * topPartHeightFactor),
-                child: const Top(),
-              ),
-              SizedBox(
-                height: (constraints.maxHeight * bottomPartHeightFactor),
-                child: const Bottom(),
-              ),
-            ],
-          );
-        },
+        body: BlocListener<ActiveTimerBloc, ActiveTimerState>(
+          listener: (context, state) {
+            /// Show buttons on timer complete
+            if (state.timerStatus == TimerStatus.completed &&
+                showControlButtons) {
+              _changeControlButtonsVisible(false);
+            }
+          },
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return Column(
+                children: [
+                  AnimatedContainer(
+                    duration: UiValues.animationDuration,
+                    height: (constraints.maxHeight * topPartHeightFactor),
+                    child: const Top(),
+                  ),
+                  AnimatedContainer(
+                    duration: UiValues.animationDuration,
+                    height: (constraints.maxHeight * bottomPartHeightFactor),
+                    child: const Bottom(),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
       ),
     );
   }

@@ -19,11 +19,10 @@ class SoundItem extends StatelessWidget {
       builder: (context, state) {
         return RadioListTile(
           value: value,
-          groupValue: 1,
+          groupValue: state.soundName,
           title: AppText(value),
+          contentPadding: const EdgeInsets.all(0),
           onChanged: onChanged,
-          // activeColor: Colors.red,
-          selected: state.soundName == value,
         );
       },
     );

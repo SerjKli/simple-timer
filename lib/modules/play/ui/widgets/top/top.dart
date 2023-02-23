@@ -16,8 +16,7 @@ class Top extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: const [
           TimerStatusTitle(),
-          SizedBox(
-            height: 320, //TODO: remove static height
+          Expanded(
             child: AppWatch(isActive: true),
           ),
         ],

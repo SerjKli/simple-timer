@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
 import 'package:simpletimer/modules/settings/blocks/settings/exports.dart';
 import 'package:simpletimer/route/NavigationService.dart';
 import 'package:simpletimer/utils/services/LocatorService.dart';
@@ -9,6 +10,10 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
   SettingsState settings = const SettingsState();
 
   AudioplayersAudioServiceImpl(this.player) {
+    _checkSettings();
+  }
+
+  _checkSettings() {
     settings = locator<NavigationService>()
         .navigatorKey
         .currentContext!
@@ -20,6 +25,8 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
 
   @override
   void playFromAssets(String assetsPath) async {
+    //TODO: replace method with bloc state change listener
+    _checkSettings();
     await player.play(AssetSource(assetsPath));
   }
 
@@ -27,6 +34,9 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
   void playSoundOnTimerCountdown(int duration) {
     if (duration > 3) return;
     if (isSoundOff) return;
+
+    //TODO: replace method with bloc state change listener
+    _checkSettings();
 
     final String sound = _getSoundFileNameByDurationAndSetting(duration);
 
@@ -36,7 +46,7 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
   String _getSoundFileNameByDurationAndSetting(int duration) {
     String fileName;
     String fileNameSuffix;
-
+    debugPrint("${settings.soundName}"); //TODO: remove debugging
     switch (settings.soundName) {
       case 'base':
         fileName = "base";

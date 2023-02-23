@@ -28,8 +28,7 @@ class BaseSkinBackgroundPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    debugPrint("skin repaint"); //TODO: remove debugging
-
+    //TODO: check repaint
     _paintBaseLayers(canvas, size);
 
     _paintDashes(canvas, size);

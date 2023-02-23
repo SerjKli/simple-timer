@@ -7,12 +7,14 @@ class SimpleSettingItem extends SettingItem {
   final dynamic title;
   final Widget trailer;
   final bool withTopPadding;
+  final bool isActive;
 
   const SimpleSettingItem({
     Key? key,
     required this.title,
     required this.trailer,
     this.withTopPadding = false,
+    this.isActive = true,
   })  : assert(title is String || title is Widget),
         super(key: key);
 
@@ -27,15 +29,22 @@ class SimpleSettingItem extends SettingItem {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: UiValues.padding2x),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(child: titleElement),
-          trailer,
-        ],
+    return AnimatedOpacity(
+      duration: UiValues.animationDuration,
+      opacity: isActive ? 1 : 0.5,
+      child: IgnorePointer(
+        ignoring: !isActive,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: UiValues.padding2x),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(child: titleElement),
+              trailer,
+            ],
+          ),
+        ),
       ),
     );
   }
