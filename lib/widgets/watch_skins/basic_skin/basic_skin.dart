@@ -10,6 +10,7 @@ import 'skin_background.dart';
 
 class BasicSkin extends StatelessWidget {
   static const String skinName = 'base_skin';
+  static const double maxSkinSize = 240;
 
   final Widget? child;
   final bool isActive;
@@ -26,16 +27,21 @@ class BasicSkin extends StatelessWidget {
       padding: UiValues.paddingEdgeMax,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final double size = min(constraints.maxWidth, constraints.maxHeight);
+          final double size = min(
+            min(constraints.maxWidth, constraints.maxHeight),
+            maxSkinSize,
+          );
           return Stack(
             children: [
-              CustomPaint(
-                size: Size(size, size),
-                painter: BaseSkinBackgroundPainter(
-                  colors: context.colorScheme,
+              Center(
+                child: CustomPaint(
+                  size: Size(size, size),
+                  painter: BaseSkinBackgroundPainter(
+                    colors: context.colorScheme,
+                  ),
                 ),
               ),
-              if (isActive) const SecondsHand(),
+              if (isActive) SecondsHand(size),
               child != null ? Center(child: child) : const Nothing(),
             ],
           );

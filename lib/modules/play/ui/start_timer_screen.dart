@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simpletimer/modules/play/enums/TimerStatus.dart';
-import 'package:simpletimer/modules/play/ui/widgets/hint_dialog.dart';
+import 'package:simpletimer/modules/play/ui/widgets/hint_dialog/hint_dialog.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
 import 'package:simpletimer/widgets/app_icon_button.dart';
 import 'package:simpletimer/widgets/app_screen.dart';

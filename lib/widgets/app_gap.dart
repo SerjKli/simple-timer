@@ -15,6 +15,11 @@ class AppGap extends StatelessWidget {
     this.width = 0,
   }) : height = UiValues.padding2x;
 
+  const AppGap.verticalMax({
+    super.key,
+    this.width = 0,
+  }) : height = UiValues.paddingMax;
+
   const AppGap.horizontal({
     super.key,
     this.height = 0,

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:simpletimer/models/TimerModel.dart';
+import 'package:simpletimer/modules/play/enums/SwipeDirection.dart';
 import 'package:simpletimer/route/NavigationService.dart';
 import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/services/LocatorService.dart';
@@ -34,18 +35,27 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     });
 
     /// Exit from timer screen
-    on<ExitTimerEvent>(_exitTimer);
+    on<ExitTimerEvent>(_handleExitTimer);
 
     /// Pause timer
-    on<PauseTimerEvent>(_pauseTimer);
+    on<PauseTimerEvent>(_handlePauseTimerEvent);
 
     /// Continue timer
-    on<ContinuePausedTimerEvent>(_continueTimer);
+    on<ContinuePausedTimerEvent>(_handleContinueTimerEvent);
 
     /// Skip current phase of timer
     /// For example: if current phase = "workout", this event switch to "rest"
     /// If current phase is the last in the list finish timer
-    on<SkipCurrentDurationEvent>(_skipCurrentDuration);
+    on<SkipCurrentDurationEvent>(_handleSkipCurrentStageEvent);
+
+    /// Double tap on watch on selected timer
+    on<TimerDoubleTappedEvent>(_handleDoubleTapEvent);
+
+    /// Long press on watch on selected timer
+    on<TimerLongPressedEvent>(_handleLongPressEvent);
+
+    /// Swipe on watch on selected timer
+    on<TimerSwipeEvent>(_handleSwipeEvent);
   }
 
   _goToTimerPage(ChooseTimerEvent event, Emitter<ActiveTimerState> emit) {
@@ -102,19 +112,32 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     ));
   }
 
-  _exitTimer(ExitTimerEvent event, Emitter<ActiveTimerState> emit) {
+  _handleExitTimer(ExitTimerEvent event, Emitter<ActiveTimerState> emit) {
+    _exitTimer(emit);
+  }
+
+  _exitTimer(emit) {
     emit(const ActiveTimerState());
     locator<NavigationService>().pop();
   }
 
-  _pauseTimer(PauseTimerEvent event, Emitter<ActiveTimerState> emit) {
+  _handlePauseTimerEvent(
+      PauseTimerEvent event, Emitter<ActiveTimerState> emit) {
+    _pauseTimer(emit);
+  }
+
+  _pauseTimer(emit) {
     emit(state.copyWith(timerStatus: TimerStatus.pause));
   }
 
-  _continueTimer(
+  _handleContinueTimerEvent(
     ContinuePausedTimerEvent event,
     Emitter<ActiveTimerState> emit,
   ) async {
+    _continueTimer(emit);
+  }
+
+  _continueTimer(emit) {
     final TimerStatus status = state.durations[0].status;
 
     emit(state.copyWith(
@@ -122,8 +145,12 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     ));
   }
 
-  _skipCurrentDuration(
+  _handleSkipCurrentStageEvent(
       SkipCurrentDurationEvent event, Emitter<ActiveTimerState> emit) {
+    _skipCurrentStage(emit);
+  }
+
+  _skipCurrentStage(emit) {
     final List<DurationModel> durations = [...state.durations];
 
     if (state.durations.isEmpty) return;
@@ -142,6 +169,62 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
         timerStatus: status,
         durations: durations,
       ));
+    }
+  }
+
+  _handleDoubleTapEvent(event, emit) {
+    switch (state.timerStatus) {
+      case TimerStatus.ready:
+      case TimerStatus.completed:
+        _startTimer(emit);
+        break;
+      case TimerStatus.pause:
+        _continueTimer(emit);
+        break;
+      default:
+        _pauseTimer(emit);
+    }
+  }
+
+  _handleLongPressEvent(event, emit) {
+    _exitTimer(emit);
+  }
+
+  _handleSwipeEvent(TimerSwipeEvent event, emit) {
+    if (event.isRightSwipe) {
+      _handleRightSwipe(emit);
+    } else {
+      _handleLeftSwipe(emit);
+    }
+  }
+
+  _handleLeftSwipe(emit) {
+    switch (state.timerStatus) {
+      case TimerStatus.preparing:
+      case TimerStatus.workout:
+      case TimerStatus.rest:
+        _pauseTimer(emit);
+        _continueTimer(emit);
+        break;
+      case TimerStatus.completed:
+        _startTimer(emit);
+        break;
+      default: //,
+    }
+  }
+
+  _handleRightSwipe(emit) {
+    switch (state.timerStatus) {
+      case TimerStatus.ready:
+        _startTimer(emit);
+        break;
+      case TimerStatus.pause:
+        _continueTimer(emit);
+        break;
+      case TimerStatus.completed:
+        break;
+      default:
+        _skipCurrentStage(emit);
     }
   }
 }

@@ -19,7 +19,7 @@ class AppScreen extends StatelessWidget {
     required this.body,
     this.titleIcon,
     this.actions,
-    this.isInSafeArea = true,
+    this.isInSafeArea = false,
   }) : super(key: key);
 
   @override

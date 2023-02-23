@@ -37,7 +37,9 @@ abstract class UiValues {
     offset: shadowOffset,
   );
 
-  static BoxBorder get borderTest => Border.all(color: Colors.black);
+  static BoxDecoration get borderTest => BoxDecoration(
+        border: Border.all(color: Colors.black),
+      );
 
   /// UI elements sizes
   static const double buttonHeight = 88;

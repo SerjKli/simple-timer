@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:simpletimer/utils/theme/ui_values.dart';
 
 class SkinItem extends StatelessWidget {
   final Widget child;
@@ -7,9 +6,8 @@ class SkinItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 120,
-      padding: const EdgeInsets.symmetric(vertical: UiValues.padding2x),
+    return SizedBox(
+      width: 200,
       child: child,
     );
   }

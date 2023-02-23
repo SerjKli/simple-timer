@@ -20,7 +20,6 @@ class StartTimerEvent extends ActiveTimerEvent {
   List<Object> get props => [];
 }
 
-
 class ExitTimerEvent extends ActiveTimerEvent {
   const ExitTimerEvent();
 
@@ -54,4 +53,29 @@ class SkipCurrentDurationEvent extends ActiveTimerEvent {
 
   @override
   List<Object> get props => [];
+}
+
+class TimerDoubleTappedEvent extends ActiveTimerEvent {
+  const TimerDoubleTappedEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class TimerLongPressedEvent extends ActiveTimerEvent {
+  const TimerLongPressedEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class TimerSwipeEvent extends ActiveTimerEvent {
+  final SwipeDirection direction;
+
+  const TimerSwipeEvent(this.direction);
+
+  bool get isRightSwipe => direction == SwipeDirection.right;
+
+  @override
+  List<Object> get props => [direction];
 }

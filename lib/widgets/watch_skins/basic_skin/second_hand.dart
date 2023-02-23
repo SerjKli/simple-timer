@@ -5,7 +5,8 @@ import 'package:simpletimer/modules/play/ui/widgets/timer_tick_builder.dart';
 import 'package:simpletimer/utils/theme/extensions/context.dart';
 
 class SecondsHand extends StatelessWidget {
-  const SecondsHand({Key? key}) : super(key: key);
+  final double size;
+  const SecondsHand(this.size, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class SecondsHand extends StatelessWidget {
           return Transform.rotate(
             angle: -pi / 2,
             child: CustomPaint(
-              size: Size(constraints.maxWidth, constraints.maxHeight),
+              size: Size(size, size),
               painter: _SecondsHandPainter(
                 color: context.colorScheme.brand!,
                 remainingSeconds: seconds,
