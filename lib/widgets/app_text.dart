@@ -7,18 +7,21 @@ class AppText extends StatelessWidget {
   final String text;
   final ColorTypes colorType;
   final TextStyle? style;
+  final TextAlign textAlign;
 
   const AppText(
     this.text, {
     Key? key,
     this.colorType = ColorTypes.light,
     this.style,
+    this.textAlign = TextAlign.start,
   }) : super(key: key);
 
   const AppText.brand(
     this.text, {
     Key? key,
     this.style,
+    this.textAlign = TextAlign.start,
   })  : colorType = ColorTypes.brand,
         super(key: key);
 
@@ -26,12 +29,14 @@ class AppText extends StatelessWidget {
     this.text, {
     Key? key,
     this.style,
+    this.textAlign = TextAlign.start,
   })  : colorType = ColorTypes.dark,
         super(key: key);
 
   const AppText.h1(
     this.text, {
     Key? key,
+    this.textAlign = TextAlign.start,
   })  : colorType = ColorTypes.brand,
         style = const TextStyle(
           //TODO: remove static and take data from theme
@@ -43,6 +48,7 @@ class AppText extends StatelessWidget {
   const AppText.max(
     this.text, {
     Key? key,
+    this.textAlign = TextAlign.start,
   })  : colorType = ColorTypes.brand,
         style = const TextStyle(
           //TODO: remove static and take data from theme
@@ -54,10 +60,10 @@ class AppText extends StatelessWidget {
   const AppText.xs(
     this.text, {
     Key? key,
+    this.textAlign = TextAlign.start,
   })  : colorType = ColorTypes.light,
         style = const TextStyle(
-            fontSize: ThemeService
-                .fontSizeSm //TODO: remove static and take data from theme
+            fontSize: ThemeService.fontSizeSm //TODO: remove static and take data from theme
             ),
         super(key: key);
 
@@ -67,6 +73,7 @@ class AppText extends StatelessWidget {
 
     return Text(
       text,
+      textAlign: textAlign,
       style: styles.copyWith(
         color: context.colorScheme.getColorByType(colorType),
       ),

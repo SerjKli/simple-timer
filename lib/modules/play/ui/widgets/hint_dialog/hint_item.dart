@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simpletimer/widgets/app_gap.dart';
 import 'package:simpletimer/widgets/app_text.dart';
 
 class HintItem extends StatelessWidget {
@@ -23,8 +24,8 @@ class HintItem extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const Spacer(),
-        Expanded(child: AppText(caption)),
+        const AppGap.horizontal(),
+        Expanded(child: AppText(caption, textAlign: TextAlign.end)),
       ],
     );
   }

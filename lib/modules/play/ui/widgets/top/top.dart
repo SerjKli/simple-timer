@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:simpletimer/modules/play/enums/SwipeDirection.dart';
+import 'package:simpletimer/modules/play/enums/GestureActivity.dart';
 import 'package:simpletimer/widgets/app_gap.dart';
 import 'package:simpletimer/widgets/app_watch.dart';
 
@@ -10,7 +10,8 @@ import 'timer_status_title.dart';
 
 class Top extends StatelessWidget {
   /// Determinate sensitive of swiping to fire the "swipe" event
-  static const double swipeSensitive = 20;
+  // TODO: check sensitive on iOs and android
+  static const double swipeSensitive = 2;
 
   const Top({Key? key}) : super(key: key);
 
@@ -22,11 +23,11 @@ class Top extends StatelessWidget {
       width: double.infinity,
       child: GestureDetector(
         onDoubleTap: () {
-          const event = TimerDoubleTappedEvent();
+          const event = TimerGestureActivityEvent(GestureActivity.doubleTap);
           context.read<ActiveTimerBloc>().add(event);
         },
         onLongPress: () {
-          const event = TimerLongPressedEvent();
+          const event = TimerGestureActivityEvent(GestureActivity.longPress);
           context.read<ActiveTimerBloc>().add(event);
         },
         onHorizontalDragUpdate: (details) {
@@ -36,19 +37,19 @@ class Top extends StatelessWidget {
             swipeTimer = null;
           });
 
-          SwipeDirection? direction;
-
-          if (details.delta.dx > 20) {
-            direction = SwipeDirection.right;
+          GestureActivity? activity;
+          debugPrint("${details.delta.dx}"); //TODO: remove debugging
+          if (details.delta.dx > swipeSensitive) {
+            activity = GestureActivity.swipeRight;
           }
 
-          if (details.delta.dx < -20) {
-            direction = SwipeDirection.left;
+          if (details.delta.dx < -swipeSensitive) {
+            activity = GestureActivity.swipeLeft;
           }
 
-          if (direction == null) return;
+          if (activity == null) return;
 
-          final event = TimerSwipeEvent(direction);
+          final event = TimerGestureActivityEvent(activity);
           context.read<ActiveTimerBloc>().add(event);
         },
         child: Column(

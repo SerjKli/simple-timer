@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:simpletimer/models/TimerModel.dart';
-import 'package:simpletimer/modules/play/enums/SwipeDirection.dart';
+import 'package:simpletimer/modules/play/enums/GestureActivity.dart';
 import 'package:simpletimer/route/NavigationService.dart';
 import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/services/LocatorService.dart';
@@ -48,14 +48,8 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     /// If current phase is the last in the list finish timer
     on<SkipCurrentDurationEvent>(_handleSkipCurrentStageEvent);
 
-    /// Double tap on watch on selected timer
-    on<TimerDoubleTappedEvent>(_handleDoubleTapEvent);
-
-    /// Long press on watch on selected timer
-    on<TimerLongPressedEvent>(_handleLongPressEvent);
-
-    /// Swipe on watch on selected timer
-    on<TimerSwipeEvent>(_handleSwipeEvent);
+    /// Handle watch gesture activities
+    on<TimerGestureActivityEvent>(_handleGestureActivity);
   }
 
   _goToTimerPage(ChooseTimerEvent event, Emitter<ActiveTimerState> emit) {
@@ -172,7 +166,24 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     }
   }
 
-  _handleDoubleTapEvent(event, emit) {
+  _handleGestureActivity(TimerGestureActivityEvent event, emit){
+    switch(event.activity){
+      case GestureActivity.doubleTap:
+        _handleDoubleTapEvent(emit);
+        break;
+      case GestureActivity.longPress:
+        _handleLongPressEvent(emit);
+        break;
+      case GestureActivity.swipeLeft:
+        _handleLeftSwipe(emit);
+        break;
+      case GestureActivity.swipeRight:
+        _handleRightSwipe(emit);
+        break;
+    }
+  }
+
+  _handleDoubleTapEvent(emit) {
     switch (state.timerStatus) {
       case TimerStatus.ready:
       case TimerStatus.completed:
@@ -186,16 +197,8 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     }
   }
 
-  _handleLongPressEvent(event, emit) {
+  _handleLongPressEvent(emit) {
     _exitTimer(emit);
-  }
-
-  _handleSwipeEvent(TimerSwipeEvent event, emit) {
-    if (event.isRightSwipe) {
-      _handleRightSwipe(emit);
-    } else {
-      _handleLeftSwipe(emit);
-    }
   }
 
   _handleLeftSwipe(emit) {
