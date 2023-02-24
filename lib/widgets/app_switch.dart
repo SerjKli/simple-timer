@@ -13,8 +13,6 @@ class AppSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: Move theming in ThemeService
-
     return Switch.adaptive(
       value: value,
       onChanged: onChanged,

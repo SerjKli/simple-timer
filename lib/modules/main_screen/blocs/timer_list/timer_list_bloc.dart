@@ -33,9 +33,8 @@ class TimerListBloc extends HydratedBloc<TimerListEvent, TimerListState> {
     Emitter<TimerListState> emit,
   ) {
     final allTimers = [...state.allTimers];
-    debugPrint("$allTimers"); //TODO: remove debugging
-    final index =
-        allTimers.indexWhere((element) => element.uuid == event.timer.uuid);
+
+    final index = allTimers.indexWhere((element) => element.uuid == event.timer.uuid);
 
     if (index < 0) return;
 

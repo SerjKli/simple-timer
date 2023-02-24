@@ -16,7 +16,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppScreen(
       isInSafeArea: false,
-      screenTitle: "Simple Timer Timer",
+      screenTitle: "SimpleTimer",
       actions: [
         IconButton(
           onPressed: () {

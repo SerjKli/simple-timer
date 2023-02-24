@@ -27,6 +27,8 @@ dependencies:
   audioplayers: ^3.0.1
   vibration: ^1.7.6
   flutter_launcher_icons: ^0.11.0
+  flutter_native_splash: ^2.2.16
+  yaml: ^3.1.1
 
 dev_dependencies:
   flutter_test:
@@ -44,7 +46,11 @@ flutter:
   #   - images/a_dot_ham.jpeg
 
   assets:
+    # audio files
     - assets/audio/timer_sounds/
+
+    # config files
+    - assets/configs/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

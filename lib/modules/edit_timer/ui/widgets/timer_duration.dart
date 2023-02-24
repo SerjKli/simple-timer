@@ -16,8 +16,8 @@ class TimerDuration extends StatelessWidget {
       title: "Timer duration",
       durationTypeMinutes: DurationType.timerMinutes,
       durationTypeSeconds: DurationType.timerSeconds,
-      currentMinutes: timer.timerMinutes,
-      currentSeconds: timer.timerSeconds,
+      currentMinutes: timer.workoutMinutes,
+      currentSeconds: timer.workoutSeconds,
     );
   }
 }

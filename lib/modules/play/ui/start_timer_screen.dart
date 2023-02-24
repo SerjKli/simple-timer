@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:simpletimer/models/TimerModel.dart';
 import 'package:simpletimer/modules/play/enums/TimerStatus.dart';
 import 'package:simpletimer/modules/play/ui/widgets/hint_dialog/hint_dialog.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
@@ -20,6 +21,7 @@ class StartTimerScreen extends StatefulWidget {
 }
 
 class _StartTimerScreenState extends State<StartTimerScreen> {
+  String timerName = "SimpleTimer";
   double topPartHeightFactor = 0.6;
   double bottomPartHeightFactor = 0.4;
 
@@ -39,14 +41,20 @@ class _StartTimerScreenState extends State<StartTimerScreen> {
     setState(() {});
   }
 
+  void _setTimerName(TimerModel? timer) {
+    if (timer == null) return;
+
+    timerName = timer.name;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => _changeControlButtonsVisible(!showControlButtons),
       child: AppScreen(
         isInSafeArea: false,
-        //TODO: set timer's name
-        screenTitle: "SimpleTimer",
+        screenTitle: timerName,
 
         actions: [
           AppIconButton(
@@ -64,9 +72,10 @@ class _StartTimerScreenState extends State<StartTimerScreen> {
 
         body: BlocListener<ActiveTimerBloc, ActiveTimerState>(
           listener: (context, state) {
+            _setTimerName(state.timer);
+
             /// Show buttons on timer complete
-            if (state.timerStatus == TimerStatus.completed &&
-                showControlButtons) {
+            if (state.timerStatus == TimerStatus.completed && showControlButtons) {
               _changeControlButtonsVisible(false);
             }
           },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:simpletimer/modules/edit_timer/blocs/timer/timer_bloc.dart';
 import 'package:simpletimer/modules/main_screen/blocs/timer_list/timer_list_bloc.dart';
@@ -24,9 +25,12 @@ Future<void> init() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getTemporaryDirectory(),
   );
-}
 
-//TODO: rename package name
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

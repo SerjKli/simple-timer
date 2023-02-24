@@ -39,8 +39,8 @@ class TimerModel extends Equatable {
     );
   }
 
-  int get timerMinutes => workDuration ~/ 60;
-  int get timerSeconds => workDuration - (timerMinutes * 60);
+  int get workoutMinutes => workDuration ~/ 60;
+  int get workoutSeconds => workDuration - (workoutMinutes * 60);
 
   int get restMinutes => restDuration ~/ 60;
   int get restSeconds => restDuration - (restMinutes * 60);
@@ -49,7 +49,7 @@ class TimerModel extends Equatable {
   int get prepareSeconds => prepareDuration - (prepareMinutes * 60);
   bool get needToPrepare => prepareDuration > 0;
 
-  int get totalDuration =>
+  int get totalTimerDuration =>
       prepareDuration + rounds * (workDuration + restDuration);
 
   bool get hasError => errorMessage != null;
@@ -119,17 +119,4 @@ class TimerModel extends Equatable {
       restDuration: restDuration ?? this.restDuration,
     );
   }
-
-  //TODO: check usage and remove
-  /// Return duration of preparing stage as MM:SS
-  String get prepareDurationAsTime =>
-      "${prepareMinutes.beautifyForTime}:${prepareSeconds.beautifyForTime}";
-
-  /// Return duration of timer stage as MM:SS
-  String get timerDurationAsTime =>
-      "${timerMinutes.beautifyForTime}:${timerSeconds.beautifyForTime}";
-
-  /// Return duration of resting stage as MM:SS
-  String get restDurationAsTime =>
-      "${restMinutes.beautifyForTime}:${restSeconds.beautifyForTime}";
 }

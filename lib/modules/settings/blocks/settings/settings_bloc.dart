@@ -1,9 +1,12 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:simpletimer/modules/edit_timer/blocs/timer/exports.dart';
-import 'package:simpletimer/utils/assets/audio_assets.dart';
+import 'package:simpletimer/utils/assets/AudioAssets.dart';
+import 'package:simpletimer/utils/services/ConfigService.dart';
 import 'package:simpletimer/utils/services/LocatorService.dart';
 import 'package:simpletimer/utils/services/audio_services/AudioServiceContract.dart';
 import 'package:simpletimer/widgets/watch_skins/basic_skin/basic_skin.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'settings_event.dart';
 part 'settings_state.dart';
@@ -21,6 +24,9 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
 
     /// Change vibration active status
     on<ChangeVibrationActiveStatusSettingEvent>(_changeVibrationStatus);
+
+    /// Open developer website event
+    on<OpenDeveloperWebsiteEvent>(_openDeveloperWebsite);
   }
 
   _changePlaySoundSetting(
@@ -28,8 +34,7 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
     Emitter<SettingsState> emit,
   ) {
     emit(
-      state.copyWith(
-          playSoundOnLastThreeSeconds: !state.playSoundOnLastThreeSeconds),
+      state.copyWith(playSoundOnLastThreeSeconds: !state.playSoundOnLastThreeSeconds),
     );
   }
 
@@ -58,6 +63,16 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
     Emitter<SettingsState> emit,
   ) {
     emit(state.copyWith(vibrationActive: !state.vibrationActive));
+  }
+
+  _openDeveloperWebsite(event, emit) async {
+    String urlString = await ConfigService.getConfig(ConfigService.developerWebsiteUrl);
+
+    final Uri url = Uri.parse(urlString);
+
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
   }
 
   @override

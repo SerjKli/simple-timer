@@ -34,6 +34,5 @@ class AppWatch extends StatelessWidget {
         }
       },
     );
-    // return DigitalBaseSkin(isActive: isActive, child: child);
   }
 }

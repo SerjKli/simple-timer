@@ -2,21 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:simpletimer/widgets/app_text.dart';
 import 'package:simpletimer/widgets/nothing.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import '../../blocks/settings/exports.dart';
 import 'templates/setting_group.dart';
 import 'templates/simple_setting_item.dart';
 
 class AboutSettings extends StatelessWidget {
   const AboutSettings({Key? key}) : super(key: key);
 
-  void _goToDeveloperWebsite() async {
-    //TODO: insert correct web site
-    final Uri url = Uri.parse("https://google.com");
-
-    if (!await launchUrl(url)) {
-      throw Exception('Could not launch $url');
-    }
+  void _goToDeveloperWebsite(BuildContext context) async {
+    context.read<SettingsBloc>().add(const OpenDeveloperWebsiteEvent());
   }
 
   @override
@@ -42,7 +37,7 @@ class AboutSettings extends StatelessWidget {
         SimpleSettingItem(
           title: "Created by",
           trailer: GestureDetector(
-            onTap: () => _goToDeveloperWebsite(),
+            onTap: () => _goToDeveloperWebsite(context),
             child: const AppText('SimpleAppsOk'),
           ),
         ),

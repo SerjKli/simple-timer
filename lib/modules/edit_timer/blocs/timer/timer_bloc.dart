@@ -152,7 +152,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
         currentSecondsValue = state.timer.prepareSeconds;
         break;
       case DurationType.timerMinutes:
-        currentSecondsValue = state.timer.timerSeconds;
+        currentSecondsValue = state.timer.workoutSeconds;
         break;
       case DurationType.restMinutes:
         currentSecondsValue = state.timer.restSeconds;
@@ -186,7 +186,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
         currentMinutesValue = state.timer.prepareMinutes;
         break;
       case DurationType.timerSeconds:
-        currentMinutesValue = state.timer.timerMinutes;
+        currentMinutesValue = state.timer.workoutMinutes;
         break;
       case DurationType.restSeconds:
         currentMinutesValue = state.timer.restMinutes;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simpletimer/utils/assets/font_assets.dart';
+import 'package:simpletimer/utils/assets/FontAssets.dart';
 
 import 'color_schema.dart';
 

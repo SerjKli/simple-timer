@@ -30,7 +30,6 @@ class SoundSettings extends StatelessWidget {
                 },
               ),
             ),
-            //TODO: implement
             SimpleSettingItem(
               isActive: state.playSoundOnLastThreeSeconds,
               title: "Track",

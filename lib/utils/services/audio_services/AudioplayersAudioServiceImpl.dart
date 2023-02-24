@@ -46,7 +46,7 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
   String _getSoundFileNameByDurationAndSetting(int duration) {
     String fileName;
     String fileNameSuffix;
-    debugPrint("${settings.soundName}"); //TODO: remove debugging
+
     switch (settings.soundName) {
       case 'base':
         fileName = "base";

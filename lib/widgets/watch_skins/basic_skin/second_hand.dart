@@ -50,7 +50,6 @@ class _SecondsHandPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    //TODO: check repaint
     _paintCircle(canvas, size);
 
     _paintHand(canvas, size);

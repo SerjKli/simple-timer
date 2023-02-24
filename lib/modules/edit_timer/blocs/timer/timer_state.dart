@@ -22,9 +22,9 @@ class TimerState extends Equatable {
       case (DurationType.prepareSeconds):
         return timer.prepareSeconds;
       case (DurationType.timerMinutes):
-        return timer.timerMinutes;
+        return timer.workoutMinutes;
       case (DurationType.timerSeconds):
-        return timer.timerSeconds;
+        return timer.workoutSeconds;
       case (DurationType.restMinutes):
         return timer.restMinutes;
       case (DurationType.restSeconds):

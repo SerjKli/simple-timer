@@ -10,7 +10,6 @@ import 'timer_status_title.dart';
 
 class Top extends StatelessWidget {
   /// Determinate sensitive of swiping to fire the "swipe" event
-  // TODO: check sensitive on iOs and android
   static const double swipeSensitive = 2;
 
   const Top({Key? key}) : super(key: key);
@@ -38,7 +37,7 @@ class Top extends StatelessWidget {
           });
 
           GestureActivity? activity;
-          debugPrint("${details.delta.dx}"); //TODO: remove debugging
+
           if (details.delta.dx > swipeSensitive) {
             activity = GestureActivity.swipeRight;
           }

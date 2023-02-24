@@ -7,6 +7,9 @@ import '../../../blocks/settings/exports.dart';
 import '../templates/setting_item.dart';
 
 class SkinsCarousel extends SettingItem {
+  static const double skinsWidgetHeightFactor = 0.3668;
+  static const double carouselFraction = 0.66;
+
   static const List<String> skins = [
     BasicSkin.skinName,
     DigitalBaseSkin.skinName,
@@ -16,8 +19,10 @@ class SkinsCarousel extends SettingItem {
 
   @override
   Widget build(BuildContext context) {
+    final Size mediaSize = MediaQuery.of(context).size;
+
     return SizedBox(
-      height: 280, //TODO: remove static height
+      height: mediaSize.height * skinsWidgetHeightFactor,
       child: OverflowBox(
         maxWidth: MediaQuery.of(context).size.width,
         child: BlocBuilder<SettingsBloc, SettingsState>(
@@ -27,7 +32,7 @@ class SkinsCarousel extends SettingItem {
             return PageView(
               controller: PageController(
                 initialPage: pageIndex,
-                viewportFraction: 0.66,
+                viewportFraction: carouselFraction,
               ),
               onPageChanged: (int pageIndex) {
                 final event = ChangeWatchSkinSettingEvent(skins[pageIndex]);

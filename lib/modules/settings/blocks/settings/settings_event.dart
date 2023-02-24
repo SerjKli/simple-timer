@@ -35,3 +35,10 @@ class ChangeVibrationActiveStatusSettingEvent extends SettingsEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OpenDeveloperWebsiteEvent extends SettingsEvent {
+  const OpenDeveloperWebsiteEvent();
+
+  @override
+  List<Object?> get props => [];
+}

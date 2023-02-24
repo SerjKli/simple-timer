@@ -77,22 +77,18 @@ class DurationInputField extends StatelessWidget {
                   final int currentDurationValue =
                       state.getDurationValueByDurationType(durationTypeMinutes);
 
-                  if (minutesController.text.isEmpty &&
-                      currentDurationValue == 0) return;
+                  if (minutesController.text.isEmpty && currentDurationValue == 0) return;
 
-                  if (currentDurationValue !=
-                      int.parse(minutesController.text)) {
+                  if (currentDurationValue != int.parse(minutesController.text)) {
                     FocusManager.instance.primaryFocus?.unfocus();
-                    minutesController.text =
-                        currentDurationValue.beautifyForTime;
+                    minutesController.text = currentDurationValue.beautifyForTime;
                   }
                 },
                 child: Focus(
                   onFocusChange: (hasFocus) {
                     if (hasFocus) return;
 
-                    minutesController.text =
-                        minutesController.text.beautifyForTime;
+                    minutesController.text = minutesController.text.beautifyForTime;
                   },
                   child: AppInputField.noBorder(
                     inputType: TextInputType.number,
@@ -122,23 +118,19 @@ class DurationInputField extends StatelessWidget {
               child: Focus(
                 onFocusChange: (hasFocus) {
                   if (hasFocus) return;
-                  secondsController.text =
-                      secondsController.text.beautifyForTime;
+                  secondsController.text = secondsController.text.beautifyForTime;
                 },
                 child: BlocListener<TimerBloc, TimerState>(
                   listener: (context, state) {
                     // TODO: ! move logic from UI
-                    final int currentDurationValue = state
-                        .getDurationValueByDurationType(durationTypeSeconds);
+                    final int currentDurationValue =
+                        state.getDurationValueByDurationType(durationTypeSeconds);
 
-                    if (secondsController.text.isEmpty &&
-                        currentDurationValue == 0) return;
+                    if (secondsController.text.isEmpty && currentDurationValue == 0) return;
 
-                    if (currentDurationValue !=
-                        int.parse(secondsController.text)) {
+                    if (currentDurationValue != int.parse(secondsController.text)) {
                       FocusManager.instance.primaryFocus?.unfocus();
-                      secondsController.text =
-                          currentDurationValue.beautifyForTime;
+                      secondsController.text = currentDurationValue.beautifyForTime;
                     }
                   },
                   child: AppInputField.noBorder(
