@@ -6,9 +6,10 @@ import 'package:simpletimer/utils/theme/ui_values.dart';
 import 'package:simpletimer/widgets/nothing.dart';
 import 'package:simpletimer/widgets/watch_skins/basic_skin/second_hand.dart';
 
+import '../watch_skin.dart';
 import 'skin_background.dart';
 
-class BasicSkin extends StatelessWidget {
+class BasicSkin extends WatchSkin {
   static const String skinName = 'base_skin';
   static const double maxSkinSize = 240;
 
@@ -23,15 +24,15 @@ class BasicSkin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: UiValues.paddingEdgeMax,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final double size = min(
-            min(constraints.maxWidth, constraints.maxHeight),
-            maxSkinSize,
-          );
-          return Stack(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double size = min(
+          min(constraints.maxWidth, constraints.maxHeight),
+          maxSkinSize,
+        );
+        return Padding(
+          padding: UiValues.paddingEdgeMax,
+          child: Stack(
             children: [
               Center(
                 child: CustomPaint(
@@ -44,9 +45,9 @@ class BasicSkin extends StatelessWidget {
               if (isActive) SecondsHand(size),
               child != null ? Center(child: child) : const Nothing(),
             ],
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

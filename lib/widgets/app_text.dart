@@ -39,7 +39,6 @@ class AppText extends StatelessWidget {
     this.textAlign = TextAlign.start,
   })  : colorType = ColorTypes.brand,
         style = const TextStyle(
-          //TODO: remove static and take data from theme
           fontSize: ThemeService.fontSizeLg,
           fontWeight: FontWeight.bold,
         ),
@@ -51,7 +50,6 @@ class AppText extends StatelessWidget {
     this.textAlign = TextAlign.start,
   })  : colorType = ColorTypes.brand,
         style = const TextStyle(
-          //TODO: remove static and take data from theme
           fontSize: ThemeService.fontSizeMax,
           fontWeight: FontWeight.bold,
         ),
@@ -62,9 +60,7 @@ class AppText extends StatelessWidget {
     Key? key,
     this.textAlign = TextAlign.start,
   })  : colorType = ColorTypes.light,
-        style = const TextStyle(
-            fontSize: ThemeService.fontSizeSm //TODO: remove static and take data from theme
-            ),
+        style = const TextStyle(fontSize: ThemeService.fontSizeSm),
         super(key: key);
 
   @override

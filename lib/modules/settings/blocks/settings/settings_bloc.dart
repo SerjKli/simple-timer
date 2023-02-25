@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:simpletimer/modules/edit_timer/blocs/timer/exports.dart';
 import 'package:simpletimer/utils/assets/AudioAssets.dart';
 import 'package:simpletimer/utils/services/ConfigService.dart';
@@ -34,7 +33,8 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
     Emitter<SettingsState> emit,
   ) {
     emit(
-      state.copyWith(playSoundOnLastThreeSeconds: !state.playSoundOnLastThreeSeconds),
+      state.copyWith(
+          playSoundOnLastThreeSeconds: !state.playSoundOnLastThreeSeconds),
     );
   }
 
@@ -66,7 +66,8 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
   }
 
   _openDeveloperWebsite(event, emit) async {
-    String urlString = await ConfigService.getConfig(ConfigService.developerWebsiteUrl);
+    String urlString =
+        await ConfigService.getConfig(ConfigService.developerWebsiteUrl);
 
     final Uri url = Uri.parse(urlString);
 

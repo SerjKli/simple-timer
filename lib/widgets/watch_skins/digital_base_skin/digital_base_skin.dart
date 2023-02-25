@@ -6,7 +6,9 @@ import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/widgets/app_text.dart';
 import 'package:simpletimer/widgets/nothing.dart';
 
-class DigitalBaseSkin extends StatelessWidget {
+import '../watch_skin.dart';
+
+class DigitalBaseSkin extends WatchSkin {
   static const String skinName = 'digital_base_skin';
   static const double watchFontSizeFactor = 0.236428571428571;
 
@@ -31,7 +33,6 @@ class DigitalBaseSkin extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 
   @override
@@ -40,7 +41,7 @@ class DigitalBaseSkin extends StatelessWidget {
       builder: (context, constraints) {
         return Stack(
           children: [
-            /// If timer active (use is interacts with it, wrap text in TimerTickBuilder
+            /// If timer active (user is interacting with it, wrap text in TimerTickBuilder
             if (isActive)
               TimerTickBuilder(builder: (context, int? remainingSeconds) {
                 final seconds = remainingSeconds ?? 0;
