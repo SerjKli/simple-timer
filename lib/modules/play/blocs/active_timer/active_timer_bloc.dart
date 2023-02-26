@@ -1,11 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:simpletimer/models/TimerModel.dart';
-import 'package:simpletimer/modules/play/enums/GestureActivity.dart';
+import 'package:simpletimer/modules/settings/blocks/settings/exports.dart';
 import 'package:simpletimer/route/NavigationService.dart';
 import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/services/LocatorService.dart';
+import 'package:simpletimer/utils/services/audio_services/AudioServiceContract.dart';
 
+import '../../enums/GestureActivity.dart';
 import '../../enums/TimerStatus.dart';
 import '../../models/DurationModel.dart';
 import '../../ui/start_timer_screen.dart';
@@ -14,7 +16,11 @@ part 'active_timer_event.dart';
 part 'active_timer_state.dart';
 
 class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
-  ActiveTimerBloc() : super(const ActiveTimerState()) {
+  final AudioServiceContract audioService;
+
+  ActiveTimerBloc({
+    required this.audioService,
+  }) : super(const ActiveTimerState()) {
     /// Open specific timer's page
     on<ChooseTimerEvent>(_goToTimerPage);
 
@@ -94,9 +100,7 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
   }
 
   _startTimer(Emitter<ActiveTimerState> emit) async {
-    final TimerStatus status = state.timer!.needToPrepare
-        ? TimerStatus.preparing
-        : TimerStatus.workout;
+    final TimerStatus status = state.timer!.needToPrepare ? TimerStatus.preparing : TimerStatus.workout;
 
     final durations = _generateDurationModels(state.timer!);
 
@@ -115,8 +119,7 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     locator<NavigationService>().pop();
   }
 
-  _handlePauseTimerEvent(
-      PauseTimerEvent event, Emitter<ActiveTimerState> emit) {
+  _handlePauseTimerEvent(PauseTimerEvent event, Emitter<ActiveTimerState> emit) {
     _pauseTimer(emit);
   }
 
@@ -139,8 +142,7 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     ));
   }
 
-  _handleSkipCurrentStageEvent(
-      SkipCurrentDurationEvent event, Emitter<ActiveTimerState> emit) {
+  _handleSkipCurrentStageEvent(SkipCurrentDurationEvent event, Emitter<ActiveTimerState> emit) {
     _skipCurrentStage(emit);
   }
 
@@ -166,8 +168,8 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     }
   }
 
-  _handleGestureActivity(TimerGestureActivityEvent event, emit){
-    switch(event.activity){
+  _handleGestureActivity(TimerGestureActivityEvent event, emit) {
+    switch (event.activity) {
       case GestureActivity.doubleTap:
         _handleDoubleTapEvent(emit);
         break;

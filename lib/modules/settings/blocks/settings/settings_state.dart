@@ -5,12 +5,14 @@ class SettingsState extends Equatable {
   final bool playSoundOnLastThreeSeconds;
   final String soundName;
   final bool vibrationActive;
+  final double volume;
 
   const SettingsState({
     this.skinName = BasicSkin.skinName,
     this.playSoundOnLastThreeSeconds = false,
     this.soundName = 'base',
     this.vibrationActive = false,
+    this.volume = 100,
   });
 
   @override
@@ -19,6 +21,7 @@ class SettingsState extends Equatable {
         playSoundOnLastThreeSeconds,
         soundName,
         vibrationActive,
+    volume,
       ];
 
   Map<String, dynamic> toMap() {
@@ -27,6 +30,7 @@ class SettingsState extends Equatable {
       'playSoundOnLastThreeSeconds': playSoundOnLastThreeSeconds,
       'soundName': soundName,
       'vibrationActive': vibrationActive,
+      'volume': volume,
     };
   }
 
@@ -36,6 +40,7 @@ class SettingsState extends Equatable {
       playSoundOnLastThreeSeconds: map['playSoundOnLastThreeSeconds'] as bool,
       soundName: map['soundName'] as String,
       vibrationActive: map['vibrationActive'] as bool,
+      volume: map['volume'] as double,
     );
   }
 
@@ -44,13 +49,14 @@ class SettingsState extends Equatable {
     bool? playSoundOnLastThreeSeconds,
     String? soundName,
     bool? vibrationActive,
+    double? volume,
   }) {
     return SettingsState(
       skinName: skinName ?? this.skinName,
-      playSoundOnLastThreeSeconds:
-          playSoundOnLastThreeSeconds ?? this.playSoundOnLastThreeSeconds,
+      playSoundOnLastThreeSeconds: playSoundOnLastThreeSeconds ?? this.playSoundOnLastThreeSeconds,
       soundName: soundName ?? this.soundName,
       vibrationActive: vibrationActive ?? this.vibrationActive,
+      volume: volume ?? this.volume,
     );
   }
 }

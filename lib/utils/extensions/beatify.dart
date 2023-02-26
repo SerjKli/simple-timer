@@ -1,4 +1,4 @@
-extension AppIntExtension on int {
+extension IntX on int {
   String get beautifyForTime => toString().padLeft(2, "0");
 
   String timeFromDuration() {
@@ -9,6 +9,6 @@ extension AppIntExtension on int {
   }
 }
 
-extension AppStringExtension on String {
+extension StringX on String {
   String get beautifyForTime => padLeft(2, "0");
 }

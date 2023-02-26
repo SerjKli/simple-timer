@@ -11,7 +11,9 @@ part 'settings_event.dart';
 part 'settings_state.dart';
 
 class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
-  SettingsBloc() : super(const SettingsState()) {
+  final AudioServiceContract audioService;
+
+  SettingsBloc({required this.audioService}) : super(const SettingsState()) {
     /// Change setting "play sound on last three seconds fo the timer"
     on<ChangePlaySoundSettingEvent>(_changePlaySoundSetting);
 
@@ -33,8 +35,7 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
     Emitter<SettingsState> emit,
   ) {
     emit(
-      state.copyWith(
-          playSoundOnLastThreeSeconds: !state.playSoundOnLastThreeSeconds),
+      state.copyWith(playSoundOnLastThreeSeconds: !state.playSoundOnLastThreeSeconds),
     );
   }
 
@@ -49,13 +50,12 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
     ChangeSoundFileNameSettingEvent event,
     Emitter<SettingsState> emit,
   ) {
-    emit(state.copyWith(soundName: event.soundFileName));
-
-    //TODO: use DI
-    final audioService = locator<AudioServiceContract>();
+    /// Play selected sound
     audioService.playFromAssets(
       AudioAssets.base.replaceFirst('base', event.soundFileName),
     );
+
+    emit(state.copyWith(soundName: event.soundFileName));
   }
 
   _changeVibrationStatus(
@@ -66,8 +66,7 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
   }
 
   _openDeveloperWebsite(event, emit) async {
-    String urlString =
-        await ConfigService.getConfig(ConfigService.developerWebsiteUrl);
+    String urlString = await ConfigService.getConfig(ConfigService.developerWebsiteUrl);
 
     final Uri url = Uri.parse(urlString);
 

@@ -9,6 +9,7 @@ import 'package:simpletimer/modules/settings/blocks/settings/exports.dart';
 import 'package:simpletimer/route/NavigationService.dart';
 import 'package:simpletimer/route/routes.dart';
 import 'package:simpletimer/utils/services/LocatorService.dart';
+import 'package:simpletimer/utils/services/audio_services/AudioServiceContract.dart';
 import 'package:simpletimer/utils/theme/ThemeService.dart';
 
 void main() async {
@@ -26,10 +27,7 @@ Future<void> init() async {
     storageDirectory: await getTemporaryDirectory(),
   );
 
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown
-  ]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 }
 
 class MyApp extends StatelessWidget {
@@ -47,10 +45,18 @@ class MyApp extends StatelessWidget {
       },
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(
+            create: (context) => SettingsBloc(
+              audioService: locator<AudioServiceContract>(),
+            ),
+          ),
           BlocProvider(create: (context) => TimerListBloc()),
           BlocProvider(create: (context) => TimerBloc()),
-          BlocProvider(create: (context) => ActiveTimerBloc()),
-          BlocProvider(create: (context) => SettingsBloc()),
+          BlocProvider(
+            create: (context) => ActiveTimerBloc(
+              audioService: locator<AudioServiceContract>(),
+            ),
+          ),
         ],
         child: MaterialApp(
           /// Global key for SnackBar messages
