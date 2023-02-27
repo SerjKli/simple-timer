@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simpletimer/models/TimerModel.dart';
 import 'package:simpletimer/modules/play/enums/TimerStatus.dart';
 import 'package:simpletimer/modules/play/ui/widgets/hint_dialog/hint_dialog.dart';
+import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
 import 'package:simpletimer/widgets/app_icon_button.dart';
 import 'package:simpletimer/widgets/app_screen.dart';
@@ -84,12 +85,12 @@ class _StartTimerScreenState extends State<StartTimerScreen> {
               return Column(
                 children: [
                   AnimatedContainer(
-                    duration: UiValues.animationDuration,
+                    duration: UiValues.animationSpeed.toMillisecondsDuration,
                     height: (constraints.maxHeight * topPartHeightFactor),
                     child: const Top(),
                   ),
                   AnimatedContainer(
-                    duration: UiValues.animationDuration,
+                    duration: UiValues.animationSpeed.toMillisecondsDuration,
                     height: (constraints.maxHeight * bottomPartHeightFactor),
                     child: const Bottom(),
                   ),

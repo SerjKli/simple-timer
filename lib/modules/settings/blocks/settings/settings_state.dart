@@ -15,13 +15,30 @@ class SettingsState extends Equatable {
     this.volume = 100,
   });
 
+  String getSoundFileNameBasedOnSecond(int second) {
+    String fileName;
+    switch (soundName) {
+      case 'base':
+        fileName = "base";
+        break;
+      case 'race':
+        fileName = "race";
+        break;
+      default:
+        fileName = "base";
+    }
+
+    final fileNameSuffix = second == 0 ? '_finish' : '';
+    return 'audio/timer_sounds/$fileName$fileNameSuffix.wav';
+  }
+
   @override
   List<Object> get props => [
         skinName,
         playSoundOnLastThreeSeconds,
         soundName,
         vibrationActive,
-    volume,
+        volume,
       ];
 
   Map<String, dynamic> toMap() {

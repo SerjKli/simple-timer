@@ -17,35 +17,4 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
       volume: 1,
     );
   }
-
-  @override
-  void playSoundOnTimerCountdown(int duration) {
-    if (duration > 3) return;
-    // if (isSoundOff) return;
-
-    final String sound = _getSoundFileNameByDurationAndSetting(duration);
-
-    playFromAssets(sound);
-  }
-
-  String _getSoundFileNameByDurationAndSetting(int duration) {
-    // String fileName;
-    // String fileNameSuffix;
-    //
-    // switch (settings.soundName) {
-    //   case 'base':
-    //     fileName = "base";
-    //     break;
-    //   case 'race':
-    //     fileName = "race";
-    //     break;
-    //   default:
-    //     fileName = "base";
-    // }
-    //
-    // fileNameSuffix = duration <= 3 && duration >= 1 ? '' : '_finish';
-    return 'audio/timer_sounds/base.wav';
-
-    // return 'audio/timer_sounds/$fileName$fileNameSuffix.wav';
-  }
 }

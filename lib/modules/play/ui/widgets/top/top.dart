@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:simpletimer/modules/play/enums/GestureActivity.dart';
+import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/widgets/app_gap.dart';
 import 'package:simpletimer/widgets/app_watch.dart';
 
@@ -32,7 +33,7 @@ class Top extends StatelessWidget {
         onHorizontalDragUpdate: (details) {
           if (swipeTimer != null) return;
 
-          swipeTimer = Timer(const Duration(milliseconds: 500), () {
+          swipeTimer = Timer(500.toMillisecondsDuration, () {
             swipeTimer = null;
           });
 

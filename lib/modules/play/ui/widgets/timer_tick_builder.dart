@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:simpletimer/modules/play/models/DurationModel.dart';
+import 'package:simpletimer/modules/settings/blocks/settings/exports.dart';
+import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/services/LocatorService.dart';
 import 'package:simpletimer/utils/services/audio_services/AudioServiceContract.dart';
 
@@ -35,8 +37,13 @@ class _TimerTickBuilderState extends State<TimerTickBuilder> {
     super.initState();
   }
 
-  void _playSound(int duration) {
-    locator<AudioServiceContract>().playSoundOnTimerCountdown(duration);
+  void _playSound(int currentSecond) {
+    final event = PlaySoundOnTimerTickEvent(
+      second: currentSecond,
+      settings: context.read<SettingsBloc>().state,
+    );
+
+    context.read<ActiveTimerBloc>().add(event);
   }
 
   void _startTimer(DurationModel? durationModel) {
@@ -46,15 +53,15 @@ class _TimerTickBuilderState extends State<TimerTickBuilder> {
       duration = durationModel.duration;
     });
 
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(1.toSecondsDuration, (timer) {
       if (duration == null || duration! == 0) {
         timer.cancel();
-        context.read<ActiveTimerBloc>().add(const SkipCurrentDurationEvent());
+        context.read<ActiveTimerBloc>().add(const SkipCurrentTimerStageEvent());
       } else {
-        setState(() {
-          duration = duration! - 1;
-        });
+        duration = duration! - 1;
         _playSound(duration!);
+
+        setState(() {});
       }
     });
   }

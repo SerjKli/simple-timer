@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:simpletimer/modules/play/ui/widgets/bottom/progress/stages_left.dart';
+import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/theme/extensions/context.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
 
@@ -14,7 +15,7 @@ class CurrentProgress extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       final widgetHeight = min(UiValues.buttonHeight, constraints.maxHeight);
-      const animationSpeed = UiValues.animationDuration;
+      final animationSpeed = UiValues.animationSpeed.toMillisecondsDuration;
 
       return Stack(
         children: [

@@ -12,12 +12,7 @@ abstract class UiValues {
   static const EdgeInsets paddingEdgeMax = EdgeInsets.all(paddingMax);
 
   static const int animationSpeed = 300;
-  static const Duration animationDuration = Duration(
-    milliseconds: animationSpeed,
-  );
-  static const Duration animationDuration2x = Duration(
-    milliseconds: animationSpeed ~/ 2,
-  );
+  static const int animationSpeed2x = 150;
 
   static const Radius radius = Radius.circular(8);
   static const Radius radius2x = Radius.circular(16);

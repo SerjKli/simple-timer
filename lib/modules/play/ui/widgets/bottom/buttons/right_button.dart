@@ -15,7 +15,7 @@ class RightButton extends StatelessWidget {
   }
 
   _skipCurrentDuration(BuildContext context) {
-    context.read<ActiveTimerBloc>().add(const SkipCurrentDurationEvent());
+    context.read<ActiveTimerBloc>().add(const SkipCurrentTimerStageEvent());
   }
 
   _continueTimer(BuildContext context) {

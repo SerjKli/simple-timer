@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
 import 'package:simpletimer/widgets/app_gap.dart';
 import 'package:simpletimer/widgets/app_icon.dart';
@@ -30,7 +31,7 @@ class _EmptyTimerListState extends State<EmptyTimerList> {
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       opacity: opacity,
-      duration: UiValues.animationDuration2x,
+      duration: UiValues.animationSpeed2x.toMillisecondsDuration,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,

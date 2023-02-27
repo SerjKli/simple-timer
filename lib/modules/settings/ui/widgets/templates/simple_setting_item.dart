@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simpletimer/modules/settings/ui/widgets/templates/setting_item.dart';
+import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
 import 'package:simpletimer/widgets/app_text.dart';
 
@@ -30,7 +31,7 @@ class SimpleSettingItem extends SettingItem {
   @override
   Widget build(BuildContext context) {
     return AnimatedOpacity(
-      duration: UiValues.animationDuration,
+      duration: UiValues.animationSpeed.toMillisecondsDuration,
       opacity: isActive ? 1 : 0.5,
       child: IgnorePointer(
         ignoring: !isActive,

@@ -7,6 +7,9 @@ extension IntX on int {
 
     return "${minutes.beautifyForTime}:${seconds.beautifyForTime}";
   }
+
+  Duration get toSecondsDuration => Duration(seconds: this);
+  Duration get toMillisecondsDuration => Duration(milliseconds: this);
 }
 
 extension StringX on String {

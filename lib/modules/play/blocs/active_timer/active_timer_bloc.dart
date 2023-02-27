@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:simpletimer/models/TimerModel.dart';
 import 'package:simpletimer/modules/settings/blocks/settings/exports.dart';
 import 'package:simpletimer/route/NavigationService.dart';
@@ -52,10 +53,13 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     /// Skip current phase of timer
     /// For example: if current phase = "workout", this event switch to "rest"
     /// If current phase is the last in the list finish timer
-    on<SkipCurrentDurationEvent>(_handleSkipCurrentStageEvent);
+    on<SkipCurrentTimerStageEvent>(_handleSkipCurrentStageEvent);
 
     /// Handle watch gesture activities
     on<TimerGestureActivityEvent>(_handleGestureActivity);
+
+    /// Play sound on timer tick
+    on<PlaySoundOnTimerTickEvent>(_handlePlaySoundEvent);
   }
 
   _goToTimerPage(ChooseTimerEvent event, Emitter<ActiveTimerState> emit) {
@@ -142,7 +146,7 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     ));
   }
 
-  _handleSkipCurrentStageEvent(SkipCurrentDurationEvent event, Emitter<ActiveTimerState> emit) {
+  _handleSkipCurrentStageEvent(SkipCurrentTimerStageEvent event, Emitter<ActiveTimerState> emit) {
     _skipCurrentStage(emit);
   }
 
@@ -231,5 +235,16 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
       default:
         _skipCurrentStage(emit);
     }
+  }
+
+  _handlePlaySoundEvent(PlaySoundOnTimerTickEvent event, emit) {
+    /// Do not play any sounds if current timer shows more than 3 seconds
+    if (event.second > 3) return;
+
+    if(!event.settings.playSoundOnLastThreeSeconds) return;
+
+    final String audioFileName = event.settings.getSoundFileNameBasedOnSecond(event.second);
+
+    audioService.playFromAssets(audioFileName);
   }
 }

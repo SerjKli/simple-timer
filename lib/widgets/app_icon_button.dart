@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:simpletimer/utils/enums/ColorTypes.dart';
+import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/services/VibrationService.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
 import 'package:simpletimer/widgets/app_icon.dart';
@@ -44,10 +45,10 @@ class AppIconButton extends StatelessWidget {
         if (!allowLongPress) return;
 
         timerDelay = Timer(
-          UiValues.animationDuration2x,
+          UiValues.animationSpeed2x.toMillisecondsDuration,
           () {
             timerPeriodic = Timer.periodic(
-              UiValues.animationDuration2x,
+              UiValues.animationSpeed2x.toMillisecondsDuration,
               (_) => _buttonPressed(),
             );
           },

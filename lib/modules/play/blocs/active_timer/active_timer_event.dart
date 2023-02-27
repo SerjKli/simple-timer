@@ -48,8 +48,8 @@ class ContinuePausedTimerEvent extends ActiveTimerEvent {
   List<Object> get props => [];
 }
 
-class SkipCurrentDurationEvent extends ActiveTimerEvent {
-  const SkipCurrentDurationEvent();
+class SkipCurrentTimerStageEvent extends ActiveTimerEvent {
+  const SkipCurrentTimerStageEvent();
 
   @override
   List<Object> get props => [];
@@ -61,4 +61,17 @@ class TimerGestureActivityEvent extends ActiveTimerEvent {
 
   @override
   List<Object> get props => [];
+}
+
+class PlaySoundOnTimerTickEvent extends ActiveTimerEvent {
+  final int second;
+  final SettingsState settings;
+
+  const PlaySoundOnTimerTickEvent({
+    required this.second,
+    required this.settings,
+  });
+
+  @override
+  List<Object> get props => [second, settings];
 }
