@@ -6,6 +6,9 @@ class SettingsState extends Equatable {
   final String soundName;
   final bool vibrationActive;
   final double volume;
+  final bool showBackgroundForActiveTimer;
+
+  static const String soundFileExtension = 'mp3';
 
   const SettingsState({
     this.skinName = BasicSkin.skinName,
@@ -13,6 +16,7 @@ class SettingsState extends Equatable {
     this.soundName = 'base',
     this.vibrationActive = false,
     this.volume = 100,
+    this.showBackgroundForActiveTimer = true,
   });
 
   String getSoundFileNameBasedOnSecond(int second) {
@@ -24,12 +28,21 @@ class SettingsState extends Equatable {
       case 'race':
         fileName = "race";
         break;
+      case 'arcade':
+        fileName = "arcade";
+        break;
+      case 'bell':
+        fileName = "bell";
+        break;
       default:
+        debugPrint("!!! Error: undefined sound name $soundName");
         fileName = "base";
     }
 
     final fileNameSuffix = second == 0 ? '_finish' : '';
-    return 'audio/timer_sounds/$fileName$fileNameSuffix.wav';
+
+    final fullFileName = "$fileName$fileNameSuffix";
+    return AudioAssets.base.replaceFirst('base', fullFileName);
   }
 
   @override
@@ -39,6 +52,7 @@ class SettingsState extends Equatable {
         soundName,
         vibrationActive,
         volume,
+        showBackgroundForActiveTimer,
       ];
 
   Map<String, dynamic> toMap() {
@@ -48,6 +62,7 @@ class SettingsState extends Equatable {
       'soundName': soundName,
       'vibrationActive': vibrationActive,
       'volume': volume,
+      'showBackgroundForActiveTimer': showBackgroundForActiveTimer,
     };
   }
 
@@ -58,6 +73,7 @@ class SettingsState extends Equatable {
       soundName: map['soundName'] as String,
       vibrationActive: map['vibrationActive'] as bool,
       volume: map['volume'] as double,
+      showBackgroundForActiveTimer: map['showBackgroundForActiveTimer'] as bool,
     );
   }
 
@@ -67,13 +83,17 @@ class SettingsState extends Equatable {
     String? soundName,
     bool? vibrationActive,
     double? volume,
+    bool? showBackgroundForActiveTimer,
   }) {
     return SettingsState(
       skinName: skinName ?? this.skinName,
-      playSoundOnLastThreeSeconds: playSoundOnLastThreeSeconds ?? this.playSoundOnLastThreeSeconds,
+      playSoundOnLastThreeSeconds:
+          playSoundOnLastThreeSeconds ?? this.playSoundOnLastThreeSeconds,
       soundName: soundName ?? this.soundName,
       vibrationActive: vibrationActive ?? this.vibrationActive,
       volume: volume ?? this.volume,
+      showBackgroundForActiveTimer:
+          showBackgroundForActiveTimer ?? this.showBackgroundForActiveTimer,
     );
   }
 }

@@ -42,3 +42,10 @@ class OpenDeveloperWebsiteEvent extends SettingsEvent {
   @override
   List<Object?> get props => [];
 }
+
+class ChangeBackgroundDisplayingEvent extends SettingsEvent {
+  const ChangeBackgroundDisplayingEvent();
+
+  @override
+  List<Object?> get props => [];
+}

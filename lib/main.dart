@@ -21,13 +21,22 @@ void main() async {
 Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  /// Setup app's dependencies
   setupLocator();
 
+  /// Create storage for hydrated bloc
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getTemporaryDirectory(),
   );
 
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  /// Set preferred orientations
+  SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+  );
+
+  /// Audio service initialization
+  final audioService = locator<AudioServiceContract>();
+  if (audioService.initializationRequired) audioService.init();
 }
 
 class MyApp extends StatelessWidget {

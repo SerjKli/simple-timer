@@ -56,7 +56,6 @@ class _StartTimerScreenState extends State<StartTimerScreen> {
       child: AppScreen(
         isInSafeArea: false,
         screenTitle: timerName,
-
         actions: [
           AppIconButton(
             onPressed: () async {
@@ -70,13 +69,13 @@ class _StartTimerScreenState extends State<StartTimerScreen> {
             icon: FontAwesomeIcons.circleQuestion,
           ),
         ],
-
         body: BlocListener<ActiveTimerBloc, ActiveTimerState>(
           listener: (context, state) {
             _setTimerName(state.timer);
 
             /// Show buttons on timer complete
-            if (state.timerStatus == TimerStatus.completed && showControlButtons) {
+            if (state.timerStatus == TimerStatus.completed &&
+                showControlButtons) {
               _changeControlButtonsVisible(false);
             }
           },

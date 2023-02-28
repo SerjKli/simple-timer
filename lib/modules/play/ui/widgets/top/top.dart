@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:simpletimer/modules/play/enums/GestureActivity.dart';
+import 'package:simpletimer/modules/play/ui/widgets/top/timer_background.dart';
 import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/widgets/app_gap.dart';
 import 'package:simpletimer/widgets/app_watch.dart';
@@ -56,11 +57,16 @@ class Top extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: const [
-            AppGap.verticalMax(),
-            TimerStatusTitle(),
+          children: [
+            const AppGap.verticalMax(),
+            const TimerStatusTitle(),
             Expanded(
-              child: AppWatch(isActive: true),
+              child: Stack(
+                children: const [
+                  TimerBackground(),
+                  AppWatch(isActive: true),
+                ],
+              ),
             ),
           ],
         ),

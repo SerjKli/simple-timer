@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:simpletimer/models/TimerModel.dart';
@@ -104,7 +103,9 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
   }
 
   _startTimer(Emitter<ActiveTimerState> emit) async {
-    final TimerStatus status = state.timer!.needToPrepare ? TimerStatus.preparing : TimerStatus.workout;
+    final TimerStatus status = state.timer!.needToPrepare
+        ? TimerStatus.preparing
+        : TimerStatus.workout;
 
     final durations = _generateDurationModels(state.timer!);
 
@@ -123,7 +124,8 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     locator<NavigationService>().pop();
   }
 
-  _handlePauseTimerEvent(PauseTimerEvent event, Emitter<ActiveTimerState> emit) {
+  _handlePauseTimerEvent(
+      PauseTimerEvent event, Emitter<ActiveTimerState> emit) {
     _pauseTimer(emit);
   }
 
@@ -146,7 +148,8 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     ));
   }
 
-  _handleSkipCurrentStageEvent(SkipCurrentTimerStageEvent event, Emitter<ActiveTimerState> emit) {
+  _handleSkipCurrentStageEvent(
+      SkipCurrentTimerStageEvent event, Emitter<ActiveTimerState> emit) {
     _skipCurrentStage(emit);
   }
 
@@ -241,10 +244,12 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     /// Do not play any sounds if current timer shows more than 3 seconds
     if (event.second > 3) return;
 
-    if(!event.settings.playSoundOnLastThreeSeconds) return;
+    if (!event.settings.playSoundOnLastThreeSeconds) return;
 
-    final String audioFileName = event.settings.getSoundFileNameBasedOnSecond(event.second);
-
+    final String audioFileName =
+        event.settings.getSoundFileNameBasedOnSecond(event.second);
+    debugPrint(
+        "activetimerbloc file got $audioFileName"); //TODO: remove debugging
     audioService.playFromAssets(audioFileName);
   }
 }

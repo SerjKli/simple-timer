@@ -33,6 +33,7 @@ class DigitalBaseSkin extends WatchSkin {
         ),
       ),
     );
+    ;
   }
 
   @override

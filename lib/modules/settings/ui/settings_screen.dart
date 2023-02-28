@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simpletimer/widgets/app_screen.dart';
 
 import 'widgets/about_settings.dart';
+import 'widgets/interface_settings.dart';
 import 'widgets/skin_settings/skin_settings.dart';
 import 'widgets/sound_settings/sound_settings.dart';
 import 'widgets/vibration_settings.dart';
@@ -23,6 +24,7 @@ class SettingsScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: const [
             SkinSettings(),
+            InterfaceSettings(),
             SoundSettings(),
             VibrationSettings(),
             AboutSettings(),

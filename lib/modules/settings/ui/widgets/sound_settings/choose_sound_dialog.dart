@@ -12,6 +12,13 @@ import '../../../blocks/settings/exports.dart';
 class ChooseSoundDialog extends StatelessWidget {
   const ChooseSoundDialog({Key? key}) : super(key: key);
 
+  static const List<String> _sounds = [
+    'base',
+    'bell',
+    'arcade',
+    'race',
+  ];
+
   _updateSoundFileNameSetting(BuildContext context, value) {
     if (value is! String) return;
 
@@ -26,18 +33,16 @@ class ChooseSoundDialog extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SoundItem(
-              value: 'base',
-              onChanged: (value) {
-                _updateSoundFileNameSetting(context, value);
-              },
-            ),
-            SoundItem(
-              value: 'race',
-              onChanged: (value) {
-                _updateSoundFileNameSetting(context, value);
-              },
-            ),
+            ..._sounds
+                .map(
+                  (e) => SoundItem(
+                    value: e,
+                    onChanged: (value) {
+                      _updateSoundFileNameSetting(context, value);
+                    },
+                  ),
+                )
+                .toList(),
           ],
         ),
       ),
