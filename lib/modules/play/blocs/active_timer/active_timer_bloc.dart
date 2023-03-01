@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:simpletimer/models/TimerModel.dart';
 import 'package:simpletimer/modules/settings/blocks/settings/exports.dart';
 import 'package:simpletimer/route/NavigationService.dart';
@@ -248,8 +247,7 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
 
     final String audioFileName =
         event.settings.getSoundFileNameBasedOnSecond(event.second);
-    debugPrint(
-        "activetimerbloc file got $audioFileName"); //TODO: remove debugging
+
     audioService.playFromAssets(audioFileName);
   }
 }

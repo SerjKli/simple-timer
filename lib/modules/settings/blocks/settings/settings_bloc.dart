@@ -54,9 +54,6 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
     ChangeSoundFileNameSettingEvent event,
     Emitter<SettingsState> emit,
   ) {
-    debugPrint(
-        "settingbloc file name get ${event.soundFileName}"); //TODO: remove debugging
-
     /// Play selected sound
     audioService.playFromAssets(
       AudioAssets.base.replaceFirst('base', event.soundFileName),

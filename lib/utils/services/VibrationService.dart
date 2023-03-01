@@ -17,7 +17,6 @@ class VibrationService {
     }
   }
 
-  //TODO: remove duplicate code with AudioplayersAudioServiceImpl _checkSettings
   static bool _vibrationAllowed() {
     final settings = locator<NavigationService>()
         .navigatorKey
