@@ -4,7 +4,9 @@ import 'package:simpletimer/models/TimerModel.dart';
 import 'package:simpletimer/modules/play/enums/TimerStatus.dart';
 import 'package:simpletimer/modules/play/ui/widgets/hint_dialog/hint_dialog.dart';
 import 'package:simpletimer/utils/extensions/beatify.dart';
+import 'package:simpletimer/utils/theme/extensions/context.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
+import 'package:simpletimer/widgets/app_bar.dart';
 import 'package:simpletimer/widgets/app_icon_button.dart';
 import 'package:simpletimer/widgets/app_screen.dart';
 
@@ -53,49 +55,53 @@ class _StartTimerScreenState extends State<StartTimerScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => _changeControlButtonsVisible(!showControlButtons),
-      child: AppScreen(
-        isInSafeArea: false,
-        screenTitle: timerName,
-        actions: [
-          AppIconButton(
-            onPressed: () async {
-              await showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return const HintDialog();
+      child: Container(
+        decoration: BoxDecoration(gradient: context.colorScheme.bgGradient),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBaseBar(
+            title: "Timer",
+            actions: [
+              AppIconButton(
+                onPressed: () async {
+                  await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const HintDialog();
+                    },
+                  );
                 },
-              );
-            },
-            icon: FontAwesomeIcons.circleQuestion,
+                icon: FontAwesomeIcons.circleQuestion,
+              ),
+            ],
           ),
-        ],
-        body: BlocListener<ActiveTimerBloc, ActiveTimerState>(
-          listener: (context, state) {
-            _setTimerName(state.timer);
+          body: BlocListener<ActiveTimerBloc, ActiveTimerState>(
+            listener: (context, state) {
+              _setTimerName(state.timer);
 
-            /// Show buttons on timer complete
-            if (state.timerStatus == TimerStatus.completed &&
-                showControlButtons) {
-              _changeControlButtonsVisible(false);
-            }
-          },
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return Column(
-                children: [
-                  AnimatedContainer(
-                    duration: UiValues.animationSpeed.toMillisecondsDuration,
-                    height: (constraints.maxHeight * topPartHeightFactor),
-                    child: const Top(),
-                  ),
-                  AnimatedContainer(
-                    duration: UiValues.animationSpeed.toMillisecondsDuration,
-                    height: (constraints.maxHeight * bottomPartHeightFactor),
-                    child: const Bottom(),
-                  ),
-                ],
-              );
+              /// Show buttons on timer complete
+              if (state.timerStatus == TimerStatus.completed && showControlButtons) {
+                _changeControlButtonsVisible(false);
+              }
             },
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Column(
+                  children: [
+                    AnimatedContainer(
+                      duration: UiValues.animationSpeed.toMillisecondsDuration,
+                      height: (constraints.maxHeight * topPartHeightFactor),
+                      child: const Top(),
+                    ),
+                    AnimatedContainer(
+                      duration: UiValues.animationSpeed.toMillisecondsDuration,
+                      height: (constraints.maxHeight * bottomPartHeightFactor),
+                      child: const Bottom(),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),

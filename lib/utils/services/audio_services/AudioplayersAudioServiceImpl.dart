@@ -25,7 +25,7 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
         stayAwake: true,
         contentType: AndroidContentType.sonification,
         usageType: AndroidUsageType.assistanceSonification,
-        audioFocus: AndroidAudioFocus.none,
+        // audioFocus: AndroidAudioFocus.none,
       ),
     );
 

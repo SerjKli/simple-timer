@@ -53,20 +53,20 @@ class Top extends StatelessWidget {
           final event = TimerGestureActivityEvent(activity);
           context.read<ActiveTimerBloc>().add(event);
         },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: Stack(
           children: [
-            const AppGap.verticalMax(),
-            const TimerStatusTitle(),
-            Expanded(
-              child: Stack(
-                children: const [
-                  TimerBackground(),
-                  AppWatch(isActive: true),
-                ],
-              ),
+            const TimerBackground(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: const [
+                AppGap.verticalMax(),
+                TimerStatusTitle(),
+                Expanded(
+                  child: AppWatch(isActive: true),
+                ),
+              ],
             ),
           ],
         ),
