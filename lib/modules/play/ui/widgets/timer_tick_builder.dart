@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:simpletimer/modules/play/models/DurationModel.dart';
+import 'package:simpletimer/modules/play/models/TimerStageModel.dart';
 import 'package:simpletimer/modules/settings/blocks/settings/exports.dart';
 import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/services/LocatorService.dart';
 import 'package:simpletimer/utils/services/audio_services/AudioServiceContract.dart';
 
 import '../../blocs/active_timer/exports.dart';
-import '../../enums/TimerStatus.dart';
+import '../../../../utils/enums/TimerStatus.dart';
 
 typedef TimerTickWidgetBuilder = Widget Function(
   BuildContext context,
@@ -46,7 +46,7 @@ class _TimerTickBuilderState extends State<TimerTickBuilder> {
     context.read<ActiveTimerBloc>().add(event);
   }
 
-  void _startTimer(DurationModel? durationModel) {
+  void _startTimer(TimerStageModel? durationModel) {
     if (durationModel == null) return;
 
     setState(() {
@@ -84,7 +84,7 @@ class _TimerTickBuilderState extends State<TimerTickBuilder> {
           case TimerStatus.workout:
           case TimerStatus.preparing:
           case TimerStatus.rest:
-            _startTimer(state.activeDuration);
+            _startTimer(state.activeStage);
             return;
           default:
             setState(() {

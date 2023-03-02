@@ -1,4 +1,4 @@
-import '../enums/TimerStatus.dart';
+import '../../../utils/enums/TimerStatus.dart';
 
 extension BeatufyTimerStatus on TimerStatus {
   String getTitle() {

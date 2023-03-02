@@ -1,14 +1,16 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:simpletimer/models/TimerModel.dart';
 import 'package:simpletimer/modules/settings/blocks/settings/exports.dart';
 import 'package:simpletimer/route/NavigationService.dart';
 import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/services/LocatorService.dart';
 import 'package:simpletimer/utils/services/audio_services/AudioServiceContract.dart';
+import 'package:wakelock/wakelock.dart';
 
 import '../../enums/GestureActivity.dart';
-import '../../enums/TimerStatus.dart';
-import '../../models/DurationModel.dart';
+import '../../../../utils/enums/TimerStatus.dart';
+import '../../models/TimerStageModel.dart';
 import '../../ui/start_timer_screen.dart';
 
 part 'active_timer_event.dart';
@@ -48,9 +50,9 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     /// Continue timer
     on<ContinuePausedTimerEvent>(_handleContinueTimerEvent);
 
-    /// Skip current phase of timer
-    /// For example: if current phase = "workout", this event switch to "rest"
-    /// If current phase is the last in the list finish timer
+    /// Skip current stage of the timer
+    /// For example: if current stage = "workout", this event switch to "rest"
+    /// If current stage is the last in the list, finish the timer
     on<SkipCurrentTimerStageEvent>(_handleSkipCurrentStageEvent);
 
     /// Handle watch gesture activities
@@ -61,20 +63,26 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
   }
 
   _goToTimerPage(ChooseTimerEvent event, Emitter<ActiveTimerState> emit) {
-    emit(ActiveTimerState(timer: event.timer));
+    final stages = _generateTimerStageModels(event.timer);
+
+    emit(ActiveTimerState(
+      timer: event.timer,
+      stages: stages,
+      stageIndex: 0,
+    ));
     locator<NavigationService>().pushNamed(StartTimerScreen.routeName);
   }
 
   /// Creating the list of duration types
   /// This list timer will change with decreasing on 1 second top duration
   /// in the list on every Timer.periodic tik
-  List<DurationModel> _generateDurationModels(TimerModel timerModel) {
-    final List<DurationModel> durations = [];
+  List<TimerStageModel> _generateTimerStageModels(TimerModel timerModel) {
+    final List<TimerStageModel> durations = [];
 
     /// Check if timer has preparing time
     if (timerModel.needToPrepare) {
       durations.add(
-        DurationModel(
+        TimerStageModel(
           duration: timerModel.prepareDuration,
           status: TimerStatus.preparing,
         ),
@@ -84,14 +92,14 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     /// For every round it timer add workout and rest durations
     for (int i = 0; i < timerModel.rounds; i++) {
       durations.add(
-        DurationModel(
+        TimerStageModel(
           duration: timerModel.workDuration,
           status: TimerStatus.workout,
         ),
       );
 
       durations.add(
-        DurationModel(
+        TimerStageModel(
           duration: timerModel.restDuration,
           status: TimerStatus.rest,
         ),
@@ -102,15 +110,12 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
   }
 
   _startTimer(Emitter<ActiveTimerState> emit) async {
-    final TimerStatus status = state.timer!.needToPrepare
-        ? TimerStatus.preparing
-        : TimerStatus.workout;
-
-    final durations = _generateDurationModels(state.timer!);
+    Wakelock.enable();
+    final TimerStatus status = state.timer!.needToPrepare ? TimerStatus.preparing : TimerStatus.workout;
 
     emit(state.copyWith(
       timerStatus: status,
-      durations: durations,
+      stageIndex: 0,
     ));
   }
 
@@ -119,17 +124,21 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
   }
 
   _exitTimer(emit) {
+    Wakelock.disable();
     emit(const ActiveTimerState());
     locator<NavigationService>().pop();
   }
 
-  _handlePauseTimerEvent(
-      PauseTimerEvent event, Emitter<ActiveTimerState> emit) {
+  _handlePauseTimerEvent(PauseTimerEvent event, Emitter<ActiveTimerState> emit) {
     _pauseTimer(emit);
   }
 
   _pauseTimer(emit) {
-    emit(state.copyWith(timerStatus: TimerStatus.pause));
+    emit(state.copyWith(
+      timerStatus: TimerStatus.pause,
+      stages: state.stages,
+      stageIndex: state.stageIndex,
+    ));
   }
 
   _handleContinueTimerEvent(
@@ -140,36 +149,30 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
   }
 
   _continueTimer(emit) {
-    final TimerStatus status = state.durations[0].status;
+    if (state.activeStage == null) return;
 
     emit(state.copyWith(
-      timerStatus: status,
+      timerStatus: state.activeStage!.status,
     ));
   }
 
-  _handleSkipCurrentStageEvent(
-      SkipCurrentTimerStageEvent event, Emitter<ActiveTimerState> emit) {
+  _handleSkipCurrentStageEvent(SkipCurrentTimerStageEvent event, Emitter<ActiveTimerState> emit) {
     _skipCurrentStage(emit);
   }
 
   _skipCurrentStage(emit) {
-    final List<DurationModel> durations = [...state.durations];
+    if (state.stages.isEmpty) return;
 
-    if (state.durations.isEmpty) return;
-
-    durations.removeAt(0);
-
-    if (durations.isEmpty) {
+    if (state.nextStage == null) {
       emit(ActiveTimerState(
         timer: state.timer,
         timerStatus: TimerStatus.completed,
+        stages: state.stages,
       ));
     } else {
-      final TimerStatus status = durations[0].status;
-
       emit(state.copyWith(
-        timerStatus: status,
-        durations: durations,
+        timerStatus: state.nextStage!.status,
+        stageIndex: state.stageIndex + 1,
       ));
     }
   }
@@ -245,8 +248,7 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
 
     if (!event.settings.playSoundOnLastThreeSeconds) return;
 
-    final String audioFileName =
-        event.settings.getSoundFileNameBasedOnSecond(event.second);
+    final String audioFileName = event.settings.getSoundFileNameBasedOnSecond(event.second);
 
     audioService.playFromAssets(audioFileName);
   }

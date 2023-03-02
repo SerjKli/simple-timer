@@ -8,6 +8,7 @@ class AppText extends StatelessWidget {
   final ColorTypes colorType;
   final TextStyle? style;
   final TextAlign textAlign;
+  final bool softWrap;
 
   const AppText(
     this.text, {
@@ -15,6 +16,7 @@ class AppText extends StatelessWidget {
     this.colorType = ColorTypes.light,
     this.style,
     this.textAlign = TextAlign.start,
+    this.softWrap = true,
   }) : super(key: key);
 
   const AppText.brand(
@@ -22,6 +24,7 @@ class AppText extends StatelessWidget {
     Key? key,
     this.style,
     this.textAlign = TextAlign.start,
+    this.softWrap = true,
   })  : colorType = ColorTypes.brand,
         super(key: key);
 
@@ -30,6 +33,7 @@ class AppText extends StatelessWidget {
     Key? key,
     this.style,
     this.textAlign = TextAlign.start,
+    this.softWrap = true,
   })  : colorType = ColorTypes.dark,
         super(key: key);
 
@@ -37,6 +41,7 @@ class AppText extends StatelessWidget {
     this.text, {
     Key? key,
     this.textAlign = TextAlign.start,
+    this.softWrap = true,
   })  : colorType = ColorTypes.brand,
         style = const TextStyle(
           fontSize: ThemeService.fontSizeLg,
@@ -48,6 +53,7 @@ class AppText extends StatelessWidget {
     this.text, {
     Key? key,
     this.textAlign = TextAlign.start,
+    this.softWrap = true,
   })  : colorType = ColorTypes.brand,
         style = const TextStyle(
           fontSize: ThemeService.fontSizeMax,
@@ -59,6 +65,7 @@ class AppText extends StatelessWidget {
     this.text, {
     Key? key,
     this.textAlign = TextAlign.start,
+    this.softWrap = true,
   })  : colorType = ColorTypes.light,
         style = const TextStyle(fontSize: ThemeService.fontSizeSm),
         super(key: key);
@@ -69,7 +76,9 @@ class AppText extends StatelessWidget {
 
     return Text(
       text,
+      overflow: TextOverflow.clip,
       textAlign: textAlign,
+      softWrap: softWrap,
       style: styles.copyWith(
         color: context.colorScheme.getColorByType(colorType),
       ),

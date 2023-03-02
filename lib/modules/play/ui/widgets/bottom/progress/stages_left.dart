@@ -21,7 +21,7 @@ class StagesLeft extends StatelessWidget {
       child: Center(
         child: BlocBuilder<ActiveTimerBloc, ActiveTimerState>(
           builder: (context, state) {
-            return AppText.dark("${state.durations.length} stages left");
+            return AppText.dark("${state.stagesLeft} stages left");
           },
         ),
       ),

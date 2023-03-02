@@ -54,6 +54,7 @@ class TimerModel extends Equatable {
 
   bool get hasError => errorMessage != null;
 
+  /// 2 => 1 workout + 1 rest
   int get totalStagesCount => rounds * 2 + (prepareDuration > 0 ? 1 : 0);
 
   String? get errorMessage {

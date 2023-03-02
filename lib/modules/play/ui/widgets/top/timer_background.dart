@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simpletimer/modules/play/enums/TimerStatus.dart';
+import 'package:simpletimer/utils/enums/TimerStatus.dart';
 import 'package:simpletimer/modules/settings/blocks/settings/exports.dart';
 import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/theme/extensions/context.dart';
