@@ -54,7 +54,9 @@ class _TimerTickBuilderState extends State<TimerTickBuilder> {
     timer = Timer.periodic(1.toSecondsDuration, (timer) {
       if (duration == null || duration! == 1) {
         timer.cancel();
-        context.read<ActiveTimerBloc>().add(const SkipCurrentTimerStageEvent());
+        context.read<ActiveTimerBloc>().add(
+              const SkipCurrentTimerStageEvent(saveToStatistic: true),
+            );
       } else {
         duration = duration! - 1;
         _playSound(duration!);

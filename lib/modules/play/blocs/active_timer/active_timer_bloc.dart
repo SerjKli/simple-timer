@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:simpletimer/models/TimerModel.dart';
 import 'package:simpletimer/modules/settings/blocks/settings/exports.dart';
+import 'package:simpletimer/repositories/active_timer_repository.dart';
 import 'package:simpletimer/route/NavigationService.dart';
 import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/services/LocatorService.dart';
@@ -17,9 +18,11 @@ part 'active_timer_state.dart';
 
 class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
   final AudioServiceContract audioService;
+  final ActiveTimerRepository activeTimerRepository;
 
   ActiveTimerBloc({
     required this.audioService,
+    required this.activeTimerRepository,
   }) : super(const ActiveTimerState()) {
     /// Open specific timer's page
     on<ChooseTimerEvent>(_goToTimerPage);
@@ -159,12 +162,19 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
   }
 
   _handleSkipCurrentStageEvent(
-      SkipCurrentTimerStageEvent event, Emitter<ActiveTimerState> emit) {
-    _skipCurrentStage(emit);
+    SkipCurrentTimerStageEvent event,
+    Emitter<ActiveTimerState> emit,
+  ) {
+    _skipCurrentStage(emit, event.saveToStatistic);
   }
 
-  _skipCurrentStage(emit) {
-    if (state.stages.isEmpty) return;
+  _skipCurrentStage(emit, [saveToStatistic = false]) {
+    if (state.stages.isEmpty || state.activeStage == null) return;
+
+    if (saveToStatistic) {
+      activeTimerRepository.updateSeconds(state.activeStage!.duration);
+      activeTimerRepository.updateStages(1);
+    }
 
     if (state.nextStage == null) {
       emit(ActiveTimerState(
@@ -172,6 +182,10 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
         timerStatus: TimerStatus.completed,
         stages: state.stages,
       ));
+
+      if (saveToStatistic) {
+        activeTimerRepository.updateTrainings(1);
+      }
     } else {
       emit(state.copyWith(
         timerStatus: state.nextStage!.status,

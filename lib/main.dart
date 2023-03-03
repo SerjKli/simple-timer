@@ -6,6 +6,8 @@ import 'package:simpletimer/modules/main_screen/blocs/timer_list/timer_list_bloc
 import 'package:simpletimer/modules/main_screen/ui/main_screen.dart';
 import 'package:simpletimer/modules/play/blocs/active_timer/active_timer_bloc.dart';
 import 'package:simpletimer/modules/settings/blocks/settings/exports.dart';
+import 'package:simpletimer/modules/statistic/blocks/statistic/exports.dart';
+import 'package:simpletimer/repositories/active_timer_repository.dart';
 import 'package:simpletimer/route/NavigationService.dart';
 import 'package:simpletimer/route/routes.dart';
 import 'package:simpletimer/utils/services/LocatorService.dart';
@@ -62,8 +64,14 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => TimerListBloc()),
           BlocProvider(create: (context) => TimerBloc()),
           BlocProvider(
+            create: (context) => StatisticBloc(
+              locator<ActiveTimerRepository>(),
+            ),
+          ),
+          BlocProvider(
             create: (context) => ActiveTimerBloc(
               audioService: locator<AudioServiceContract>(),
+              activeTimerRepository: locator<ActiveTimerRepository>(),
             ),
           ),
         ],

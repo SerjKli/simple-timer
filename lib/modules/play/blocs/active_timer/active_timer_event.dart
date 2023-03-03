@@ -49,14 +49,17 @@ class ContinuePausedTimerEvent extends ActiveTimerEvent {
 }
 
 class SkipCurrentTimerStageEvent extends ActiveTimerEvent {
-  const SkipCurrentTimerStageEvent();
+  final bool saveToStatistic;
+
+  const SkipCurrentTimerStageEvent({this.saveToStatistic = false});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [saveToStatistic];
 }
 
 class TimerGestureActivityEvent extends ActiveTimerEvent {
   final GestureActivity activity;
+
   const TimerGestureActivityEvent(this.activity);
 
   @override
