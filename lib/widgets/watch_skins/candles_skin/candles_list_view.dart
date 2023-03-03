@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simpletimer/modules/play/ui/widgets/timer_tick_builder.dart';
 
 import 'candle_item.dart';
 import 'model/CandleModel.dart';
@@ -22,9 +23,21 @@ class CandlesListView extends StatelessWidget {
       itemCount: candles.length,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (_, int index) {
-        return CandleItem(
-          candles[index],
-        );
+        final CandleModel candleModel = candles[index];
+        if (useTimerTicker) {
+          return TimerTickBuilder(builder: (_, int? seconds) {
+            debugPrint("${seconds}"); //TODO: remove debugging
+            if (seconds == null) return Text('ready');
+            if (candleModel.isActive) {
+              return CandleItem(
+                candleModel.copyWith(secondsRemaining: seconds),
+              );
+            } else {
+              return CandleItem(candleModel);
+            }
+          });
+        }
+        return CandleItem(candleModel);
       },
     );
   }

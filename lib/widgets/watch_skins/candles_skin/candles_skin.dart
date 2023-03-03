@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:simpletimer/widgets/watch_skins/candles/active_status_view.dart';
-import 'package:simpletimer/widgets/watch_skins/candles/inactive_status_view.dart';
 
 import '../watch_skin.dart';
+import 'active_status_view.dart';
+import 'inactive_status_view.dart';
 
 class CandlesSkin extends WatchSkin {
   static const String skinName = 'candles';

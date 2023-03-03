@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
 import 'package:simpletimer/utils/services/audio_services/AudioServiceContract.dart';
 
 class AudioplayersAudioServiceImpl implements AudioServiceContract {
@@ -38,10 +39,15 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
       await player.stop();
     }
 
-    await player.play(
-      AssetSource(assetsPath),
-      // volume: 1,
-      // mode: PlayerMode.lowLatency,
-    );
+    try {
+      debugPrint("play $assetsPath"); //TODO: remove debugging
+      await player.play(
+        AssetSource(assetsPath),
+        volume: 1,
+        mode: PlayerMode.lowLatency,
+      );
+    } catch (ex) {
+      debugPrint("ex = $ex");
+    }
   }
 }

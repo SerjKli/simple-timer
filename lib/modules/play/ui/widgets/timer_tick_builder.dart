@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:simpletimer/modules/play/models/TimerStageModel.dart';
 import 'package:simpletimer/modules/settings/blocks/settings/exports.dart';
 import 'package:simpletimer/utils/extensions/beatify.dart';
-import 'package:simpletimer/utils/services/LocatorService.dart';
-import 'package:simpletimer/utils/services/audio_services/AudioServiceContract.dart';
 
-import '../../blocs/active_timer/exports.dart';
 import '../../../../utils/enums/TimerStatus.dart';
+import '../../blocs/active_timer/exports.dart';
 
 typedef TimerTickWidgetBuilder = Widget Function(
   BuildContext context,
@@ -54,7 +52,7 @@ class _TimerTickBuilderState extends State<TimerTickBuilder> {
     });
 
     timer = Timer.periodic(1.toSecondsDuration, (timer) {
-      if (duration == null || duration! == 0) {
+      if (duration == null || duration! == 1) {
         timer.cancel();
         context.read<ActiveTimerBloc>().add(const SkipCurrentTimerStageEvent());
       } else {

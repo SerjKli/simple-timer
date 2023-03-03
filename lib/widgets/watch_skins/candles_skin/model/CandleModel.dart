@@ -5,46 +5,50 @@ import 'package:simpletimer/utils/enums/TimerStatus.dart';
 class CandleModel extends Equatable {
   final TimerStatus status;
   final int totalSeconds;
-  final int secondsPast;
+  final int secondsRemaining;
   final bool isActive;
 
   const CandleModel({
     required this.status,
     required this.totalSeconds,
-    required this.secondsPast,
+    required this.secondsRemaining,
     required this.isActive,
   });
 
-  int get secondsRemaining => totalSeconds - secondsPast;
   double get percentRemaining => secondsRemaining * 100 / totalSeconds;
 
   @override
-  List<Object?> get props => [status, totalSeconds, secondsPast, isActive];
+  List<Object?> get props => [status, totalSeconds, secondsRemaining, isActive];
 
   CandleModel copyWith({
     TimerStatus? status,
     int? totalSeconds,
-    int? secondsPast,
+    int? secondsRemaining,
     bool? isActive,
   }) {
     return CandleModel(
       status: status ?? this.status,
       totalSeconds: totalSeconds ?? this.totalSeconds,
-      secondsPast: secondsPast ?? this.secondsPast,
+      secondsRemaining: secondsRemaining ?? this.secondsRemaining,
       isActive: isActive ?? this.isActive,
     );
   }
 
   factory CandleModel.fromTimerStageModel({
     required TimerStageModel timerStage,
-    required int secondsPast,
+    required int secondsRemaining,
     required bool isActive,
   }) {
     return CandleModel(
       status: timerStage.status,
       totalSeconds: timerStage.duration,
-      secondsPast: secondsPast,
+      secondsRemaining: secondsRemaining,
       isActive: isActive,
     );
+  }
+
+  @override
+  String toString() {
+    return 'CandleModel{status: $status, totalSeconds: $totalSeconds, secondsRemaining: $secondsRemaining, isActive: $isActive}';
   }
 }

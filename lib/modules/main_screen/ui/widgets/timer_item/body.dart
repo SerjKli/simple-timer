@@ -37,12 +37,12 @@ class TimerBody extends StatelessWidget {
             title: "Rest",
             time: timer.restDuration.timeFromDuration(),
           ),
-          const AppGap.horizontal(),
-          const AppGap.horizontal(),
+          const Spacer(),
           _DurationInfo(
             title: "Total",
             time: timer.totalTimerDuration.timeFromDuration(),
           ),
+          const SizedBox(width: UiValues.iconButtonSize),
         ],
       ),
     );

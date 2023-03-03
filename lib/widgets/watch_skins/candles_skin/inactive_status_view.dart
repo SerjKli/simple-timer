@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:simpletimer/utils/enums/TimerStatus.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
-import 'package:simpletimer/widgets/watch_skins/candles/candle_item.dart';
-import 'package:simpletimer/widgets/watch_skins/candles/candles_list_view.dart';
 
+import 'candles_list_view.dart';
 import 'model/CandleModel.dart';
 
 class InactiveStatusView extends StatelessWidget {
@@ -11,43 +10,43 @@ class InactiveStatusView extends StatelessWidget {
     CandleModel(
       status: TimerStatus.preparing,
       totalSeconds: 15,
-      secondsPast: 15,
+      secondsRemaining: 0,
       isActive: false,
     ),
     CandleModel(
       status: TimerStatus.workout,
       totalSeconds: 60,
-      secondsPast: 60,
+      secondsRemaining: 0,
       isActive: false,
     ),
     CandleModel(
       status: TimerStatus.rest,
       totalSeconds: 30,
-      secondsPast: 12,
+      secondsRemaining: 12,
       isActive: true,
     ),
     CandleModel(
       status: TimerStatus.workout,
       totalSeconds: 60,
-      secondsPast: 0,
+      secondsRemaining: 60,
       isActive: false,
     ),
     CandleModel(
       status: TimerStatus.rest,
       totalSeconds: 30,
-      secondsPast: 0,
+      secondsRemaining: 30,
       isActive: false,
     ),
     // CandleModel(
     //   status: TimerStatus.workout,
     //   totalSeconds: 60,
-    //   secondsPast: 0,
+    //   secondsRemaining: 0,
     //   isActive: false,
     // ),
     // CandleModel(
     //   status: TimerStatus.rest,
     //   totalSeconds: 30,
-    //   secondsPast: 0,
+    //   secondsRemaining: 0,
     //   isActive: false,
     // ),
   ];
@@ -68,7 +67,8 @@ class InactiveStatusView extends StatelessWidget {
               child: Center(
                 child: CandlesListView(
                   candles,
-                  pageController: PageController(initialPage: 2, viewportFraction: 0.2),
+                  pageController:
+                      PageController(initialPage: 2, viewportFraction: 0.2),
                 ),
               ),
             ),
@@ -77,7 +77,8 @@ class InactiveStatusView extends StatelessWidget {
                 alignment: Alignment.center,
                 padding: UiValues.paddingEdgeMax,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(constraints.maxHeight)),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(constraints.maxHeight)),
                   color: Colors.black.withOpacity(0.8),
                 ),
                 child: child,

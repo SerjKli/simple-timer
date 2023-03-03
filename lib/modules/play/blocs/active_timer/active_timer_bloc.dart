@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:simpletimer/models/TimerModel.dart';
 import 'package:simpletimer/modules/settings/blocks/settings/exports.dart';
 import 'package:simpletimer/route/NavigationService.dart';
@@ -8,8 +7,8 @@ import 'package:simpletimer/utils/services/LocatorService.dart';
 import 'package:simpletimer/utils/services/audio_services/AudioServiceContract.dart';
 import 'package:wakelock/wakelock.dart';
 
-import '../../enums/GestureActivity.dart';
 import '../../../../utils/enums/TimerStatus.dart';
+import '../../enums/GestureActivity.dart';
 import '../../models/TimerStageModel.dart';
 import '../../ui/start_timer_screen.dart';
 
@@ -111,7 +110,9 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
 
   _startTimer(Emitter<ActiveTimerState> emit) async {
     Wakelock.enable();
-    final TimerStatus status = state.timer!.needToPrepare ? TimerStatus.preparing : TimerStatus.workout;
+    final TimerStatus status = state.timer!.needToPrepare
+        ? TimerStatus.preparing
+        : TimerStatus.workout;
 
     emit(state.copyWith(
       timerStatus: status,
@@ -129,7 +130,8 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     locator<NavigationService>().pop();
   }
 
-  _handlePauseTimerEvent(PauseTimerEvent event, Emitter<ActiveTimerState> emit) {
+  _handlePauseTimerEvent(
+      PauseTimerEvent event, Emitter<ActiveTimerState> emit) {
     _pauseTimer(emit);
   }
 
@@ -156,7 +158,8 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     ));
   }
 
-  _handleSkipCurrentStageEvent(SkipCurrentTimerStageEvent event, Emitter<ActiveTimerState> emit) {
+  _handleSkipCurrentStageEvent(
+      SkipCurrentTimerStageEvent event, Emitter<ActiveTimerState> emit) {
     _skipCurrentStage(emit);
   }
 
@@ -248,7 +251,8 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
 
     if (!event.settings.playSoundOnLastThreeSeconds) return;
 
-    final String audioFileName = event.settings.getSoundFileNameBasedOnSecond(event.second);
+    final String audioFileName =
+        event.settings.getSoundFileNameBasedOnSecond(event.second);
 
     audioService.playFromAssets(audioFileName);
   }
