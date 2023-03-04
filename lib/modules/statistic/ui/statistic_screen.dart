@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:simpletimer/modules/statistic/ui/widgets/statistic_item.dart';
 import 'package:simpletimer/widgets/app_screen.dart';
 
 import '../blocks/statistic/exports.dart';
 import 'widgets/clear_statistic_button.dart';
+import 'widgets/duration_item.dart';
+import 'widgets/helper_button.dart';
+import 'widgets/statistic_item.dart';
 
 class StatisticScreen extends StatelessWidget {
   static const String routeName = "/statistic";
@@ -16,6 +18,7 @@ class StatisticScreen extends StatelessWidget {
       screenTitle: "Statistic",
       actions: const [
         ClearStatisticButton(),
+        HelperButton(),
       ],
       body: BlocBuilder<StatisticBloc, StatisticState>(
         builder: (context, state) {
@@ -26,17 +29,14 @@ class StatisticScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                StatisticItem(
-                  title: "Total seconds",
-                  value: state.seconds,
-                ),
+                StatisticDurationItem(state.seconds),
                 StatisticItem(
                   title: "Total stages",
-                  value: state.stages,
+                  value: state.stages.toString(),
                 ),
                 StatisticItem(
                   title: "Total trainings",
-                  value: state.trainings,
+                  value: state.trainings.toString(),
                 ),
               ],
             ),

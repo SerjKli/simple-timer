@@ -15,3 +15,9 @@ extension IntX on int {
 extension StringX on String {
   String get beautifyForTime => padLeft(2, "0");
 }
+
+extension EnumX on Enum {
+  String toShortString() {
+    return toString().split('.').last;
+  }
+}

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simpletimer/models/TimerModel.dart';
 import 'package:simpletimer/utils/enums/TimerStatus.dart';
-import 'package:simpletimer/modules/play/ui/widgets/hint_dialog/hint_dialog.dart';
 import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
-import 'package:simpletimer/widgets/app_icon_button.dart';
 import 'package:simpletimer/widgets/app_screen.dart';
 import 'package:wakelock/wakelock.dart';
 
 import '../blocs/active_timer/exports.dart';
 import 'widgets/bottom/bottom.dart';
+import 'widgets/helper_button.dart';
 import 'widgets/top/top.dart';
 
 class StartTimerScreen extends StatefulWidget {
@@ -63,18 +61,8 @@ class _StartTimerScreenState extends State<StartTimerScreen> {
       child: AppScreen(
         isInSafeArea: false,
         screenTitle: timerName,
-        actions: [
-          AppIconButton(
-            onPressed: () async {
-              await showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return const HintDialog();
-                },
-              );
-            },
-            icon: FontAwesomeIcons.circleQuestion,
-          ),
+        actions: const [
+          HelperButton(),
         ],
         body: BlocListener<ActiveTimerBloc, ActiveTimerState>(
           listener: (context, state) {

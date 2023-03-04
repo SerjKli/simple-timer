@@ -261,7 +261,7 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
 
   _handlePlaySoundEvent(PlaySoundOnTimerTickEvent event, emit) {
     /// Do not play any sounds if current timer shows more than 3 seconds
-    if (event.second > 3) return;
+    if (event.second > 4) return;
 
     if (!event.settings.playSoundOnLastThreeSeconds) return;
 

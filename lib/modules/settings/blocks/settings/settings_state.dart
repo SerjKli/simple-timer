@@ -39,7 +39,7 @@ class SettingsState extends Equatable {
         fileName = "base";
     }
 
-    final fileNameSuffix = second == 0 ? '_finish' : '';
+    final fileNameSuffix = second == 1 ? '_finish' : '';
 
     final fullFileName = "$fileName$fileNameSuffix";
     return AudioAssets.base.replaceFirst('base', fullFileName);

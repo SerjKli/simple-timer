@@ -12,10 +12,11 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
 
   @override
   init() {
+    debugPrint("audioplayers init"); //TODO: remove debugging
     const AudioContext audioContext = AudioContext(
       iOS: AudioContextIOS(
         // defaultToSpeaker: true,
-        category: AVAudioSessionCategory.ambient,
+        category: AVAudioSessionCategory.playback,
         options: [
           AVAudioSessionOptions.defaultToSpeaker,
           AVAudioSessionOptions.mixWithOthers,
@@ -39,15 +40,12 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
       await player.stop();
     }
 
-    try {
-      debugPrint("play $assetsPath"); //TODO: remove debugging
-      await player.play(
-        AssetSource(assetsPath),
-        volume: 1,
-        mode: PlayerMode.lowLatency,
-      );
-    } catch (ex) {
-      debugPrint("ex = $ex");
-    }
+    await player.setVolume(1);
+
+    await player.play(
+      AssetSource(assetsPath),
+      volume: 1,
+      mode: PlayerMode.lowLatency,
+    );
   }
 }

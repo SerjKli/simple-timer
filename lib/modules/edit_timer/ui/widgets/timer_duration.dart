@@ -13,7 +13,7 @@ class TimerDuration extends StatelessWidget {
     final TimerModel timer = context.read<TimerBloc>().state.timer;
 
     return DurationInputField(
-      title: "Timer duration",
+      title: "Workout duration",
       durationTypeMinutes: DurationType.timerMinutes,
       durationTypeSeconds: DurationType.timerSeconds,
       currentMinutes: timer.workoutMinutes,

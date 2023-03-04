@@ -5,7 +5,7 @@ import 'package:simpletimer/widgets/app_text.dart';
 
 class StatisticItem extends StatelessWidget {
   final String title;
-  final int value;
+  final String value;
 
   const StatisticItem({
     Key? key,
