@@ -23,11 +23,11 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
         ],
       ),
       android: AudioContextAndroid(
-        isSpeakerphoneOn: true,
+        // isSpeakerphoneOn: true,
         stayAwake: true,
         contentType: AndroidContentType.sonification,
         usageType: AndroidUsageType.assistanceSonification,
-        // audioFocus: AndroidAudioFocus.none,
+        audioFocus: AndroidAudioFocus.gain,
       ),
     );
 
@@ -37,15 +37,16 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
   @override
   void playFromAssets(String assetsPath) async {
     if (player.state == PlayerState.playing) {
+      debugPrint("is playing"); //TODO: remove debugging
       await player.stop();
     }
 
-    await player.setVolume(1);
+    // await player.setVolume(1);
 
     await player.play(
       AssetSource(assetsPath),
-      volume: 1,
-      mode: PlayerMode.lowLatency,
+      // volume: 1,
+      // mode: PlayerMode.lowLatency,
     );
   }
 }

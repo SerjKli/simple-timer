@@ -5,6 +5,8 @@ import 'package:simpletimer/modules/settings/ui/widgets/to_settings_page_button.
 import 'package:simpletimer/modules/statistic/ui/widgets/to_statistic_screen_button.dart';
 import 'package:simpletimer/widgets/app_screen.dart';
 
+import 'widgets/test_sound_button.dart';
+
 class MainScreen extends StatelessWidget {
   static const String routeName = "/";
 
@@ -15,9 +17,10 @@ class MainScreen extends StatelessWidget {
     return AppScreen(
       isInSafeArea: false,
       screenTitle: "SimpleTimer",
-      actions: const [
+      actions:  [
         ToStatisticScreenButton(),
         ToSettingsPageButton(),
+        TestSoundButton(),
       ],
       body: Column(
         children: const [
