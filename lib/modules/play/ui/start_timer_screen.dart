@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simpletimer/models/TimerModel.dart';
+import 'package:simpletimer/modules/settings/ui/widgets/sound_settings/volume_setting/volume_action_button.dart';
 import 'package:simpletimer/utils/enums/TimerStatus.dart';
 import 'package:simpletimer/utils/extensions/beatify.dart';
 import 'package:simpletimer/utils/theme/ui_values.dart';
@@ -62,6 +63,7 @@ class _StartTimerScreenState extends State<StartTimerScreen> {
         isInSafeArea: false,
         screenTitle: timerName,
         actions: const [
+          VolumeActionButton(),
           HelperButton(),
         ],
         body: BlocListener<ActiveTimerBloc, ActiveTimerState>(

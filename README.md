@@ -3,7 +3,6 @@
 
 
 # How to use:
-
 * Rename file assets/configs/configs_example.yaml to assets/configs/configs.yaml
 * Set yours parameters in assets/configs/configs.yaml
 * Open terminal

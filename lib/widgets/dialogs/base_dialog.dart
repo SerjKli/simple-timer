@@ -27,6 +27,7 @@ class AppDialog extends StatelessWidget {
       title: title,
       content: body,
       actions: _buildActions(),
+      actionsAlignment: MainAxisAlignment.center,
       actionsOverflowDirection: VerticalDirection.up,
     );
   }

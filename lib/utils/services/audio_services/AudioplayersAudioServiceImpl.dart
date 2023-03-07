@@ -38,6 +38,9 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
       await player.stop();
     }
 
+    if (volume < 0) volume = 0;
+    if (volume > 1) volume = volume / 100;
+
     await player.play(
       AssetSource(assetsPath),
       volume: volume,

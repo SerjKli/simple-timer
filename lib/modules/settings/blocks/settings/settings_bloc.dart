@@ -89,8 +89,16 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
     ));
   }
 
-  _changeVolumeValue(ChangeVolumeSettingEvent event, emit){
+  _changeVolumeValue(ChangeVolumeSettingEvent event, emit) {
     emit(state.copyWith(volume: event.volume));
+
+    _testVolume();
+  }
+
+  void _testVolume() {
+    final String audioFileName = state.getSoundFileNameBasedOnSecond(2);
+
+    audioService.playFromAssets(audioFileName, state.volume);
   }
 
   @override

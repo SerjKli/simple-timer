@@ -56,7 +56,9 @@ class AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ColorTypes textColor =
-        colorType == ColorTypes.error ? ColorTypes.light : ColorTypes.dark;
+        colorType == ColorTypes.error || colorType == ColorTypes.success
+            ? ColorTypes.light
+            : ColorTypes.dark;
 
     return ElevatedButtonTheme(
       data: ElevatedButtonThemeData(

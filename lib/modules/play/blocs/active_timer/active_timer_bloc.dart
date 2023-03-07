@@ -268,6 +268,8 @@ class ActiveTimerBloc extends Bloc<ActiveTimerEvent, ActiveTimerState> {
     final String audioFileName =
         event.settings.getSoundFileNameBasedOnSecond(event.second);
 
-    audioService.playFromAssets(audioFileName);
+    final volume = event.settings.volume;
+
+    audioService.playFromAssets(audioFileName, volume / 100);
   }
 }

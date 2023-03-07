@@ -3,7 +3,7 @@ abstract class AudioServiceContract {
   final bool initializationRequired = false;
 
   /// Play sound from assets folder
-  void playFromAssets(String assetsPath);
+  void playFromAssets(String assetsPath, [double volume = 1]);
 
   /// Initialization method
   void init();

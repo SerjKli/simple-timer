@@ -14,6 +14,12 @@ import 'package:simpletimer/utils/services/LocatorService.dart';
 import 'package:simpletimer/utils/services/audio_services/AudioServiceContract.dart';
 import 'package:simpletimer/utils/theme/ThemeService.dart';
 
+//TODO: ? iphone's dynamic island
+//TODO: ? notification
+//TODO: ? allow user keep alive active timer's screen
+//TODO: ? app's widget with statistic?
+//TODO: ? timer's reminder
+
 void main() async {
   await init();
 

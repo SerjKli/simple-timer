@@ -14,7 +14,7 @@ class InterfaceSettings extends StatelessWidget {
       title: 'Interface',
       items: [
         SimpleSettingItem(
-          title: "Show background color on active timer",
+          title: "Show color effects on active timer screen",
           trailer: BlocBuilder<SettingsBloc, SettingsState>(
             buildWhen: (previousState, state) {
               return previousState.showBackgroundForActiveTimer !=

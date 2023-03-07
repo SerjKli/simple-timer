@@ -9,7 +9,7 @@ import 'package:simpletimer/widgets/app_text.dart';
 import '../../../blocks/settings/exports.dart';
 import '../templates/setting_group.dart';
 import '../templates/simple_setting_item.dart';
-import 'volume_setting.dart';
+import 'volume_setting/volume_setting.dart';
 
 class SoundSettings extends StatelessWidget {
   const SoundSettings({Key? key}) : super(key: key);
