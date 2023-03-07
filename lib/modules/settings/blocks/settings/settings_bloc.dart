@@ -31,6 +31,9 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
 
     /// Change active timer background displaying property
     on<ChangeBackgroundDisplayingEvent>(_changeBackgroundDisplayingValue);
+
+    /// Change volume settings
+    on<ChangeVolumeSettingEvent>(_changeVolumeValue);
   }
 
   _changePlaySoundSetting(
@@ -84,6 +87,10 @@ class SettingsBloc extends HydratedBloc<SettingsEvent, SettingsState> {
     emit(state.copyWith(
       showBackgroundForActiveTimer: !state.showBackgroundForActiveTimer,
     ));
+  }
+
+  _changeVolumeValue(ChangeVolumeSettingEvent event, emit){
+    emit(state.copyWith(volume: event.volume));
   }
 
   @override

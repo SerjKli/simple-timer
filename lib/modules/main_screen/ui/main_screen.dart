@@ -17,10 +17,10 @@ class MainScreen extends StatelessWidget {
     return AppScreen(
       isInSafeArea: false,
       screenTitle: "SimpleTimer",
-      actions:  [
+      actions:  const [
         ToStatisticScreenButton(),
         ToSettingsPageButton(),
-        TestSoundButton(),
+        // TestSoundButton(),
       ],
       body: Column(
         children: const [

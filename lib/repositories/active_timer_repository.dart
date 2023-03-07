@@ -1,6 +1,8 @@
 import 'dart:async';
 
-class ActiveTimerRepository {
+import 'base_repository.dart';
+
+class ActiveTimerRepository extends BaseRepository {
   final _secondsController = StreamController<int>();
   final _stagesController = StreamController<int>();
   final _trainingsController = StreamController<int>();
@@ -15,6 +17,5 @@ class ActiveTimerRepository {
 
   void updateStages(int stages) => _stagesController.sink.add(stages);
 
-  void updateTrainings(int trainings) =>
-      _trainingsController.sink.add(trainings);
+  void updateTrainings(int trainings) => _trainingsController.sink.add(trainings);
 }

@@ -49,3 +49,12 @@ class ChangeBackgroundDisplayingEvent extends SettingsEvent {
   @override
   List<Object?> get props => [];
 }
+
+class ChangeVolumeSettingEvent extends SettingsEvent {
+  final double volume;
+
+  const ChangeVolumeSettingEvent(this.volume);
+
+  @override
+  List<Object?> get props => [volume];
+}

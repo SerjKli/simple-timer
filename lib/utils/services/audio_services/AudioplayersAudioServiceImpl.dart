@@ -1,5 +1,4 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/foundation.dart';
 import 'package:simpletimer/utils/services/audio_services/AudioServiceContract.dart';
 
 class AudioplayersAudioServiceImpl implements AudioServiceContract {
@@ -12,7 +11,6 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
 
   @override
   init() {
-    debugPrint("audioplayers init"); //TODO: remove debugging
     const AudioContext audioContext = AudioContext(
       iOS: AudioContextIOS(
         // defaultToSpeaker: true,
@@ -35,17 +33,14 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
   }
 
   @override
-  void playFromAssets(String assetsPath) async {
+  void playFromAssets(String assetsPath, [double volume = 1]) async {
     if (player.state == PlayerState.playing) {
-      debugPrint("is playing"); //TODO: remove debugging
       await player.stop();
     }
 
-    // await player.setVolume(1);
-
     await player.play(
       AssetSource(assetsPath),
-      // volume: 1,
+      volume: volume,
       // mode: PlayerMode.lowLatency,
     );
   }
