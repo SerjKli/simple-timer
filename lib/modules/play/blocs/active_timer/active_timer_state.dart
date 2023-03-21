@@ -16,16 +16,22 @@ class ActiveTimerState extends Equatable {
   @override
   List<Object> get props => [timer ?? Object(), timerStatus, stages];
 
-  int get currentMinutes => stages.isEmpty ? 0 : stages[stageIndex].duration ~/ 60;
+  int get currentMinutes =>
+      stages.isEmpty ? 0 : stages[stageIndex].duration ~/ 60;
 
-  int get currentSeconds => stages.isEmpty ? 0 : (stages[stageIndex].duration - (currentMinutes * 60));
+  int get currentSeconds => stages.isEmpty
+      ? 0
+      : (stages[stageIndex].duration - (currentMinutes * 60));
 
-  String get timerText => "${currentMinutes.beautifyForTime}:${currentSeconds.beautifyForTime}";
+  String get timerText =>
+      "${currentMinutes.beautifyForTime}:${currentSeconds.beautifyForTime}";
 
   TimerStageModel? get activeStage =>
       !stages.asMap().containsKey(stageIndex) ? null : stages[stageIndex];
-  TimerStageModel? get nextStage =>
-      !stages.asMap().containsKey(stageIndex + 1) ? null : stages[stageIndex + 1];
+
+  TimerStageModel? get nextStage => !stages.asMap().containsKey(stageIndex + 1)
+      ? null
+      : stages[stageIndex + 1];
 
   double get progressPercent {
     if (timerStatus == TimerStatus.completed) return 100;
@@ -34,6 +40,13 @@ class ActiveTimerState extends Equatable {
   }
 
   int get stagesLeft => stages.isEmpty ? 0 : stages.length - (stageIndex);
+
+  int get workoutLeft => stages.isEmpty
+      ? 0
+      : stages
+          .sublist(stageIndex)
+          .where((element) => element.status == TimerStatus.workout)
+          .length;
 
   ActiveTimerState copyWith({
     TimerModel? timer,
