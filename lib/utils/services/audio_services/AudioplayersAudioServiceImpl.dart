@@ -11,16 +11,16 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
 
   @override
   init() {
-    const AudioContext audioContext = AudioContext(
+    AudioContext audioContext = AudioContext(
       iOS: AudioContextIOS(
         // defaultToSpeaker: true,
-        category: AVAudioSessionCategory.playback,
-        options: [
+        category: AVAudioSessionCategory.playAndRecord,
+        options: const {
           AVAudioSessionOptions.defaultToSpeaker,
           AVAudioSessionOptions.mixWithOthers,
-        ],
+        },
       ),
-      android: AudioContextAndroid(
+      android: const AudioContextAndroid(
         // isSpeakerphoneOn: true,
         stayAwake: true,
         contentType: AndroidContentType.sonification,
@@ -29,7 +29,7 @@ class AudioplayersAudioServiceImpl implements AudioServiceContract {
       ),
     );
 
-    AudioPlayer.global.setGlobalAudioContext(audioContext);
+    AudioPlayer.global.setAudioContext(audioContext);
   }
 
   @override
